@@ -2,7 +2,7 @@
 <html><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
   <head>
 <!-- #BeginEditable "doctitle" -->
-<title>Step by Step develop a Jdon application with jdon-struts1x</title>  
+<title>Jdon Framework</title>  
 <!-- #EndEditable -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
@@ -63,22 +63,23 @@
               <tr>
                 <td>
                   
-				<!-- #BeginEditable "main" -->
+				<!-- #BeginEditable "main" --> 
+                  <p>　　</p>
                   <h1 align="center">Step by Step develop a Jdon application with jdon-struts1x</h1>
                   <p>&nbsp;</p>
                   <ol>
                     <li><a href="quickconf.html" target="_blank">Quick starting configuration(for xml) </a></li>
                     <li><a href="#crud">Create/Read/Update/Delete(CRUD) of the Model</a>;</li>
-                    <li>                  <a href="#batch">Batch inquiry and multi-page display</a></li>
+                    <li> <a href="#batch">Batch inquiry and multi-page display</a></li>
                   </ol>
                   <p>this document will show you how to develop these functions by Jdon Framework.<br>
                     the source of this document's sample is the package of JdonCRUDsample.rar or jdonsample.rar.</p>
                   <p>this is no Domain Events or DCI.</p>
-                  <p><a href="#batch"></a><a href="http://www.jdon.com:8080/testWeb/" target="_blank">DEMO Example</a> </p>
+                  <p><a href="#batch"></a><a href="http://www.jdon.com:8080/testWeb/" target="_blank">DEMO Example</a></p>
                   <p><a href="http://www.jdon.com/jdonframework/train.rar">Source Download </a></p>
                   <p>let's begin...</p>
                   <h3><strong><a name="crud"></a>Step By Step develop CRUD function</strong></h3>
-                  <p>In CRUD developing process there are two parts that are  coding and configuration.                  </p>
+                  <p>In CRUD developing process there are two parts that are  coding and configuration. </p>
                   <h4>Coding:</h4>
                   <blockquote>
                     <p>In coding phase there are 3 steps:<br>
@@ -88,15 +89,15 @@
                     <tr>
                       <td><p>//@Model<br>
                         public class Message extends <strong>Model</strong> {<br>
-&nbsp;&nbsp;&nbsp;private Long messageId;<br>
-&nbsp;&nbsp;&nbsp;private String name;</p>
+                        &nbsp;&nbsp;&nbsp;private Long messageId;<br>
+                        &nbsp;&nbsp;&nbsp;private String name;</p>
                         <p> &nbsp;&nbsp;&nbsp;public String getName() {    return name;  }<br>
-                            &nbsp;&nbsp;&nbsp;public void setName(String name) {    this.name = name;  }<br>
-                            }</p></td>
+                          &nbsp;&nbsp;&nbsp;public void setName(String name) {    this.name = name;  }<br>
+                          }</p></td>
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    note:</p>
+                    <p> note:</p>
                     <ul>
                       <li>the class must be annotated by Model annotation ,or extends com.jdon.controller.model.Model of the jdon framework,
                         or implements the interface:com.jdon.controller.model.ModelIF.</li>
@@ -109,9 +110,9 @@
                         <td bgcolor="#CCCCCC"><p>@Component()<br>
                           @Introduce(&quot;modelCache&quot;)<br>
                           public class DAOJdbc implements MessageRepository{</p>
-                            <p>&nbsp;&nbsp;&nbsp;@Around<br>
-                              &nbsp;&nbsp;&nbsp;public Message getMessage(String Id) {</p>
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...... //fetch from key-value stores or relation DB </p>
+                          <p>&nbsp;&nbsp;&nbsp;@Around<br>
+                            &nbsp;&nbsp;&nbsp;public Message getMessage(String Id) {</p>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...... //fetch from key-value stores or relation DB </p>
                           <p>&nbsp;&nbsp;&nbsp;}</p>
                           <p>}</p></td>
                       </tr>
@@ -122,15 +123,15 @@
                   <table width="100%" border="0" bgcolor="#CCCCCC">
                     <tr>
                       <td><p>public interface MessageService {<br>
-&nbsp;&nbsp;&nbsp;void createMessage(EventModel em); <br>
-&nbsp;&nbsp;&nbsp;void updateMessage(EventModel em);<br>
-&nbsp;&nbsp;&nbsp;void deleteMessage(EventModel em);<br>
-&nbsp;&nbsp;&nbsp;Message getMessage(String messageId);<br>
-}</p>                      </td>
+                        &nbsp;&nbsp;&nbsp;void createMessage(EventModel em); <br>
+                        &nbsp;&nbsp;&nbsp;void updateMessage(EventModel em);<br>
+                        &nbsp;&nbsp;&nbsp;void deleteMessage(EventModel em);<br>
+                        &nbsp;&nbsp;&nbsp;Message getMessage(String messageId);<br>
+                        }</p></td>
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    you can creat the concrete class of the MessageService in any time, in this sample it is sample.service.MessageServiceImp</p>
+                    <p> you can creat the concrete class of the MessageService in any time, in this sample it is sample.service.MessageServiceImp</p>
                     <p><strong>3</strong>. create the UI form class:sample.web.MessageForm, the content of the class MessageForm
                       is same as the Model class sample.model.Message, the MessageForm's content can bigger than Message,</p>
                   </blockquote>
@@ -146,7 +147,7 @@
                   </table>
                   <h4>configuration:</h4>
                   <blockquote>
-                    <p>                    There are two steps:</p>
+                    <p> There are two steps:</p>
                     <ul>
                       <li> configure the relation of these class: Message/MessageService/MessageForm</li>
                       <li>configure page flow in the struts's struts-config.xml</li>
@@ -162,44 +163,44 @@
                   <table width="100%" border="0" bgcolor="#CCCCCC">
                     <tr>
                       <td><p>&lt;plug-in className=&quot;com.jdon.strutsutil.InitPlugIn&quot;&gt;<br>
-&lt;set-property property=&quot;modelmapping-config&quot;  value=&quot;jdonframework.xml&quot; /&gt;<br>
-&lt;/plug-in&gt;</p>                      </td>
+                        &lt;set-property property=&quot;modelmapping-config&quot;  value=&quot;jdonframework.xml&quot; /&gt;<br>
+                        &lt;/plug-in&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    so, when our project start, the jdonframework.xml configuration will be loaded by <br>
+                    <p> so, when our project start, the jdonframework.xml configuration will be loaded by <br>
                       the Jdon Framework.</p>
                     <p>the content about jdonframework.xml as below:</p>
                   </blockquote>
                   <table width="100%" border="0" bgcolor="#CCCCCC">
                     <tr>
                       <td><p><br>
-&lt;models&gt;<br>
-&lt;!-- the Model class is sample.model.Message, and the primary key of the Model class is messageId --&gt;<br>
-&nbsp;&nbsp;&nbsp;&lt;model key=&quot;messageId&quot; class =&quot;sample.model.Message&quot;&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- configuration  about UI Form: MessageForm --&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;actionForm name=&quot;messageForm&quot;/&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;handler&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- configuration  about  the Model service : MessageService --&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;service ref=&quot;messageService&quot;&gt; <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;getMethod name=&quot;getMessage&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;createMethod name=&quot;createMessage&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;updateMethod name=&quot;updateMessage&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;deleteMethod name=&quot;deleteMessage&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/service&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/handler&gt;<br>
-&nbsp;&nbsp;&nbsp;&lt;/model&gt;</p>
+                        &lt;models&gt;<br>
+                        &lt;!-- the Model class is sample.model.Message, and the primary key of the Model class is messageId --&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&lt;model key=&quot;messageId&quot; class =&quot;sample.model.Message&quot;&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- configuration  about UI Form: MessageForm --&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;actionForm name=&quot;messageForm&quot;/&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;handler&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- configuration  about  the Model service : MessageService --&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;service ref=&quot;messageService&quot;&gt; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;getMethod name=&quot;getMessage&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;createMethod name=&quot;createMessage&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;updateMethod name=&quot;updateMessage&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;deleteMethod name=&quot;deleteMessage&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/service&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/handler&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&lt;/model&gt;</p>
                         <p> &nbsp;&nbsp;&nbsp;......<br>
-  &lt;/models&gt;<br>
-  &lt;services&gt;<br>
-  &nbsp;&nbsp;&nbsp;&lt;!-- the Ioc configuration about MessageService --&gt;<br>
-  &nbsp;&nbsp;&nbsp;&lt;pojoService name=&quot;messageService&quot; class=&quot;sample.service.MessageServiceImp&quot;/&gt;</p>
+                          &lt;/models&gt;<br>
+                          &lt;services&gt;<br>
+                          &nbsp;&nbsp;&nbsp;&lt;!-- the Ioc configuration about MessageService --&gt;<br>
+                          &nbsp;&nbsp;&nbsp;&lt;pojoService name=&quot;messageService&quot; class=&quot;sample.service.MessageServiceImp&quot;/&gt;</p>
                         <p>&nbsp;&nbsp;&nbsp;......<br>
-  &lt;/services&gt;</p></td>
+                          &lt;/services&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    we will show how to configure those lines in jdonframework.xml</p>
+                    <p> we will show how to configure those lines in jdonframework.xml</p>
                     <p><strong>One. Model's configuration</strong>:<br>
                       this line will define a Model class and its primary filed:</p>
                   </blockquote>
@@ -209,7 +210,7 @@
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    messageId is a field of the class: sample.model.Message, and one messageId'value<br>
+                    <p> messageId is a field of the class: sample.model.Message, and one messageId'value<br>
                       indicate unique one object of the Model class Message. the messageId can be the <br>
                       Object ID, some like the primary key of a table.
                       String is recommended for the type of primary key.</p>
@@ -221,19 +222,19 @@
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    messageForm is the name of the class sample.web.MessageForm, but where the name is defined?
+                    <p> messageForm is the name of the class sample.web.MessageForm, but where the name is defined?
                       it is defined in struts-config.xml, such as :</p>
                   </blockquote>
                   <table width="100%" border="0" bgcolor="#CCCCCC">
                     <tr>
                       <td><p>&lt;struts-config&gt;<br>
-&nbsp;&nbsp;&nbsp;&lt;form-beans&gt;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;form-bean name=&quot;messageForm&quot; type=&quot;sample.web.MessageForm&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;…… <br>
-&nbsp;&nbsp;&nbsp;&lt;/form-beans&gt;<br>
-　
-….. <br>
-&lt;/struts-config&gt;</p></td>
+                        &nbsp;&nbsp;&nbsp;&lt;form-beans&gt;&nbsp;&nbsp;&nbsp;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;form-bean name=&quot;messageForm&quot; type=&quot;sample.web.MessageForm&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;…… <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/form-beans&gt;<br>
+                        
+                        ….. <br>
+                        &lt;/struts-config&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
@@ -254,24 +255,24 @@
                   <table width="100%" border="0" bgcolor="#CCCCCC">
                     <tr>
                       <td><p><br>
-&lt;handler&gt;<br>
-&nbsp;&nbsp;&nbsp;&lt;!-- this will refer to service: messageService--&gt;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&lt;service ref=&quot;messageService&quot;&gt; <br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--getMessage is the method name of MessageService --&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;getMethod name=&quot;getMessage&quot; /&gt;</p>
+                        &lt;handler&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&lt;!-- this will refer to service: messageService--&gt;&nbsp;&nbsp;&nbsp;<br>
+                        &nbsp;&nbsp;&nbsp;&lt;service ref=&quot;messageService&quot;&gt; <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--getMessage is the method name of MessageService --&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;getMethod name=&quot;getMessage&quot; /&gt;</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--createMessage is the method name of MessageService --&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;createMethod name=&quot;createMessage&quot; /&gt;</p>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;createMethod name=&quot;createMessage&quot; /&gt;</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--updateMessage is the method name of MessageService --&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;updateMethod name=&quot;updateMessage&quot; /&gt;</p>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;updateMethod name=&quot;updateMessage&quot; /&gt;</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!--deleteMessage is the method name of MessageService --&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;deleteMethod name=&quot;deleteMessage&quot; /&gt;</p>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;deleteMethod name=&quot;deleteMessage&quot; /&gt;</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/service&gt;<br>
-  &lt;/handler&gt;</p></td>
+                          &lt;/handler&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
-                    <p>                    those methods are actually the name of the interface sample.service. MessageService too.</p>
+                    <p> those methods are actually the name of the interface sample.service. MessageService too.</p>
                     <p>let's step into the second part of the CRUD configuration! </p>
                     <p><strong>Second Step </strong>.<strong>: </strong>page flow in struts-config.xml<br>
                       there are two page flows in the CRUD<strong>:</strong></p>
@@ -281,11 +282,11 @@
                   <table width="100%" border="0" bgcolor="#CCCCCC">
                     <tr>
                       <td><p><br>
-&lt;action name=&quot;messageForm&quot; path=&quot;/messageAction&quot; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type=&quot;com.jdon.strutsutil.ModelViewAction&quot;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope=&quot;request&quot; validate=&quot;false&quot;&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;create&quot; path=&quot;/message.jsp&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;edit&quot; path=&quot;/message.jsp&quot; /&gt;<br>
-&lt;/action&gt;</p></td>
+                        &lt;action name=&quot;messageForm&quot; path=&quot;/messageAction&quot; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type=&quot;com.jdon.strutsutil.ModelViewAction&quot;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope=&quot;request&quot; validate=&quot;false&quot;&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;create&quot; path=&quot;/message.jsp&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;edit&quot; path=&quot;/message.jsp&quot; /&gt;<br>
+                        &lt;/action&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
@@ -294,7 +295,7 @@
                       will enter the &quot;create&quot; flow of the 'forward', and the server will push '/message.jsp'.</p>
                     <p>when the users call http://localhost:8080/messageAction.do?action=edit&amp;messageId=18, ModelViewAction
                       will enter the &quot;edit&quot; flowof the 'forward', and the server will push  '/message.jsp' that contains a 
-                    existed old datas, so the users can update those old form datas.</p>
+                      existed old datas, so the users can update those old form datas.</p>
                     <p>there a coding rule in /message.jsp, as below:</p>
                   </blockquote>
                   <table width="100%" border="0" bgcolor="#CCCCCC">
@@ -302,10 +303,10 @@
                       <td><p><br>
                         &lt;html:form action=&quot;/messageSaveAction.do&quot; method=&quot;POST&quot; &gt;</p>
                         <p>&lt;html:hidden property=&quot;action&quot;/&gt; &lt;!--  this is a rule --&gt;</p>
-                        <p>                          MessageId：&lt;html:text property=&quot;messageId&quot;/&gt;<br>
-&lt;br&gt;Name：&lt;html:text property=&quot;name&quot;/&gt;<br>
-&lt;br&gt;&lt;html:submit property=&quot;submit&quot; value=&quot;Submit&quot;/&gt;<br>
-&lt;/html:form&gt;</p></td>
+                        <p> MessageId：&lt;html:text property=&quot;messageId&quot;/&gt;<br>
+                          &lt;br&gt;Name：&lt;html:text property=&quot;name&quot;/&gt;<br>
+                          &lt;br&gt;&lt;html:submit property=&quot;submit&quot; value=&quot;Submit&quot;/&gt;<br>
+                          &lt;/html:form&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
@@ -319,10 +320,10 @@
                     <tr>
                       <td><p><br>
                         &lt;action name=&quot;messageForm&quot; path=&quot;/messageSaveAction&quot; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type=&quot;com.jdon.strutsutil.ModelSaveAction&quot;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope=&quot;request&quot; validate=&quot;true&quot; input=&quot;/message.jsp&quot;&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;success&quot; path=&quot;/result.jsp&quot; /&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;failure&quot; path=&quot;/result.jsp&quot; /&gt;<br>
-&lt;/action&gt;</p>                      </td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope=&quot;request&quot; validate=&quot;true&quot; input=&quot;/message.jsp&quot;&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;success&quot; path=&quot;/result.jsp&quot; /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;failure&quot; path=&quot;/result.jsp&quot; /&gt;<br>
+                        &lt;/action&gt;</p></td>
                     </tr>
                   </table>
                   <blockquote>
@@ -344,7 +345,7 @@
                     <tr bgcolor="#CCCCCC">
                       <td><p><br>
                         MessageService messageService = (MessageService) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebAppUtil.getService(&quot;messageService&quot;,request);<br>
-return messageService.getAllMessages(start, count);</p></td>
+                        return messageService.getAllMessages(start, count);</p></td>
                     </tr>
                   </table>
                   <blockquote>
@@ -353,8 +354,8 @@ return messageService.getAllMessages(start, count);</p></td>
                     <table width="100%" border="0" bgcolor="#CCCCCC">
                       <tr bgcolor="#CCCCCC">
                         <td><p><br>
-                           MessageService messageService = (MessageService)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebAppUtil.getService(&quot;messageService&quot;, request);<br>
- return messageService.<strong>getMessage</strong>((String)key);</p></td>
+                          MessageService messageService = (MessageService)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebAppUtil.getService(&quot;messageService&quot;, request);<br>
+                          return messageService.<strong>getMessage</strong>((String)key);</p></td>
                       </tr>
                     </table>
                     <p><strong>Second Step</strong>: Implement the getAllMessages in Service layer, we will call the MessageDao to implement the function (see the source), </p>
@@ -364,11 +365,11 @@ return messageService.getAllMessages(start, count);</p></td>
                     <tr bgcolor="#CCCCCC">
                       <td><p><br>
                         public PageIterator getMessages(int start, int count) throws Exception {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS_ALLCOUNT = &quot;select count(1) from testmessage &quot;;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS = &quot;select messageId  from testmessage &quot;;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return pageIteratorSolver. getPageIterator (GET_ALL_ITEMS_ALLCOUNT, <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GET_ALL_ITEMS, &quot;&quot;,start, count);<br>
-}</p></td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS_ALLCOUNT = &quot;select count(1) from testmessage &quot;;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS = &quot;select messageId  from testmessage &quot;;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return pageIteratorSolver. getPageIterator (GET_ALL_ITEMS_ALLCOUNT, <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GET_ALL_ITEMS, &quot;&quot;,start, count);<br>
+                        }</p></td>
                     </tr>
                   </table>
                   <blockquote>
@@ -378,14 +379,14 @@ return messageService.getAllMessages(start, count);</p></td>
                     <tr bgcolor="#CCCCCC">
                       <td><p><br>
                         public PageIterator getMessages(Long categoryId, int start, int count) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS_ALLCOUNT =<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;select count(1) from message where categoryId = ? &quot;;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS = <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;select messageId  from message where categoryId = ? &quot;;<br>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Collection params = new ArrayList(1);<br>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;params.add(categoryId);//paramters will be put into Collection<br>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return pageIteratorSolver.getPageIterator(GET_ALL_ITEMS_ALLCOUNT, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GET_ALL_ITEMS, params, start, count);<br>
-                          }</p>                      </td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS_ALLCOUNT =<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;select count(1) from message where categoryId = ? &quot;;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String GET_ALL_ITEMS = <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;select messageId  from message where categoryId = ? &quot;;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Collection params = new ArrayList(1);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;params.add(categoryId);//paramters will be put into Collection<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return pageIteratorSolver.getPageIterator(GET_ALL_ITEMS_ALLCOUNT, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GET_ALL_ITEMS, params, start, count);<br>
+                        }</p></td>
                     </tr>
                   </table>
                   <blockquote>&nbsp;</blockquote>
@@ -395,12 +396,12 @@ return messageService.getAllMessages(start, count);</p></td>
                     <tr bgcolor="#CCCCCC">
                       <td><p><br>
                         &lt;services&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pojoService name=&quot;messageService&quot; class=&quot;sample.service.MessageServiceImp&quot;/&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;component name=&quot;messageDAO&quot; class=&quot;sample.dao.MessageDAO&quot;/&gt; <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;component name=&quot;constants&quot; class=&quot;sample.Constants&quot;&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;constructor value=&quot;java:/TestDS&quot;/&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/component&gt; <br>
-&lt;/services&gt;</p></td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pojoService name=&quot;messageService&quot; class=&quot;sample.service.MessageServiceImp&quot;/&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;component name=&quot;messageDAO&quot; class=&quot;sample.dao.MessageDAO&quot;/&gt; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;component name=&quot;constants&quot; class=&quot;sample.Constants&quot;&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;constructor value=&quot;java:/TestDS&quot;/&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/component&gt; <br>
+                        &lt;/services&gt;</p></td>
                     </tr>
                   </table>
                   <p>in the MessageServiceImp, there are such construct method:</p>
@@ -412,7 +413,7 @@ return messageService.getAllMessages(start, count);</p></td>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public MessageServiceImp(MessageDAO messageDAO){</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.messageDAO = messageDAO;</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
-                        <p>}</p>                        </td>
+                        <p>}</p></td>
                     </tr>
                   </table>
                   <p>the dependencs between MessageService with MessageDAO will be solved by Jdon Ioc container.</p>
@@ -422,10 +423,10 @@ return messageService.getAllMessages(start, count);</p></td>
                     <tr bgcolor="#CCCCCC">
                       <td><p><br>
                         &lt;form-beans&gt;<br>
-　　
-                    ……<br>
-&lt;form-bean name=&quot;listForm&quot; type=&quot;com.jdon.strutsutil.ModelListForm&quot; /&gt;<br>
-&lt;/form-beans&gt;</p>                      </td>
+                        
+                        ……<br>
+                        &lt;form-bean name=&quot;listForm&quot; type=&quot;com.jdon.strutsutil.ModelListForm&quot; /&gt;<br>
+                        &lt;/form-beans&gt;</p></td>
                     </tr>
                   </table>
                   <p>com.jdon.strutsutil.ModelListForm is the default class of Jdon Framework, we configure action: </p>
@@ -433,13 +434,13 @@ return messageService.getAllMessages(start, count);</p></td>
                     <tr bgcolor="#CCCCCC">
                       <td><p><br>
                         &lt;action name=&quot;listForm&quot; path=&quot;/messageListAction&quot; <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type=&quot;sample.web.MessageListAction&quot; scope=&quot;request&quot;&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;success&quot; path=&quot;/messageList.jsp&quot; /&gt;<br>
-&lt;/action&gt;</p></td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type=&quot;sample.web.MessageListAction&quot; scope=&quot;request&quot;&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;forward name=&quot;success&quot; path=&quot;/messageList.jsp&quot; /&gt;<br>
+                        &lt;/action&gt;</p></td>
                     </tr>
                   </table>
                   <p><br>
-sample.web.MessageListAction is our implements as above.</p>
+                    sample.web.MessageListAction is our implements as above.</p>
                   <p>when the users browse http://localhost:8080/ messageListAction.do, they will see the all messages items sist, default count is 30 .</p>
                   <p>in the  messageList.jsp we need add the multi-pages tag:</p>
                   <table width="100%" border="0" bgcolor="#CCCCCC">
@@ -447,9 +448,9 @@ sample.web.MessageListAction is our implements as above.</p>
                       <td><p><br>
                         &lt;MultiPages:pager actionFormName=&quot;listForm&quot; page=&quot;/messageListAction.do&quot;&gt;</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;MultiPages:prev name=&quot;[Prev ]&quot; /&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;MultiPages:index displayCount=&quot;1&quot; /&gt;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;MultiPages:next  name=&quot;[Next ]&quot; /&gt;<br>
-  &lt;/MultiPages:pager&gt;</p></td>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;MultiPages:index displayCount=&quot;1&quot; /&gt;<br>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;MultiPages:next  name=&quot;[Next ]&quot; /&gt;<br>
+                          &lt;/MultiPages:pager&gt;</p></td>
                     </tr>
                   </table>
                   <p>&nbsp;</p>
@@ -467,7 +468,7 @@ sample.web.MessageListAction is our implements as above.</p>
                   <p>We finish the Batch Inquiry and muilt-pages Display function! All source code can download by <a href="http://www.jdon.com/jdonframework/train.rar">click here</a>, and the running demo <a href="http://www.jdon.com:8080/testWeb/" target="_blank">click here</a></p>
                   <p></p>
                   <p>&nbsp;</p>
-                   <!-- #EndEditable -->
+                  <!-- #EndEditable -->
                  
 			    </td>
               </tr>
