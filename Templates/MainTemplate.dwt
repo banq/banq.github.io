@@ -12,21 +12,19 @@
 
 </head>
 <body>
+ <div class="carousel-inner">
+        <div class="item active">
+          <img data-src="../images/background.jpg" >
+      <div class="container">
+       
+      </div>
+    </div>
+    </div>    
  <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 
   <tr> 
     <td height="11" colspan="7" bgcolor="#FFFFFF" class="bianxian"> 
-      <table width="100%" border="0" cellspacing="0" cellpadding="0" height="1" bordercolor="#000000">
-        <tr> 
-          <td> 
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" height="200" bgcolor="#000000" background="../images/background.jpg">
-              <tr> 
-                <td></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+     
     </td>
   </tr>
   <tr> 
