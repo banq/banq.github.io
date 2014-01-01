@@ -30,7 +30,7 @@
     </div>
 
     <div class="container">
-
+     <div class="starter-template">
      
 
     
@@ -125,9 +125,9 @@
   </td>
 </tr>
 </table>
+ </div>
+</div><!-- /.container -->
 
-    </div><!-- /.container -->
-<br>
 <!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
