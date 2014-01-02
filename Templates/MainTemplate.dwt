@@ -121,7 +121,7 @@
 </div><!-- /.container -->
 
 <!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
-        <script src="js/jquery-1.8.3.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 <!-- AddThis Smart Layers BEGIN -->
 <!-- Go to http://www.addthis.com/get/smart-layers to customize -->
