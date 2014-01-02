@@ -27,10 +27,10 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="https://sourceforge.net/projects/jdon/files/" target="_blank">Download</a></li>
             <li><a href="../doc.htm" target="_blank">Document</a></li>
-            <li><a href="../quickconf.html"><strong>Qucik Start</strong></a> </li>
-             <li><a href="https://github.com/banq/jdonframework/tree/master/example" target="_blank"><strong>Examples</strong></a></li>
-                  <li ><a href="https://github.com/banq/jdonframework"><strong>Github</strong></a></li>
-<li><a href="http://sourceforge.net/projects/jdon/files/jivejdon/4.x/" target="_blank">jivejdon</a></li>
+            <li><a href="../quickconf.html">Qucik Start</a> </li>
+             <li><a href="../examples.html" target="_blank">Examples</a></li>
+                  <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+<li><a href="../articles.html" target="_blank">Articles</a></li>
   
           </ul>
         </div><!--/.nav-collapse -->

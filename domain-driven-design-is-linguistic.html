@@ -2,7 +2,7 @@
 <html><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
   <head>
 <!-- #BeginEditable "doctitle" -->
-<title>Jdon Framework</title>  
+<title>Domain-Driven Design is Linguistic</title>  
 <!-- #EndEditable -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
@@ -46,15 +46,14 @@
 
                   
 				<!-- #BeginEditable "main" --> 
-                  <h3 align="center">Jdon JPetstore</h3>
-                  <p>　　Demo url: <a href="http://www.jdon.com:8080/jpetstore/" target="_blank">http://www.jdon.com:8080/jpetstore/</a> </p>
-                  <p>　　JPetstore is a  lightweight J2EE application based Jdon Framework,  and its arichtecture is : struts + jdon + iBatis, this version was modified from iBatis JPetstore 4.0.5 .</p>
-                  <p>　　In Jdon JPetstore, you will find some different points from iBatis JPetstore and other JPetstores, <br>
-                    no more codes, only a few codes about Model , others are in configure files(struts-config.xml jdonframework.xml and iBatis's Product.xml ...),
-                  most of functions of JPetstore are implemented by jdon framework's CRUD (create/read/update/delete) and batch query. </p>
-                  <p>　　here download Jpetstore: <a href="https://sourceforge.net/project/showfiles.php?group_id=126953&package_id=138962" target="_blank">Jdon JPetstore</a></p>
-                  <p>&nbsp; </p>
-                 <!-- #EndEditable -->
+                  <h1>domain-driven-design-is-linguistic</h1>
+                  <p><a href="http://verraes.net/2014/01/domain-driven-design-is-linguistic/">original url</a></p>
+                  <p>　　If I give you half a million euros, you will be quite happy. If I give you a million euros, but on the way home, you get robbed and lose half a million, you will be unhappy, even though the end result is the same. Even if you only lose 200k, you will be unhappier than if you only had the half million to begin with. In psychology, this is called <a href="http://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555">Loss Aversion</a>. That is, loss has a higher impact on us than gains. We are not purely rational economic beings. The behaviour that leads to a certain state is more important than the actual state.</p>
+                  <p>Businesses don&rsquo;t make decisions based on the money they have in the bank. It&rsquo;s the successes and the failures that lead that profit, that are going to determine what you&rsquo;re going to do next.</p>
+                  <p>This is what, to me, is so appealing in Domain-Driven Design. Software development has traditionally been mostly about mathematics, about technical matters. DDD makes the linguistics the central concern. To express it in a formula:</p>
+                  <p>f(x) = y and g(x) = y =/=&gt; f = g</p>
+                  <p>Or: Just because two behaviours lead to the same outcome, does not mean they are replaceable. In Domain-Driven modelling, state is a side effect of behaviour. State is only interesting as far as it has the potential to influence new behaviour. An Aggregate is not just an composition of objects that belong together to represent a certain state. An Aggregate manages behaviours that belong together, and keeps state only where they are relevant to those behaviours. Event Sourcing takes the idea to the its logical conclusion: We forget about persisting state altogether, and instead, we only persist the Domain Events that lead up to that state. We preserve the meaning, instead of the outcome. When we need the state, to make a decision, we replay the events and interpret them. The beauty of this, is that if we change our minds about how to interpret the behaviour, we are not stuck with the state the we decided to persist in the past.</p>
+                  <!-- #EndEditable -->
                  
 			  	
           </td>
