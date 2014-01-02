@@ -21,7 +21,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Jdon Framework</a>
+          <a class="navbar-brand" href="../index.html">Jdon Framework</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -46,9 +46,22 @@
 
                   
 				<!-- #BeginEditable "main" --> 
+                  <h1>标题</h1>
+                  <p><a href="http://verraes.net/2014/01/domain-driven-design-is-linguistic/">original url</a></p>
                   <p>　　</p>
                   <p>&nbsp;</p>
-                  <!-- #EndEditable -->
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
                  
 			  	
           </td>
