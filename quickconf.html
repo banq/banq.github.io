@@ -151,7 +151,9 @@
                 </pre>
                 <p>&nbsp;</p>
                 <p>Service's invoking :</p>
-                <pre><div id="LC140">AppUtil appUtil = new AppUtil();</div><div id="LC141">IServiceSampleTwo serviceSample = (IServiceSampleTwo) appUtil.getService("serviceSampleTwo");</div><div id="LC142">String res = (String) serviceSample.eventPointEntry();</div><div id="LC143">System.out.print(res);</div><div id="LC144">Assert.assertEquals(res, "Synchronous sayHello and Asynchronous eventMessage=100");</div>
+                <pre><div id="LC140">AppUtil appUtil = new AppUtil();</div><div id="LC141">IServiceSampleTwo serviceSample = (IServiceSampleTwo) appUtil.getService("serviceSampleTwo");</div><div id="LC142">String res = (String) serviceSample.eventPointEntry();</div><div id="LC143">System.out.print(res);</div><div id="LC144">Assert.assertEquals(res, "Synchronous sayHello and Asynchronous eventMessage=100");
+
+serviceSample.onEventTest();</div>
                 </pre>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
