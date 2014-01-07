@@ -64,7 +64,7 @@
                     <p><strong>Table of Contents</strong></p>
                 <ul>
                       <li><a href="#intro"> Introduction</a></li>
-                      <li><a href="http://activiti.org/userguide/index.html#N1007D">In Memory Domain model </a></li>
+                      <li><a href="#inmemory">In Memory Domain model </a></li>
                       <li><a href="#CommandEvent">Command and Event</a></li>
                       <li><a href="#fourway">Producer/Consumer</a></li>
                       <li><a href="#dci">DCI</a></li>
@@ -97,7 +97,7 @@
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </div>          
-                    <h2><a id="inmemory"></a> </h2>
+                    <h2><a name="inmemory" id="inmemory"></a> </h2>
                     <h2>In Memory Domain model </h2>
                     <p>domain model  mainly includes the Entity,Value  Object and Service that all focus on the  business domain,it is nothing to do with the concrete technical  implementation. but we need let them living in the technical  system.</p>
                     <p>In Jdon Framework, these domain models are marked with the @Model  annotation, so they are in memory and     send asynchronous events or message to the consumers .</p>
