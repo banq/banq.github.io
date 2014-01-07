@@ -145,16 +145,14 @@
                   <h3>5. Client</h3>
                   <p>all main steps finished.</p>
                 <p>Service is a bounded context, and is a client for our aggregate:</p>
-                <pre><div id="LC95">@Service("serviceSampleTwo")</div><div id="LC96">public class ServiceSampleTwo implements IServiceSampleTwo {</div><div id="LC97"><br></div><div id="LC98">        private MyModelRepository repository;</div><div id="LC99">        private NameFinderContext nameFinderContext;</div><div id="LC100"><br></div><div id="LC101">        public ServiceSampleTwo(MyModelRepository repository, NameFinderContext nameFinderContext) {</div><div id="LC102">                super();</div><div id="LC103">                this.repository = repository;</div><div id="LC104">                this.nameFinderContext = nameFinderContext;</div><div id="LC105">        }</div><div id="LC106"><br></div><div id="LC107">        public Object eventPointEntry() {</div><div id="LC108">                MyModel myModel = repository.getModel(new Long(100));</div><div id="LC109">                MyModel myModel2 = repository.getModel(new Long(100));</div><div id="LC110">                return myModel.sayHelloSynchronous() + " and " + myModel2.getName();</div><div id="LC111"><br></div><div id="LC112">        }</div>
+                <pre><div id="LC95">@Service("serviceSampleTwo")</div><div id="LC96">public class ServiceSampleTwo implements IServiceSampleTwo {</div><div id="LC97"><br></div><div id="LC98">        private MyModelRepository repository;</div><div id="LC99"></div><div id="LC100"><br></div><div id="LC101">        public ServiceSampleTwo(MyModelRepository repository) {</div><div id="LC102">                super();</div><div id="LC103">                this.repository = repository;</div><div id="LC104">                this.nameFinderContext = nameFinderContext;</div><div id="LC105">        }</div><div id="LC106"><br></div><div id="LC107">        public Object eventPointEntry() {</div><div id="LC108">                MyModel myModel = repository.getModel(new Long(100));</div><div id="LC109">                MyModel myModel2 = repository.getModel(new Long(100));</div><div id="LC110">                return myModel.sayHelloSynchronous() + " and " + myModel2.getName();</div><div id="LC111"><br></div><div id="LC112">        }</div>
                 </pre>
                 <pre><div id="LC113">         public void onEventTest() {</div><div id="LC114">                MyModel myModel = repository.getModel(new Long(100));</div><div id="LC115">                myModel.setName("new name");</div><div id="LC116">                myModel.save();</div><div id="LC117">        }</div>
                 </pre>
                 <p>&nbsp;</p>
                 <p>Service's invoking :</p>
-                <p>IServiceSampleTwo serviceSample = (IServiceSampleTwo) appUtil.getService(&quot;serviceSampleTwo&quot;);<br>
-String res = (String) serviceSample.eventPointEntry();<br>
-System.out.print(res);<br>
-Assert.assertEquals(res, &quot;asynchronous eventMessage=100&quot;);</p>
+                <pre><div id="LC140">AppUtil appUtil = new AppUtil();</div><div id="LC141">IServiceSampleTwo serviceSample = (IServiceSampleTwo) appUtil.getService("serviceSampleTwo");</div><div id="LC142">String res = (String) serviceSample.eventPointEntry();</div><div id="LC143">System.out.print(res);</div><div id="LC144">Assert.assertEquals(res, "Synchronous sayHello and Asynchronous eventMessage=100");</div>
+                </pre>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
                   <p align="left">this quickStart's source code in <a href="https://github.com/banq/jdonframework/tree/master/src/test/java/com/jdon/sample/test/domain/simplecase" target="_blank">github</a></p>
