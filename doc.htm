@@ -98,6 +98,7 @@
 </script>
 </div>          
                     <h2><a name="inmemory" id="inmemory"></a> </h2>
+                    <p>&nbsp;</p>
                     <h2>In Memory Domain model </h2>
                     <p>domain model  mainly includes the Entity,Value  Object and Service that all focus on the  business domain,it is nothing to do with the concrete technical  implementation. but we need let them living in the technical  system.</p>
                     <p>In Jdon Framework, these domain models are marked with the @Model  annotation, so they are in memory and     send asynchronous events or message to the consumers .</p>
@@ -141,6 +142,7 @@
                   <p>when you got a myModel, you can invoke its any methods, but if you call a method with(@Oncommand), it is different with direct method invoking.</p>
                   <p>&nbsp;</p>
                   <p><a id="CommandEvent"></a></p>
+                  <p>&nbsp;</p>
                   <h2>Command and Event</h2>
                   <p> Command or Event is a communication way between domain model and components, at first we need know how much components type there are in jdon.</p>
                   <h3>&nbsp;</h3>
@@ -271,6 +273,7 @@ public class AggregateRootA {</p>
                     <p>wo can use domain events to model the requirement, see <a href="ces.html"><strong>CES:Context Event and State</strong></a></p>
                     <p>and <a href="http://www.slideshare.net/ziobrando/model-storming-a-different-approach-to-collaborative-model-discovery-vilnius-edition" target="_blank">Model Storming</a></p>
                     <p><a name="fourway"></a></p>
+                    <p>&nbsp;</p>
                     <h2>Producer/Consumer</h2>
                     <p>Jdon provide four kinds of asynchronous concurrency communication(Producer/Consumer) with these two models.</p>
                     <p>　　1. Component -----&gt; model (that is a Command)</p>
@@ -575,6 +578,7 @@ public class AggregateRootA {</p>
                     <p>　　this mode's source code is in Github: <a href="https://github.com/banq/jdonframework/tree/master/src/test/java/com/jdon/sample/test/cqrs" target="_blank">https://github.com/banq/jdonframework/tree/master/src/test/java/com/jdon/sample/test/cqrs</a></p>
                     <p>&nbsp;</p>
                     <p><a id="dci"></a></p>
+                    <p>&nbsp;</p>
 <h2>DCI</h2>
 <p>DCI: Data, Context, Interactions is a programming paradigm invented by Trygve Reenskaug. the domain model is a Data, the domain events producer is a Role of DCI, it includes the interactions of DCI. </p>
 <p>Jdon Framework's domain model injection function can inject the role into the domain model, such as above the class UserDomainEvents is a Role, it can be injected into the model UserModel.so it help UserModel implements business function ComputeCount. In runtime, The Role UserDomainEvents will be injected into the Data UserModel.<br>
@@ -584,6 +588,7 @@ public class AggregateRootA {</p>
   DCI Example:<a href="http://code.google.com/p/jivejdon/downloads/detail?name=SimpleJdonFrameworkTest.rar&amp;can=2&amp;q=">SimpleJdonFrameworkTest.rar</a> </p>
 <p>&nbsp;</p>
 <p><a id="aop"></a></p>
+<p>&nbsp;</p>
 <h2>AOP</h2>
                     <p>Using the  DDD,It is the domain models drive the  technical components to finish the business logics,and in this design style,the  components are just the assistants,which assist the domain models to complete  the business operations.So how the domain models gain the needed  components,Jdon framework use the @Inject and @Component to inject components  and the domain events into models.<br>
                   </p>
@@ -623,6 +628,7 @@ public class AggregateRootA {</p>
                     <p><a href="springIntegration.html">How to integrate Jdon Framework  with Spring</a>                    </p>
                     <h2>&nbsp;</h2>
                     <p><a id="ioc"></a></p>
+                    <p>&nbsp;</p>
                     <h2><strong>Ioc container</strong></h2>
                     <P><br>
                       The great thing about objects is they can be replaced.
