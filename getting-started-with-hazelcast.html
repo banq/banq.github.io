@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Getting Started with Hazelcast</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1>Getting Started with Hazelcast                  </h1>
+                  <p><a href="http://www.captaindebug.com/2013/10/getting-started-with-hazelcast.html">original</a></p>
+                  <p>　　In July I wrote a <a href="http://www.captaindebug.com/2013/07/erlang-for-java-developers.html#.UmFeCGTk8jc" target="new">blog</a> introducing erlang to Java developers, highlighting some of the similarities and differences between the two languages. The erlang virtual machine has a number of impressive, built-in features, one of which is that they are location independent and can talk to each other. This means that that data can be synchronised between VMs by writing very few lines of code. This is really good news if you have a networked cluster of servers all doing the same thing. <br>
+                    <br>
+                    You could argue that there's something lacking in the JVM if it can't even perform the most basic interprocess communication; however, Java takes the opposite view, it has a basic VM and then layers different services on top as and when required. Whether this is right is a matter of opinion and I'll leave it as a subject for a future blog, because it seems that the Hazelcast Guys have solved the problem of JVMs talking to each other; which is the point of this blog.<br>
+                    <br>
+                  </p>
+                  <h3>So, what is Hazelcast?</h3>
+                  <a name="more"></a><br>
+                  The Hazelcast press release goes something like this: "Hazelcast (<a href="http://www.captaindebug.com/2013/10/www.hazelcast.com" target="new">www.hazelcast.com</a>) is reinventing in-memory data grid through open source. Hazelcast provides a drop-in library that any Java developer can include in minutes to enable them to build elegantly simple mission-critical, transactional, and terascale in-memory applications". <br>
+                  <br>
+                  <h3>So, what does that really mean?</h3>
+                  <br>
+                  Okay, so that's just marketing/PR bumpf. What is Hazelcast… in real life? The answer can be succinctly given using code. Imagine you're writing an application and you need a Map&lt;String,String&gt; and when you're in production you'll have multiple instances of your app in a cluster. Then writing the following code:<br>
+                  <br>
+                  <div>    HazelcastInstance instance = Hazelcast.newHazelcastInstance();<br>
+                    loggedOnUsers = instance.getMap("Users");</div>
+                  <br>
+                  …means that data added to your map by one instance of your application is available to all the other instances of your application2<br>
+                  <br>
+                  There are a few points that you can deduce from this. Firstly, Hazelcast nodes are 'masterless', which means that it isn't a client-server system. There is a cluster leader, which is by default the oldest member of the cluster, which manages how data is spread across the system; however, if that node went down, then the next oldest will take over.<br>
+                  <br>
+                  Having a bunch of distributed Maps, Lists, Queues etc, means that everything is held in memory. If one node in your cluster dies, then you're okay, there's no loss of data; however, if a number of nodes die at the same time, then you're in trouble and you'll get data loss as the system won't have time to rebalance itself. It also goes without saying that if the whole cluster dies, then you're in big trouble.<br>
+                  <br>
+                  <h3>So, why is Hazelcast a good bet?</h3>
+                  <br>
+                  <ol>
+                    <li>It's open source. This is <a href="http://www.captaindebug.com/2011/09/benefits-and-dangers-of-using.html#.UmFlj2Tk8jc" target="new">usually a good thing…</a></li>
+                    <li>Hazelcast have just received a large cash injection to 'commoditize' the product. For more on this take a look <a href="http://www.prnewswire.com/news-releases/hazelcast-announces-25-million-in-series-a-funding-to-commoditize-in-memory-computing-224634081.html" target="new">here</a> and <a href="http://www.infoq.com/news/2013/09/hazelcast-vc-funding" target="new">here</a>.</li>
+                    <li>Rod Johnson, yes Mr Spring, is now on the board of Hazelcast.</li>
+                    <li>It just works1.</li>
+                    <li>Getting started is pretty easy.</li>
+                  </ol>
+                  <br>
+                  <h3>The Scenario</h3>
+                  <br>
+                  To demonstrate Hazelcast imagine that you're writing an application, in this case modelled by the MyApplication class and then there's a big, wide world of users as modelled by the BigWideWorld class. As expected, users from the BigWideWorld log in and out of your application. Your application is very popular and you're running multiple instances of it in a cluster, so when a user logs in an instance of the app it stores their details (as modelled by the User class) in a Map and the contents of the map are synchronised with the maps held by other instances of your application.<br>
+                  <br>
+                  <div><a href="http://4.bp.blogspot.com/-hOTLi2dWy48/UmWZFKxJyaI/AAAAAAAAA08/R5JGipX_moo/s1600/Screen+Shot+2013-10-21+at+20.45.28.png" imageanchor="1"><img src="http://4.bp.blogspot.com/-hOTLi2dWy48/UmWZFKxJyaI/AAAAAAAAA08/R5JGipX_moo/s320/Screen+Shot+2013-10-21+at+20.45.28.png" alt="" border="0"></a></div>
+                  <br>
+                  <h3>POM Configuration</h3>
+                  <br>
+                  The first thing to do is to setup the POM.xml and there's only one entry to consider:<br>
+                  <br>
+                  <pre>&lt;dependency&gt;          &lt;groupId&gt;com.hazelcast&lt;/groupId&gt;          &lt;artifactId&gt;hazelcast&lt;/artifactId&gt;          &lt;version&gt;3.1&lt;/version&gt;      &lt;/dependency&gt;  </pre>
+                  <br>
+                  <h3>The Code</h3>
+                  <br>
+                  The BigWideWorld is the starting point for the code and it's a very small class for such a large concept. It has one method, nextUser(), which randomly chooses the name of the next user to log in or out from a collection of all your application's users. <br>
+                  <br>
+                  <div>public class BigWideWorld {<br>
+                    <br>
+                    private static Random rand = new Random(System.currentTimeMillis());<br>
+                    <br>
+                    private final Users users = new Users();<br>
+                    <br>
+                    private final int totalNumUsers = users.size();<br>
+                    <br>
+                    public String nextUser() {<br>
+                    <br>
+                    User user = users.get(rand.nextInt(totalNumUsers));<br>
+                    String name = user.getUsername();<br>
+                    <br>
+                    return name;<br>
+                    <br>
+                    }<br>
+                    <br>
+                    }</div>
+                  <br>
+                  The collection of users is managed by the Users class. This is a sample code convenience class that contains a number of hard coded users' details. <br>
+                  <br>
+                  <div>public class Users {<br>
+                    <br>
+                    /** The users in the database */<br>
+                    private final User[] users = { new User("fred123", "Fred", "Jones", "fredj@a.com"),<br>
+                    new User("jim", "Jim", "Jones", "jimj@a.com"),<br>
+                    new User("bill", "Bill", "Jones", "bill@a.com"),<br>
+                    new User("ted111", "Edward", "Jones", "tedj@a.com"),<br>
+                    new User("annie", "Annette", "Jones", "annj@a.com"),<br>
+                    new User("lucy", "Lucy", "Jones", "lucyj@a.com"),<br>
+                    new User("jimj", "James", "Jones", "jimj@a.com"),<br>
+                    new User("jez", "Jerry", "Jones", "fredj@a.com"),<br>
+                    new User("will", "William", "Jones", "willj@a.com"),<br>
+                    new User("shaz", "Sharon", "Jones", "shazj@a.com"),<br>
+                    new User("paula", "Paula", "Jones", "pauj@a.com"),<br>
+                    new User("leo", "Leonardo", "Jones", "leoj@a.com"), };<br>
+                    <br>
+                    private final Map&lt;String, User&gt; userMap;<br>
+                    <br>
+                    public Users() {<br>
+                    <br>
+                    userMap = new HashMap&lt;String, User&gt;();<br>
+                    <br>
+                    for (User user : users) {<br>
+                    userMap.put(user.getUsername(), user);<br>
+                    }<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * The number of users in the database<br>
+                    */<br>
+                    public int size() {<br>
+                    return userMap.size();<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * Given a number, return the user<br>
+                    */<br>
+                    public User get(int index) {<br>
+                    return users[index];<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * Given the user's name return the User details<br>
+                    */<br>
+                    public User get(String username) {<br>
+                    return userMap.get(username);<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * Return the user names.<br>
+                    */<br>
+                    public Set&lt;String&gt; getUserNames() {<br>
+                    return userMap.keySet();<br>
+                    }<br>
+                    }</div>
+                  <br>
+                  This class contains a few database type of calls, such as get(String username) to return the user object for a given name, or get(int index) to return a given user from the DB, or size() to return the number of users in the database.<br>
+                  <br>
+                  The user is described by the User class; a simple Java bean:<br>
+                  <br>
+                  <div>public class User implements Serializable {<br>
+                    <br>
+                    private static final long serialVersionUID = 1L;<br>
+                    private final String username;<br>
+                    private final String firstName;<br>
+                    private final String lastName;<br>
+                    private final String email;<br>
+                    <br>
+                    public User(String username, String firstName, String lastName, String email) {<br>
+                    super();<br>
+                    this.username = username;<br>
+                    this.firstName = firstName;<br>
+                    this.lastName = lastName;<br>
+                    this.email = email;<br>
+                    }<br>
+                    <br>
+                    public String getUsername() {<br>
+                    return username;<br>
+                    }<br>
+                    <br>
+                    public String getFirstName() {<br>
+                    return firstName;<br>
+                    }<br>
+                    <br>
+                    public String getLastName() {<br>
+                    return lastName;<br>
+                    }<br>
+                    <br>
+                    public String getEmail() {<br>
+                    return email;<br>
+                    }<br>
+                    <br>
+                    @Override<br>
+                    public String toString() {<br>
+                    <br>
+                    StringBuilder sb = new StringBuilder("User: ");<br>
+                    sb.append(username);<br>
+                    sb.append(" ");<br>
+                    sb.append(firstName);<br>
+                    sb.append(" ");<br>
+                    sb.append(lastName);<br>
+                    sb.append(" ");<br>
+                    sb.append(email);<br>
+                    <br>
+                    return sb.toString();<br>
+                    }<br>
+                    }</div>
+                  <br>
+                  Moving on the crux of the blog, which is the MyApplication class. Most of the code in this blogs is merely window dressing, the code that's of importance is in MyApplication's constructor. The construct contains two lines of code; the first gets hold of a new Hazelcast instance, whilst the second uses that instance to create a Map&lt;String, User&gt; with a namespace of "Users". This is all the Hazelcast specific code that's needed. The other methods: logon(), logout() and isLoggedOn() just manage the users.<br>
+                  <br>
+                  <div>public class MyApplication {<br>
+                    <br>
+                    private final Map&lt;String, User&gt; loggedOnUsers;<br>
+                    <br>
+                    private final Users userDB = new Users();<br>
+                    <br>
+                    private final SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss-SS");<br>
+                    <br>
+                    private long lastChange;<br>
+                    <br>
+                    public MyApplication() {<br>
+                    <br>
+                    HazelcastInstance instance = Hazelcast.newHazelcastInstance();<br>
+                    <br>
+                    loggedOnUsers = instance.getMap("Users");<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * A user logs on to the application<br>
+                    * <br>
+                    * @param username<br>
+                    *            The user name<br>
+                    */<br>
+                    public void logon(String username) {<br>
+                    <br>
+                    User user = userDB.get(username);<br>
+                    <br>
+                    loggedOnUsers.put(username, user);<br>
+                    lastChange = System.currentTimeMillis();<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * The user logs out (or off depending on your pov).<br>
+                    */<br>
+                    public void logout(String username) {<br>
+                    <br>
+                    loggedOnUsers.remove(username);<br>
+                    lastChange = System.currentTimeMillis();<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * @return Return true if the user is logged on<br>
+                    */<br>
+                    public boolean isLoggedOn(String username) {<br>
+                    return loggedOnUsers.containsKey(username);<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * Return a list of the currently logged on users - perhaps to sys admin.<br>
+                    */<br>
+                    public Collection&lt;User&gt; loggedOnUsers() {<br>
+                    return loggedOnUsers.values();<br>
+                    }<br>
+                    <br>
+                    /**<br>
+                    * Display the logged on users<br>
+                    */<br>
+                    public void displayUsers() {<br>
+                    <br>
+                    StringBuilder sb = new StringBuilder("Logged on users:\n");<br>
+                    Collection&lt;User&gt; users = loggedOnUsers.values();<br>
+                    for (User user : users) {<br>
+                    sb.append(user);<br>
+                    sb.append("\n");<br>
+                    }<br>
+                    sb.append(loggedOnUsers.size());<br>
+                    sb.append(" -- ");<br>
+                    sb.append(sdf.format(new Date(lastChange)));<br>
+                    sb.append("\n");<br>
+                    System.out.println(sb.toString());<br>
+                    }<br>
+                    <br>
+                    }</div>
+                  <br>
+                  All the above is tied together using a simple Mainclass:<br>
+                  <br>
+                  <div>public class Main {<br>
+                    <br>
+                    public static void main(String[] args) throws InterruptedException {<br>
+                    <br>
+                    BigWideWorld theWorld = new BigWideWorld();<br>
+                    <br>
+                    MyApplication application = new MyApplication();<br>
+                    <br>
+                    while (true) {<br>
+                    <br>
+                    String username = theWorld.nextUser();<br>
+                    <br>
+                    if (application.isLoggedOn(username)) {<br>
+                    application.logout(username);<br>
+                    } else {<br>
+                    application.logon(username);<br>
+                    }<br>
+                    <br>
+                    application.displayUsers();<br>
+                    TimeUnit.SECONDS.sleep(2);<br>
+                    }<br>
+                    }<br>
+                    <br>
+                    }</div>
+                  <br>
+                  This code creates an instance of the BigWideWorld and MyApplication. It then infinitely loops grabbing hold of the next random user name. If the user is already logged in, then the user logs out. If the user is not logged in, then the user logs in. The logged in users are then displayed so that you can see what's going on.<br>
+                  <br>
+                  <h3>Running the App</h3>
+                  <br>
+                  After building the app, open a terminal and navigate to the projects target/classes directory. Then type in the following command:<br>
+                  <br>
+                  <pre>java -cp /<em>your path to the</em>/hazelcast-3.1/lib/hazelcast-1.jar:. com.captaindebug.hazelcast.gettingstarted.Main  </pre>
+                  <br>
+                  When running, you'll get output that looks something like this:<br>
+                  <br>
+                  <pre>Logged on users:  User: fred123 Fred Jones fredj@a.com  User: jimj James Jones jimj@a.com  User: shaz Sharon Jones shazj@a.com  User: paula Paula Jones pauj@a.com  User: lucy Lucy Jones lucyj@a.com  User: jez Jerry Jones fredj@a.com  User: jim Jim Jones jimj@a.com  7 -- 14:54:16-17  </pre>
+                  <br>
+                  Next, open more terminals and run a few more instances of your application. <br>
+                  <br>
+                  If you trail through the output you can see users logging in and out, with the user Map being displayed on each change. The clue that the changes in one app's map are reflected in the other instances can be hard to spot, but can be deduced from the total size of the map (the first number on the last line of the output). Each time the map is displayed one user has either logged in or out; however, the total size can change by more than one, meaning that other instances' changes have affected the size of the map you're looking at. <br>
+                  <br>
+                  <div><a href="http://2.bp.blogspot.com/-KMYXhOvCSFE/UmWai81ZdAI/AAAAAAAAA1I/zANq2BakXSA/s1600/Screen+Shot+2013-10-21+at+22.22.21.png" imageanchor="1"><img src="http://2.bp.blogspot.com/-KMYXhOvCSFE/UmWai81ZdAI/AAAAAAAAA1I/zANq2BakXSA/s320/Screen+Shot+2013-10-21+at+22.22.21.png" alt="" border="0"></a></div>
+                  <br>
+                  So, there you have it a simple app that when four instances are running keep themselves in synch and know which users are logged in. <br>
+                  <br>
+                  It's supposed to work in large clusters, but I've never tried it. Apparently, in large clusters, you have to do some jiggery-pokery with the config file, but that's beyond the scope of this blog.
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>

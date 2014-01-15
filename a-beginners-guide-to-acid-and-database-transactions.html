@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>A Beginner’s guide to ACID and database transactions</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1><strong>A Beginner&rsquo;s guide to ACID and database transactions</strong></h1>
+                  <p><a href="http://vladmihalcea.wordpress.com/2014/01/05/a-beginners-guide-to-acid-and-database-transactions/">original </a></p>
+                  <p>　　Transactions are omnipresent in today&rsquo;s enterprise systems, providing data integrity even in highly concurrent environments. So let&rsquo;s get started by first defining the term and the context where you might usually employ it.</p>
+                  <p>A transaction is a collection of read/write operations succeeding only if all contained operations succeed.</p>
+                  <p><a href="http://vladmihalcea.files.wordpress.com/2014/01/transaction-workflow1.gif" sl-processed="1"><img alt="Transaction-workflow" src="http://vladmihalcea.files.wordpress.com/2014/01/transaction-workflow1.gif?w=294&h=300" width="294" height="300"></a></p>
+                  <p>Inherently a transaction is characterized by four properties (commonly referred as ACID) :</p>
+                  <ol>
+                    <li>Atomicity</li>
+                    <li>Consistency</li>
+                    <li>Isolation</li>
+                    <li>Durability</li>
+                  </ol>
+                  <p>It&rsquo;s very important to understand those, hence we will discuss each and every one of them as follows.</p>
+                  <p>1. Atomicity takes individual operations and turns them into an all-or-nothing unit of work, succeeding if and only if all contained operations succeed.</p>
+                  <p>2. A transaction might encapsulates a state change (unless it is a read-only one). A transaction must always leave the system in a consistent state, no matter how many concurrent transactions are inter-leaved at any given time.</p>
+                  <p>Consistency has the following characteristics:</p>
+                  <ul>
+                    <li>if one operation triggers secondary actions (CASCADE, TRIGGERS), those must also succeed otherwise the transaction fails .</li>
+                    <li>if the system is composed of multiple nodes, then consistency mandates that all changes be propagated to all nodes (<a href="http://en.wikipedia.org/wiki/Multi-master_replication" sl-processed="1">multi-master replication</a>). If slaves nodes are updated asynchronously then we break the consistency rule, the system becoming &ldquo;<a href="http://en.wikipedia.org/wiki/Eventual_consistency" sl-processed="1">eventually consistent</a>&ldquo;.</li>
+                    <li>a transaction is a data state transition, so the system must operate as if all transactions occur in a serial form even if those are concurrently executed.</li>
+                  </ul>
+                  <p>If there would be only one connection running at all times, then serializability wouldn&rsquo;t impose any concurrency control cost. In reality, all transactional systems must accommodate concurrent requests, hence serialization has its toll on scalability. The<a href="http://en.wikipedia.org/wiki/Amdahl%27s_law" sl-processed="1">Amdahl&rsquo;s law</a> describes the relation between serial execution and concurrency:</p>
+                  <blockquote>
+                    <p>&ldquo;The speed up of a program using multiple processors in parallel computing is limited by the time needed for the sequential fraction of the program.&rdquo;</p>
+                  </blockquote>
+                  <p>As you&rsquo;ll see later, most database management systems choose (by default) to relax consistency to achieve better concurrency.</p>
+                  <p>3. Isolation</p>
+                  <p>Transactions are concurrency control mechanisms, and they deliver consistency even when being interleaved. Isolation brings us the benefit of hiding uncommitted state changes from the outside world, as failing transactions shouldn&rsquo;t ever corrupt the state of the system. Isolation is achieved through <a href="http://en.wikipedia.org/wiki/Concurrency_control" sl-processed="1">concurrency control</a> using pessimistic or optimistic locking mechanisms.</p>
+                  <p>4. Durability</p>
+                  <p>A successful transaction must permanently change the state of a system, and before ending it, the state changes are recorded in a persisted <a href="http://en.wikipedia.org/wiki/Transaction_log" sl-processed="1">transaction log</a>. If our system is suddenly affected by a system crash or a power outage, then all unfinished committed transactions may be replayed.</p>
+                  <p>For messaging systems like <a href="http://en.wikipedia.org/wiki/Java_Message_Service" sl-processed="1">JMS</a>, transactions are not mandatory. That&rsquo;s why we have non-transacted <a href="http://docs.oracle.com/javaee/6/api/javax/jms/Session.html" sl-processed="1">acknowledgement modes</a>.</p>
+                  <p>File system operations are usually non-managed, but if your business requirements demand transaction file operations, you might make use a tool such as <a href="https://xadisk.java.net/" sl-processed="1">XADisk</a>.</p>
+                  <p>While, messaging and file systems use transactions optionally, for database management systems transactions are compulsory. That&rsquo;s the reason database connections define a default <a href="http://en.wikipedia.org/wiki/Autocommit" sl-processed="1">autocommit</a> mode. ACID is mandated by the SQL Standard, hence all operations must be embedded in a database transaction. But for an enterprise application, the autocommit mode is something you&rsquo;d generally avoid, since it performs badly and it doesn&rsquo;t allow you to include multiple <a href="http://en.wikipedia.org/wiki/Data_manipulation_language" sl-processed="1">DML</a> operations in a single atomic unit of work.</p>
+                  <p>ACID is old school. <a href="http://research.microsoft.com/en-us/um/people/gray/papers/theTransactionConcept.pdf" sl-processed="1">Jim Gray</a> described atomicity, consistency and durability long before I was even born. But that particular paper doesn&rsquo;t mention anything about isolation. This is understandable, if we think of the production systems of the late 70′s, which according to Jim Gray:</p>
+                  <blockquote>
+                    <p>&ldquo;At present, the largest airlines and banks have about 10,000 terminals and about 100 active transactions at any instant&rdquo;.</p>
+                  </blockquote>
+                  <p>So all efforts were spent for delivering consistency rather than concurrency. Things have changed drastically ever since, and nowadays even modest set-ups are able to run 1000 TPS.</p>
+                  <p>From a database perspective, the atomicity is a fixed property, but everything else may be traded-off for performance/scalability reasons.</p>
+                  <p>Playing with durability makes sense for <a href="http://wiki.postgresql.org/images/3/3b/2011-11-11_PostgreSQL_SyncRepPerformance.pdf" sl-processed="1">highly performing clustered databases </a>if the enterprise system business requirements don&rsquo;t mandate durable transactions. But, most often durability is better off untouched.</p>
+                  <p>Although some database management systems offer <a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" sl-processed="1">MVCC</a>, usually concurrency control is achieved through locking. But as we all know, locking increases the serializable portion of the executed code, affecting <a href="http://en.wikipedia.org/wiki/Amdahl%27s_law#Parallelization" sl-processed="1">parallelization</a>.</p>
+                  <p>The SQL standard defines four Isolation levels:</p>
+                  <ul>
+                    <li>READ_UNCOMMITTED</li>
+                    <li>READ_COMMITTED</li>
+                    <li>REPETABLE_READ</li>
+                    <li>SERIALIZABLE</li>
+                  </ul>
+                  <p>All but the SERIALIZABLE level are subject to data anomalies (phenomena) that might occur according to the following pattern:</p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>ISOLATION LEVEL</th>
+                        <th>DIRTY READ</th>
+                        <th>NON-REPETABLE READ</th>
+                        <th>PHANTOM READ</th>
+                      </tr>
+                      <tr>
+                        <td>READ_UNCOMMITTED</td>
+                        <td>allowed</td>
+                        <td>allowed</td>
+                        <td>allowed</td>
+                      </tr>
+                      <tr>
+                        <td>READ_COMMITTED</td>
+                        <td>prevented</td>
+                        <td>allowed</td>
+                        <td>allowed</td>
+                      </tr>
+                      <tr>
+                        <td>REPETABLE_READ</td>
+                        <td>prevented</td>
+                        <td>prevented</td>
+                        <td>allowed</td>
+                      </tr>
+                      <tr>
+                        <td>SERIALIZABLE</td>
+                        <td>prevented</td>
+                        <td>prevented</td>
+                        <td>prevented</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p>But what are all those phenomena we&rsquo;d just listed. Let&rsquo;s discuss each and every one of them.</p>
+                  <p>1. Dirty read</p>
+                  <p><a href="http://vladmihalcea.files.wordpress.com/2014/01/acid-dirty-read.gif" sl-processed="1"><img src="http://vladmihalcea.files.wordpress.com/2014/01/acid-dirty-read.gif?w=300&h=284" alt="ACID-dirty-read" width="300" height="284"></a></p>
+                  <p>A dirty read happens when a transaction is allowed to read uncommitted changes of some other running transaction. This happens because there is no locking preventing it. In the picture above, you can see that the second transaction uses an inconsistent value as of the first transaction had rollbacked.</p>
+                  <p>2. Non-repetable read</p>
+                  <p><a href="http://vladmihalcea.files.wordpress.com/2014/01/acid-non-repetable-read.gif" sl-processed="1"><img src="http://vladmihalcea.files.wordpress.com/2014/01/acid-non-repetable-read.gif?w=300&h=273" alt="ACID-non-repetable-read" width="300" height="273"></a></p>
+                  <p>A non-repetable read manifests when consecutive reads yield different results due to a concurring transaction that has just updated the record we&rsquo;re reading. This is undesirable since we end up using stale data. This is prevented by holding a shared lock (read lock) on the read record for the whole duration of the current transaction.</p>
+                  <p>3. Phantom read</p>
+                  <p><a href="http://vladmihalcea.files.wordpress.com/2014/01/acid-phantom-read.gif" sl-processed="1"><img src="http://vladmihalcea.files.wordpress.com/2014/01/acid-phantom-read.gif?w=300&h=285" alt="ACID-phantom-read" width="300" height="285"></a></p>
+                  <p>A phantom read happens when a second transaction inserts a row that matches a previously select criteria of the first transaction. We therefore end up using stale data, which might affect our business operation. This is prevented using range locks or<a href="http://research.microsoft.com/en-us/um/people/gray/papers/On%20the%20Notions%20of%20Consistency%20and%20Predicate%20Locks%20in%20a%20Database%20System%20CACM.pdf" sl-processed="1">predicate locking</a>.</p>
+                  <p>Even if the SOL standard mandates the use of the SERIALIZABLE isolation level, most database management system use a different default level.</p>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>DATABASE</th>
+                        <th>DEFAULT ISOLATION LEVEL</th>
+                      </tr>
+                      <tr>
+                        <td>Oracle</td>
+                        <td>READ_COMMITTED</td>
+                      </tr>
+                      <tr>
+                        <td>MySQL</td>
+                        <td>REPETABLE_READ</td>
+                      </tr>
+                      <tr>
+                        <td>Microsoft SQL Server</td>
+                        <td>READ_COMMITTED</td>
+                      </tr>
+                      <tr>
+                        <td>PostgreSQL</td>
+                        <td>READ_COMMITTED</td>
+                      </tr>
+                      <tr>
+                        <td>DB2</td>
+                        <td>CURSOR STABILITY (a.k.a READ_COMMITTED)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p>Usually, READ_COMMITED is the right choice, since not even SERIALIZABLE can protect you from a &ldquo;lost update&rdquo; where the read/write happen in different transactions (and web requests). You should take into consideration your enterprise system requirements and set up tests for deciding which isolation level best suits your needs.</p>
+                  <p>If you are interested in learning more about Transactions you can follow me on my blog, or on <a href="https://twitter.com/vlad_mihalcea" sl-processed="1">twitter</a> since all this material will hopefully materialize in my <a href="http://vladmihalcea.wordpress.com/2014/01/05/a-beginners-guide-to-acid-and-database-transactions/2014/01/01/my-open-book-movement/" sl-processed="1">open-source book</a>.</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
