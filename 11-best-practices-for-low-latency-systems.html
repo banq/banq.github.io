@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>11 Best Practices for Low Latency Systems</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1>11 Best Practices for Low Latency Systems</h1>
+                  <p><a href="http://codedependents.com/2014/01/27/11-best-practices-for-low-latency-systems/"><strong><em>Reference</em></strong></a></p>
+                  <p>　　Its been 8 years since Google noticed that <a href="http://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html" sl-processed="1">an extra 500ms of  latency dropped traffic by 20%</a> and Amazon realized that <a href="http://highscalability.com/latency-everywhere-and-it-costs-you-sales-how-crush-it" sl-processed="1">100ms of extra latency dropped sales by 1%</a>. Ever since then developers have been racing to the bottom of the latency curve, culminating in front-end developers squeezing every last millisecond out of their <a href="http://shop.oreilly.com/product/9780596802806.do" sl-processed="1">JavaScript</a>,<a href="http://islovely.co/blog/writing-high-performance-css/" sl-processed="1">CSS</a>, and even <a href="http://www.slideshare.net/souders/high-performance-html5-sf-html5-ug" sl-processed="1">HTML</a>. What follows is a random walk through a variety of best practices to keep in mind when designing low latency systems. Most of these suggestions are taken to the logical extreme but of course tradeoffs can be made. (Thanks to an anonymous user for asking <a href="https://www.quora.com/Scalability/How-do-you-design-a-web-backend-that-minimizes-latency" sl-processed="1">this question</a> on <a href="https://www.quora.com/" sl-processed="1">Quora</a> and getting me to put my thoughts down in writing).</p>
+                  <h3>Choose the right language</h3>
+                  <p>Scripting languages need not apply. Though they keep getting faster and faster, when you are looking to shave those last few milliseconds off your processing time you cannot have the overhead of an interpreted language. Additionally, you will want a strong memory model to enable lock free programming so you should be looking at Java, Scala, C++11 or Go.</p>
+                  <h3>Keep it all in memory</h3>
+                  <p>I/O will kill your latency, so make sure all of your data is in memory. This generally means managing your own in-memory data structures and maintaining a persistent log, so you can rebuild the state after a machine or process restart. Some options for a persistent log include <a href="https://github.com/basho/bitcask" sl-processed="1">Bitcask</a>, <a href="https://github.com/jingwei/krati" sl-processed="1">Krati</a>, <a href="https://code.google.com/p/leveldb/" sl-processed="1">LevelDB</a> and <a href="http://www.oracle.com/technetwork/products/berkeleydb/overview/index-093405.html" sl-processed="1">BDB-JE</a>. Alternatively, you might be able to get away with running a local, persisted in-memory database like <a href="http://redis.io/" sl-processed="1">redis</a> or <a href="http://www.mongodb.org/" sl-processed="1">MongoDB</a> (with memory &gt;&gt; data). Note that you can loose some data on crash due to their background syncing to disk.</p>
+                  <h3>Keep data and processing colocated</h3>
+                  <p><a href="http://www.eecs.berkeley.edu/~rcs/research/interactive_latency.html" sl-processed="1">Network hops are faster than disk seeks</a> but even still they will add a lot of overhead. Ideally, your data should fit entirely in memory on one host. With AWS providing almost 1/4 TB of RAM in the cloud and physical servers offering multiple TBs this is generally possible. If you need to run on more than one host you should ensure that your data and requests are properly partitioned so that all the data necessary to service a given request is available locally.</p>
+                  <h3>Keep the system underutilized</h3>
+                  <p>Low latency requires always having resources to process the request. Don&rsquo;t try to run at the limit of what your hardware/software can provide. Always have lots of head room for bursts and then some.</p>
+                  <h3>Keep context switches to a minimum</h3>
+                  <p>Context switches are a sign that you are doing more compute work than you have resources for. You will want to limit your number of threads to the number of cores on your system and to pin each thread to its own core.</p>
+                  <h3>Keep your reads sequential</h3>
+                  <p>All forms of storage, wither it be rotational, flash based, or memory <a href="http://codedependents.com/2012/07/08/a-sequential-io-reading-list/" sl-processed="1">performs significantly better when used sequentially</a>. When issuing sequential reads to memory you trigger the use of prefetching at the RAM level as well as at the CPU cache level. If done properly, the next piece of data you need will always be in L1 cache right before you need it. The easiest way to help this process along is to make heavy use of arrays of primitive data types or structs. Following pointers, either through use of linked lists or through arrays of objects, should be avoided at all costs.</p>
+                  <h3>Batch your writes</h3>
+                  <p>This sounds counterintuitive but you can gain significant improvements in performance by batching  writes. However, there is a misconception that this means the system should wait an arbitrary amount of time before doing a write. Instead, one thread should spin in a tight loop doing I/O. Each write will batch all the data that arrived since the last write was issued. This makes for a very fast and adaptive system.</p>
+                  <h3>Respect your cache</h3>
+                  <p>With all of these optimizations in place, memory access quickly becomes a bottleneck. Pinning threads to their own cores helps reduce CPU cache pollution and  sequential I/O also helps preload the cache. Beyond that, you should keep memory sizes down using primitive data types so more data fits in cache. Additionally, you can look into <a href="http://en.wikipedia.org/wiki/Cache-oblivious_algorithm" sl-processed="1">cache-oblivious algorithms</a> which work by recursively breaking down the data until it fits in cache and then doing any necessary processing.</p>
+                  <h3>Non blocking as much as possible</h3>
+                  <p>Make friends with non blocking and wait free data structures and algorithms. Every time you use a lock you have to go down the stack to the OS to mediate the lock which is a huge overhead. Often, if you know what you are doing, you can get around locks by understanding the memory model of the JVM, C++11 or Go.</p>
+                  <h3>Async as much as possible</h3>
+                  <p>Any processing and particularly any I/O that is not absolutely necessary for building the response should be done outside the critical path.</p>
+                  <h3>Parallelize as much as possible</h3>
+                  <p>Any processing and particularly any I/O that can happen in parallel should be done in parallel. For instance if your high availability strategy includes logging transactions to disk and sending transactions to a secondary server those actions can happen in parallel.</p>
+                  <h3>Resources</h3>
+                  <p>Almost all of this comes from following what LMAX is doing with their Disruptor project. Read up on that and follow anything that <a href="https://twitter.com/mjpt777" sl-processed="1">Martin Thompson</a> does.</p>
+                  <ul>
+                    <li><a href="http://lmax-exchange.github.io/disruptor/" target="_blank" sl-processed="1">Disruptor Project</a></li>
+                    <li><a href="http://martinfowler.com/articles/lmax.html" target="_blank" rel="nofollow" sl-processed="1">The LMAX Architecture</a></li>
+                    <li><a href="http://mechanical-sympathy.blogspot.com/" target="_blank" sl-processed="1">Mechanical Sympathy</a></li>
+                    <li><a href="http://bad-concurrency.blogspot.com/" target="_blank" sl-processed="1">Bad Concurrency</a></li>
+                    <li><a href="https://github.com/LMAX-Exchange/disruptor/wiki/Blogs-And-Articles" target="_blank" sl-processed="1">Disruptor Blogs</a></li>
+                    <li><a href="https://github.com/LMAX-Exchange/disruptor/wiki/Presentations-And-Interviews" target="_blank" sl-processed="1">Disruptor Presentations</a></li>
+                  </ul>
+                  <p>Additional Blogs</p>
+                  <ul>
+                    <li><a href="http://java-is-the-new-c.blogspot.com/" target="_blank" sl-processed="1">Java is the new C</a></li>
+                    <li><a href="http://psy-lob-saw.blogspot.com/" target="_blank" sl-processed="1">Psychosomatic, Lobotomy, Saw</a></li>
+                    <li><a href="http://preshing.com/" target="_blank" rel="nofollow" sl-processed="1">Preshing on Programming</a></li>
+                    <li><a href="http://vanillajava.blogspot.com/" target="_blank" sl-processed="1">Vanilla #Java</a></li>
+                    <li><a href="http://www.1024cores.net/" target="_blank" rel="nofollow" sl-processed="1">1024cores</a></li>
+                  </ul>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
