@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Three Reasons Why I Like the Builder Pattern</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1><strong>Three Reasons Why I Like the Builder Pattern</strong></h1>
+                  <p><a href="http://www.javacodegeeks.com/2014/02/three-reasons-why-i-like-the-builder-pattern.html" target="_blank"><strong><em>Reference</em></strong></a></p>
+                  <p>There are three ways to create new objects in Java programming language:</p>
+                  <ol>
+                    <li><a href="http://www.captaindebug.com/2011/05/telescoping-constructor-antipattern.html" target="_blank" rel="external nofollow" title="">The telescoping constructor (anti)pattern</a></li>
+                    <li><a href="http://www.javapractices.com/topic/TopicAction.do?Id=84" target="_blank" rel="external nofollow" title="">The Javabeans pattern</a></li>
+                    <li><a href="http://www.informit.com/articles/article.aspx?p=1216151&seqNum=2" target="_blank" rel="external nofollow" title="">The builder pattern</a></li>
+                  </ol>
+                  <p>I prefer the builder pattern over the other two methods.</p>
+                  <p>Why?</p>
+                  <p>Joshua Bloch described the builder pattern and the benefits of using it in <a href="http://www.amazon.com/Effective-Java-Edition-Joshua-Bloch/dp/0321356683" target="_blank" rel="external nofollow" title="">Effective Java</a>. He did an excellent job and I will not repeat these benefits in this blog post.</p>
+                  <p>Instead, I will describe three other reasons why I prefer the builder pattern over the telescoping constructor pattern and the Javabeans pattern.</p>
+                  <h2>1. It Helps You to Enforce Better Design</h2>
+                  <p>Using either the telescoping constructor pattern or the Javabeans pattern means that the properties of the created object must be created before the actual object is created.</p>
+                  <p>This might or might not be a problem.</p>
+                  <p>If the properties of the created object are fetched by using an external service, it is not a problem. However, if the properties are created in the method which creates the &ldquo;target&rdquo; object, it is a problem.</p>
+                  <p>In the latter scenario, the lifecycle of the created objects is often bound to the lifecycle of the &ldquo;target&rdquo; object.</p>
+                  <p>If this is the case, the builder pattern can help you use the <a href="http://en.wikipedia.org/wiki/Domain-driven_design" target="_blank" rel="external nofollow" title="">Domain-driven design (DDD)</a> pattern called the aggregate. <a href="http://martinfowler.com/bliki/DDD_Aggregate.html" target="_blank" rel="external nofollow" title="">Martin Fowler specifies the aggregate pattern</a> as follows:</p>
+                  <blockquote>
+                    <p>A DDD aggregate is a cluster of domain objects that can be treated as a single unit. An example may be an order and its line-items, these will be separate objects, but it&rsquo;s useful to treat the order (together with its line items) as a single aggregate.</p>
+                  </blockquote>
+                  <p>The builder pattern can help you to design your code in a such way that your domain model is divided into aggregates. This means that the all objects belonging to the aggregate are created by the aggregate root object (Order) and can be accessed only via the aggregate root object.</p>
+                  <p>This moves the construction relation to the logic to the place where it belongs.</p>
+                  <h2>2. It Makes You Think</h2>
+                  <p>Writing code in the traditional way is easy because you don&rsquo;t have to think. All you have to do is write the code which copies information from one place to another. It might take some time to do it, but it isn&rsquo;t a problem to you because you are on your comfort zone.</p>
+                  <p>Maybe you want to just crunch code without thinking what you are doing.</p>
+                  <p>I am not like that (and you shouldn&rsquo;t be either).</p>
+                  <p>The builder pattern forces you to think about your objects. To be more specific, it forces you to think about the following things:</p>
+                  <ul>
+                    <li>You have to figure out the mandatory and optional properties of an object.</li>
+                    <li>You have to identify the properties which lifecycle is bound to the lifecycle of the created object and design the builder so that it emphasizes this.</li>
+                    <li>You have to decide what properties cannot be updated after the object is created (and mark these properties as final).</li>
+                    <li>You have to decide what properties can be updated and find the best way to update them.</li>
+                  </ul>
+                  <p>Finding answers to these questions help you to write better code. I can guarantee that if you take the time to find the answers to these questions, your code will look a lot better than the code written on autopilot.</p>
+                  <h2>3. It Helps You to Create Domain-specific Languages</h2>
+                  <p>If you use create new objects by using the telescoping constructor pattern or the Javabeans pattern, it is hard to add business meaning to your code. You can try to improve the situation by following these principles:</p>
+                  <ul>
+                    <li>The only way you can add business meaning to constructor arguments is to name the arguments in a proper way. This is difficult to do and even if you get it right, the results aren&rsquo;t optimal.</li>
+                    <li>If you use setters, you can of course name the setter methods in a way which adds business meaning to them. However, how often have you seen setter methods which are named following this principle?</li>
+                  </ul>
+                  <p>99 times out of a 100 the created objects are just objects without meaning. They hold data. That is all.</p>
+                  <p>When you use the builder pattern, you can create a <a href="http://en.wikipedia.org/wiki/Domain-specific_language" target="_blank" rel="external nofollow" title="">domain-specific language (DSL)</a> for creating new objects by naming the methods of your builder class. This helps you to add business meaning to the code which creates new objects.</p>
+                  <p>This raises one question: how can I update the properties of my objects?</p>
+                  <p>You can of course be boring and use setter methods for updating the individual properties of your objects. But you can do something totally different as well.</p>
+                  <p>Instead of updating individual properties, you can group these properties into meaningful groups and update the values of these properties in a single method. If you name this method correctly, you can create a DSL for updating the information of existing objects.</p>
+                  <h2>It Is Not a Silver Bullet</h2>
+                  <p>Blake Caldwell says that <a href="http://blakecaldwell.net/blog/2013/8/30/builder-pattern-instead-of-error-prone-constructors.html" target="_blank" rel="external nofollow" title="">the builder pattern is basically a less error prone alternative for constructors</a>. I agree with him.</p>
+                  <p>The first thing which you notice when you start to use the builder pattern is that the code which creates new objects is easier to write and read. However, after some time you might notice other benefits as well. I know that I did.</p>
+                  <p>However, it is important that you understand that <strong>the builder pattern is not a silver bullet</strong>.</p>
+                  <p>I think that <a href="http://www.javacodegeeks.com/software-development/processes/the-dark-side-of-best-practices/">no one should follow a best practice just because it is a best practice</a>. This applies to the builder pattern as well.</p>
+                  <p>If your object has only a few constructor arguments, it makes no sense to use the builder pattern. However, because of the benefits described in this blog post (and in Effective Java), you <strong>should</strong> consider using the builder pattern every time when you have to create new objects.</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
