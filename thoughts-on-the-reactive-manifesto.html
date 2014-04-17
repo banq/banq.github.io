@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Thoughts on The Reactive Manifesto</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1>Thoughts on The Reactive Manifesto</h1>
+                  <p><a href="http://practicingtechie.com/2014/04/15/thoughts-on-the-reactive-manifesto/"><strong><em>Reference</em></strong></a></p>
+                  <p>Reactive programming is an emerging trend in software development that has gathered a lot of enthusiasm among technology connoisseurs during the last couple of years. After studying the subject last year, I got curious enough to attend the "Principles of Reactive Programming" course on Coursera (by Odersky, Meijer and Kuhn). Reactive advocates from Typesafe and others have created <a title="The Reactive Manifesto" href="http://www.reactivemanifesto.org/" sl-processed="1">The Reactive Manifesto</a> that tries to formulate the vocabulary for reactive programming and what it actually aims at. This post collects some reflections on the manifesto.</p>
+                  <p>According to The Reactive Manifesto systems that are reactive</p>
+                  <ul>
+                    <li>react to events – event-driven nature enables the following qualities</li>
+                    <li>react to load – focus on scalability by avoiding contention on shared resources</li>
+                    <li>react to failure – resilient systems that are able to recover at all levels</li>
+                    <li>react to users – honor response time guarantees regardless of load</li>
+                  </ul>
+                  <h2>Event-driven</h2>
+                  <p>Event-driven applications are composed of components that communicate through sending and receiving events. Events are passed asynchronously, often using a push based communication model, without the event originator blocking. A key goal is to be able to make efficient use of system resources, not tie up resources unnecessarily and maximize resource sharing.</p>
+                  <p>Reactive applications are built on a distributed architecture in which message-passing provides the inter-node communication layer and location transparency for components. It also enables interfaces between components and subsystems to be based on loosely coupled design, thus allowing easier system evolution over time.</p>
+                  <p>Systems designed to rely on shared mutable state require data access and mutation operations to be coordinated by using some concurrency control mechanism, in order to avoid data integrity issues. Concurrency control mechanisms limit the degree of parallelism in the system. Amdahl's law formulates clearly how reducing the parallelizable portion of the program code puts an upper limit to system scalability. Designs that avoid shared mutable state allow for higher degrees of parallelism and thus reaching higher degrees of scalability and resource sharing.</p>
+                  <h2>Scalable</h2>
+                  <p>System architecture needs to be carefully designed to scale out, as well as up, in order to be able to exploit the hardware trends of both increased node-level parallelism (increased number of CPUs and nb. of physical and logical cores within a CPU) and system level parallelism (number of nodes). Vertical and horizontal scaling should work both ways, so an elastic system will also be able to scale in and down, thereby allowing to optimize operational cost structures for lower demand conditions.</p>
+                  <p>A key building block for elasticity is achieved through a distributed architecture and the node-to-node communication mechanism, provided by message-passing, that allows subsystems to be configured to run on the same node or on different nodes without code changes (location transparency).</p>
+                  <h2>Resilient</h2>
+                  <p>A resilient system will continue to function in the presence of failures in one or more parts of the system, and in unanticipated conditions (e.g. unexpected load). The system needs to be designed carefully to contain failures in well defined and safe compartments to prevent failures from escalating and cascading unexpectedly and uncontrollably.</p>
+                  <h2>Responsive</h2>
+                  <p>The Reactive manifesto characterizes the responsive quality as follows:</p>
+                  <blockquote>
+                    <p>Responsive is defined by Merriam-Webster as "quick to respond or react appropriately".<br>
+                      …<br>
+                      Reactive applications use observable models, event streams and stateful clients.<br>
+                      …<br>
+                      Observable models enable other systems to receive events when state changes.<br>
+                      …<br>
+                      Event streams form the basic abstraction on which this connection is built.<br>
+                      …<br>
+                      Reactive applications embrace the order of algorithms by employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load.</p>
+                  </blockquote>
+                  <h2>Commentary</h2>
+                  <p>If you've been actively following software development trends during the last couple of years, ideas stated in the reactive manifesto may seem quite familiar to you. This is because the manifesto captures insights learned by the software development community in building internet-scale systems.</p>
+                  <p>One such set of lessons stems from problems related to having centrally-stored state in distributed systems. The tradeoffs of having a strong consistency model in a distributed system have been formalized in the CAP theorem. CAP-induced insights led developers to consider alternative consistency models, such as BASE, in order to trade off strong consistency guarantees for availability and partition tolerance, but also scalability. Looser consistency models have been popularized during recent years, in particular, by different breeds of NoSQL databases. Application's consistency model has a major impact on the application scalability and availability, so it would be good to address this concern more explicitly in the manifesto. The chosen consistency model is a cross-cutting trait, over which all the application layers should uniformly agree. This concern is something that is mentioned in the manifesto, but since it's such an important issue, and it has subtle implications, it would be good to elaborate it a bit more or refer to a more through discussion of the topic.</p>
+                  <p>Event-driven is a widely used term in programming that can take on many different meanings and has multiple variations. Since it's such an overloaded term, it would be good to define it more clearly and try to characterize what exactly does and does not constitute as event-driven in this context. The authors clearly have <a href="http://en.wikipedia.org/wiki/Event-driven_architecture" sl-processed="1">event-driven architecture</a> (EDA) in mind, but EDA is also something that can be achieved with different approaches. The same is true for "asynchronous communication". In the reactive manifesto "asynchronous communication" seems to imply using message-passing, as in <a href="http://www.eaipatterns.com/MessagingComponentsIntro.html" sl-processed="1">messaging systems</a> or the <a href="http://en.wikipedia.org/wiki/Actor_model#Message-passing_semantics" sl-processed="1">Actor model</a>, and not asynchronous function or method invocation.</p>
+                  <p>The reactive manifesto adopts and combines ideas from many movement from CAP theorem, NoSQL, event-driven architecture. It captures and amalgamates valuable lessons learned learned by the software development community in building internet-scale applications.</p>
+                  <p>The manifesto makes a lot of sense, and I can subscribe to the ideas presented in it. However, on a few occasions, the terminology could be elaborated a bit and made more approachable to developers who don't have extensive experience in scalability issues. Sometimes, the worst thing that can happen to great ideas is that they get diluted by unfortunate misunderstandings</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
