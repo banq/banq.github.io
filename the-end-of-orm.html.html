@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>The end of ORM</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1>The end of ORM</h1>
+                  <p><a href="http://www.gumtree.com/devteam/2014-04-01-the-end-of-orm.html?utm_content=buffer06481"><strong><em>Reference</em></strong></a>                  </p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">A link-bait title, I'm aware, but please indulge me while I try to expose some thoughts about<span class="Apple-converted-space"> </span><a target="_blank" href="http://en.wikipedia.org/wiki/Object-relational_mapping" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">ORM</a><span class="Apple-converted-space"> </span>and<span class="Apple-converted-space"> </span><a target="_blank" href="http://martinfowler.com/eaaDev/EventSourcing.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Eventsourcing</a><span class="Apple-converted-space"> </span>that have recently crossed my mind. I wish to go down a theory-crafting path exploring these thoughts and I will welcome any comments on the matter.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">As the sage said, stay a while and listen...</p>
+                  <h2 id="the-impedance-mismatch" style="box-sizing: border-box; margin: 24px 0px 0.33333em; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-style: normal; color: rgb(51, 51, 51); text-rendering: optimizelegibility; line-height: 1em; font-size: 2em; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">The impedance mismatch</h2>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Let's start with a bit of basic context. Most decent sized applications need to persist information so it can be retrieved later. Traditionally, this has been achieved via use of<a target="_blank" href="http://en.wikipedia.org/wiki/Relational_database_management_system" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">RDBMS</a>. More recently,<span class="Apple-converted-space"> </span><a target="_blank" href="http://en.wikipedia.org/wiki/Nosql" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">NoSQL</a><span class="Apple-converted-space"> </span>movement has promoted alternatives. But, in the end, we need a storage area for that data.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">But this is not without problems. The prevalent development model is based on<span class="Apple-converted-space"> </span><a target="_blank" href="http://en.wikipedia.org/wiki/Object-oriented" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Object Oriented</a><span class="Apple-converted-space"> </span>programming along<span class="Apple-converted-space"> </span><a target="_blank" href="http://en.wikipedia.org/wiki/Relational_database_management_system" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">relational databases</a>. This triggers what is known as<span class="Apple-converted-space"> </span><a target="_blank" href="http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Object-relational impedance mismatch</a>, which is a fancy way to say that they don't work well together for many reasons, some subtle and others not so.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">This is not a new problem, obviously, and people have tried quite hard to provide a solution or something that eases the pain. From a developer point of view the use of<a target="_blank" href="http://en.wikipedia.org/wiki/Object-relational_mapping" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">ORM</a><span class="Apple-converted-space"> </span>is intended to alleviate the problem, even if only slightly. Tools like<span class="Apple-converted-space"> </span><a target="_blank" href="http://hibernate.org/" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Hibernate</a><span class="Apple-converted-space"> </span>take care of communication with the relational layer so the developer doesn't need to spend time on it. They are not perfect, though, and the<span class="Apple-converted-space"> </span><a target="_blank" href="http://www.joelonsoftware.com/articles/LeakyAbstractions.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">law of leaky abstractions</a><span class="Apple-converted-space"> </span>hits hard. Anyone working with Hibernate may have found pretty inefficient queries being run by the framework, which means it is time for the developer to delve deep and tell the tool how it should be done. But this means going down to a level, the database, which resurfaces the impedance issues mentioned before.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">So ORM fail as a complete solution. But this must be a pretty serious problem, as we (developers) devote tons of effort to it. Look at this<span class="Apple-converted-space"> </span><a target="_blank" href="http://manuel.bernhardt.io/2014/02/04/a-quick-tour-of-relational-database-access-with-scala/" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">list of relational database access tools for Scala</a>. I count 6 different tools to provide a communication layer between your code (Scala) and the persistence area. We are talking for only one language, not checking Python or Java for similar lists, nor any in-house system developed before ORM were commonplace. And they are good tools, production ready, not pet projects of some developer that wants to experiment.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">How many man hours are we devoting to this each year?</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Even if the development world is moving towards a more functional paradigm, as the changes in<span class="Apple-converted-space"> </span><a target="_blank" href="http://www.gumtree.com/devteam/2014-03-05-java-8-is-coming.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Java 8</a><span class="Apple-converted-space"> </span>seem to confirm, and even if<span class="Apple-converted-space"> </span><a target="_blank" href="http://en.wikipedia.org/wiki/Nosql" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">NoSQL</a><span class="Apple-converted-space"> </span>has become a viable alternative, the issue persists. We may not have impedance mismatch, but we still use transformation layers to communicate with the database, tools that work with our data objects and try to convert them to a format suitable for storage. You think<span class="Apple-converted-space"> </span><a target="_blank" href="https://www.mongodb.org/" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">MongoDB</a><span class="Apple-converted-space"> </span>may solve this by being a document store and then you see this:</p>
+                  <pre class="highlight" style="box-sizing: border-box; font-family: monospace, serif; font-size: 0.9rem; white-space: pre-wrap; margin: 0px; padding: 0px; direction: ltr; background-color: rgb(238, 238, 238); border: 2px solid black; overflow: hidden; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><code class="java" style="box-sizing: border-box; font-family: monospace, serif; font-size: 0.9rem; font-weight: normal; line-height: 1.14285em; display: block; padding: 0.5em; background-color: rgb(40, 43, 46); color: rgb(224, 226, 228); border: none; border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; margin: 0px; white-space: inherit; background-position: initial initial; background-repeat: initial initial;">query = <span class="keyword" style="box-sizing: border-box; color: rgb(147, 199, 99); font-weight: bold;">new</span> BasicDBObject(<span class="string" style="box-sizing: border-box; color: rgb(236, 118, 0);">"i"</span>,       <span class="keyword" style="box-sizing: border-box; color: rgb(147, 199, 99); font-weight: bold;">new</span> BasicDBObject(<span class="string" style="box-sizing: border-box; color: rgb(236, 118, 0);">"$gt"</span>, <span class="number" style="box-sizing: border-box; color: rgb(255, 205, 34);">20</span>).          append(<span class="string" style="box-sizing: border-box; color: rgb(236, 118, 0);">"$lte"</span>, <span class="number" style="box-sizing: border-box; color: rgb(255, 205, 34);">30</span>));     cursor = coll.find(query);  </code></pre>
+                  <h2 id="the-wrong-approach-" style="box-sizing: border-box; margin: 24px 0px 0.33333em; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-style: normal; color: rgb(51, 51, 51); text-rendering: optimizelegibility; line-height: 1em; font-size: 2em; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">The wrong approach?</h2>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">If we are spending so many man hours in this problem and it still causes headaches, it may be that we are approaching it wrong?</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Each new component in an application adds to the complexity of the system. There is good complexity, like<span class="Apple-converted-space"> </span><a target="_blank" href="http://klangism.tumblr.com/post/80087171446/microservices" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">microservices</a>, which give a clear benefit even if they increase the number of "moving parts". And there is bad complexity. Having to learn a full framework like Hibernate for something like saving my user data seems overkill. A service that manages storage of application state is the right approach, but when you have domain objects in you application that contain all the data having a different model to store that same data is wasteful.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">But we do that. Being honest, it's a natural mistake. As with many things, one is not usually aware that he is doing it wrong until shown the right way. And in here I have to add a mention to<span class="Apple-converted-space"> </span><a target="_blank" href="http://doc.akka.io/docs/akka/2.3.0/scala/persistence.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Akka Persistence</a><span class="Apple-converted-space"> </span>as that tool that shows you the correct way.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Yes, I won't delude myself: it is still a framework to learn, and one marked as experimental. It may well be that it won't perform once put into demanding production scenarios, it may be that all the promises will fail short. But, as I said at the beginning, please indulge me and ignore all this for a second.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);"><a target="_blank" href="http://doc.akka.io/docs/akka/2.3.0/scala/persistence.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Akka Persistence</a><span class="Apple-converted-space"> </span>provides an implementation of the<span class="Apple-converted-space"> </span><a target="_blank" href="http://martinfowler.com/eaaDev/EventSourcing.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Event Sourcing</a><span class="Apple-converted-space"> </span>pattern. Forget additional mismatched layers for storage. Your source of true are your domain objects. You store only changes to the objects, so you can reproduce the state of the system at any given time. By taking care of "new states" no transactional issues happen in the data layer due to concurrent updates on pre-existing states. You are even capturing something that relational databases struggle to, but it's essential in many systems: time (as a sequence of states).</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Doesn't it just click? Doesn't it seem natural? Why to waste time on ORM or other alternatives? Persistence suddenly becomes a support system instead of one of the main components of your application. The data stays where it is generated: your domain. Your objects are the source of truth, and you only make sure their state won't be lost in case you have to take them out of memory. Simple. As it should.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">And the fact that it fits perfectly with<span class="Apple-converted-space"> </span><a target="_blank" href="https://skillsmatter.com/skillscasts/4698-reactive-ddd-with-scala-and-akka" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">DDD as described by Vaughn</a><span class="Apple-converted-space"> </span>only reinforces the sensation that this is the right approach.</p>
+                  <h1 id="why-will-it-succeed-" style="box-sizing: border-box; font-size: 2.25em; margin: 0.2em 0px 0.1em; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-style: normal; color: rgb(51, 51, 51); text-rendering: optimizelegibility; line-height: 1em; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Why will it succeed?</h1>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">As I said, there may be technical issues which I have not considered. I may be blind to glaring limitations, either on use cases or performance. It may be that it is not feasible to construct a solution using this storage system only. I may be wrong.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">On the other hand, given the amount of man hours we have and are still devoting to ORM-like systems, which we know are far from perfect, it seems natural that we could fix any issues<span class="Apple-converted-space"> </span><a target="_blank" href="http://doc.akka.io/docs/akka/2.3.0/scala/persistence.html" style="box-sizing: border-box; color: rgb(0, 84, 126); text-decoration: none; line-height: inherit;">Akka Persistence</a><span class="Apple-converted-space"> </span>may have. It is doubtful that the guys at Typesafe, all brilliant engineers, would have integrated this project if it had obvious major problems. And, if I'm right, Persistence (either implemented by Typesafe or any other implementation of the concept that may appear) will inevitably succeed. Even if it ends up being slightly worse, performance wise, than the current ORM.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">The reason I'm so sure is because simplicity trumps all. Look at many popular technologies from the last decade or so: MySql, PHP, Ruby, MongoDb. They weren't the most performant. They weren't the most good looking. They had some shortcomings. But they became incredibly popular, with plenty of developers moving to use them. Why? Simplicity. If these technologies have something in common is that they were easy to use. Any developer could spend a few hours learning the basics and use them. They were enablers that required less effort than other more stablished alternatives. And, yes, at some point the developers hit walls on performance or security or other areas. But that was later on.</p>
+                  <p style="box-sizing: border-box; margin: 0.75em 0px; padding: 0px; direction: ltr; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17.27272605895996px; line-height: 23.18181800842285px; text-rendering: optimizelegibility; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">Persistence can follow that path. In a bad scenario, it allows a developer to forget about learning SQL, transactional contexts, ORM mappings and other relatively complex stuff. Your domain data is your data. And that is a massive enabler, which increases productivity just by removing all the bugs and edge cases that happen when you use an ORM at scale. In the best scenario, we have a framework which is both simple and performant.</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
