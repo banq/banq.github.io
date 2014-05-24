@@ -108,7 +108,7 @@
                   <p>full code: <a href="https://github.com/banq/jdonframework/blob/master/src/test/java/com/jdon/sample/test/domain/simplecase/repository/RepositoryImp.java" target="_blank">RepositoryImp.java</a></p>
                   <p>&nbsp;</p>
                   <h3>2.create a Domain Event</h3>
-                  <p>domain event was emitted from a domain model, generally is a aggregate root entity, jdonframework can help you develop domain event easily. </p>
+                  <p>domain event is emitted from a domain model, generally is a aggregate root entity, jdonframework can help you develope domain event easily. </p>
                   <p>at first, we create a domain event object, its name is MyModelDomainEvent, and this class is event producer, you can use jdonframework annotations to reache this goal.</p>
                   <p>annotate a Producer class with @Introduce(&quot;message&quot;)</p>
                   <pre><div id="LC61">@<strong>Introduce</strong>("message")</div><div id="LC62">public class MyModelDomainEvent {</div><div id="LC63"><br></div><div id="LC64">        @<strong>Send</strong>("MyModel.findName")</div><div id="LC65">        public DomainMessage asyncFindName(FindNameEvent findNameEvent) {</div><div id="LC66">                return new DomainMessage(findNameEvent);</div><div id="LC67">        }</div><div id="LC68"><br></div><div id="LC69">        @Send("saveMyModel")</div><div id="LC70">        public DomainMessage save(MyModelCreatedEvent myModelCreatedEvent) {</div><div id="LC71">                return new DomainMessage(myModelCreatedEvent);</div><div id="LC72">        }</div><div id="LC73"><br></div><div id="LC74">}</div>
