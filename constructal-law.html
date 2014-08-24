@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>the constructal law</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1>the constructal law</h1>
+                  <p><a href="http://alexsquest.com/texts/complexity-in-software-3-the-constructal-law"><strong><em>Reference</em></strong></a></p>
+                  <p>　　</p>
+                  <blockquote>
+                    <p>Look! Look! Look deep into nature and you will understand everything.</p>
+                    <p>- Albert Einstein</p>
+                  </blockquote>
+                  <p>Complexity is underrated. The higher it is, the higher the developers' unrest. The higher the cognitive load, the unhappier we are. The real challenge is on structuring our systems in a way that keeps it orderly and engineers productive. For that, a simple physics law can help us: the Constructal Law.</p>
+                  <p>When all we have is bloated components and classes, each composed by numerous responsibilities, we're failing at systems thinking. Instead, we're just having clusters of fatty classes and no messages. Looking from the outside, you can't figure out what the system is doing, the business requirements or the user cases. What the app does is hidden.</p>
+                  <p>Neil Johnson, a <a href="http://www.amazon.com/Simply-Complexity-Neil-Johnson-ebook/dp/B005KR0M38/ref=tmm_kin_title_0?_encoding=UTF8&sr=&qid=">big proponent of Complexity Science</a>, when defining many key aspects of complex systems, tells us that</p>
+                  <blockquote>
+                    <p>The [complex] system shows a complicated mix of ordered and disordered behavior.</p>
+                  </blockquote>
+                  <p>In software, this organization clearly doesn't happen by accident, it's the result of human decisions. It's engineers' duty to build components and systems in an ordered and sustainable way.</p>
+                  <p>The smartest people in computer science have studied and shown since the 60's what are some of the best practices for achieving that. However, that's not enough. We as a society have looked for patterns in nature that'd inspire us to design solutions to our hardest problems, such as neural nets, energy generation and hydraulics. Surprisingly, when it comes to complexity, nature has sophisticated ways for dealing with it too, balancing order and disorder.</p>
+                  <h2>Order and disorder</h2>
+                  <blockquote>
+                    <p>Software designers win by separating things that can be considered separately, lose by separating things that must be considered together. <a href="https://twitter.com/KentBeck/status/477560432958255104">Kent Beck</a></p>
+                  </blockquote>
+                  <p>When we decide to break our bloated components in small and isolated parts, we're faced with one great paradox in programming. At first, everything's rainbows and unicorns. Later, not so much.</p>
+                  <p><img src="http://f.cl.ly/items/3g2N1y1f3g0C3L3E092q/many_small_objects.png" alt="small objects, everything's rainbows and unicorns" width="600"></p>
+                  <div>small objects, everything's rainbows and unicorns</div>
+                  <p>Initially, after our first efforts to isolate concerns, we're happy with it. Everything looks tight and beautiful. However, soon things start falling apart and we end up with something way worse than our initial bloated components.</p>
+                  <p><img src="http://f.cl.ly/items/23273X052h2C0o2b4244/many_small_objects.png" alt="system grows out of control" width="600"></p>
+                  <div>system grows out of control</div>
+                  <p>What's the natural thing to do? Give up and get back to our pet, bloated classes. We feel better about it, but in reality we're moving backwards. Your components are not the issue. The problem is that complexity is a living beast that will do everything possible to grow and you'll have to learn to tame it. <a href="http://www.amazon.com/Simply-Complexity-Neil-Johnson-ebook/dp/B005KR0M38/ref=tmm_kin_title_0?_encoding=UTF8&sr=&qid=">Quoting Neil Johnson</a>,</p>
+                  <blockquote>
+                    <p><strong>The [complex] system appears to be "alive".</strong> The system evolves in a highly non-trivial and often complicated way, driven by an ecology of agents who interact and adapt under the influence of feedback.</p>
+                  </blockquote>
+                  <h2>Complexity Wants to Grow</h2>
+                  <p>Let's say we defined the complexity of a system as the number of interactions between its components. In the presence of 2 components, complexity would be 1.</p>
+                  <p><img src="http://i61.tinypic.com/1sxnk9.png" alt="2 components, complexity 1" width="600"></p>
+                  <div>2 components, complexity 1</div>
+                  <p>What would happen if you added 1 extra component? Complexity would grow from 1 to 3!</p>
+                  <p><img src="http://i57.tinypic.com/24294aq.png" alt="3 components, complexity 3" width="600"></p>
+                  <div>3 components, complexity 3</div>
+                  <p>This exponential growth is staggering. The moment we reach 6 components, complexity hits 15!</p>
+                  <p><img src="http://i61.tinypic.com/30adlro.png" alt="6 components, complexity 15!" width="600"></p>
+                  <div>6 components, complexity 15!</div>
+                  <p>Obviously, this topology is an extreme, but is fair enough to show that complexity needs to be tamed. And to be honest, this extreme example is not uncommon; this is precisely the thing that people do that allow me to have a job as a consultant!</p>
+                  <p>We came from bloated components to many small components talking to each other. However, things didn't work out very well. Complexity infected everything. What did go wrong?</p>
+                  <h2>Constructal Law</h2>
+                  <p>It's not unknown to nature how malicious complexity is. To cope with that, it makes use of a phenomena described as the Constructal Law, the only known physical law that guides design in nature. Its definition is:</p>
+                  <blockquote>
+                    <p>For a finite-size system to persist in time (to live), it must evolve in such a way that it provides easier access to the imposed currents that flow through it.</p>
+                  </blockquote>
+                  <p>In practice, whenever something needs to flow from point A to point B, the shape of a tree will arise. This is present everywhere.</p>
+                  <p><img src="http://i61.tinypic.com/2i94kmq.jpg" alt="Constructal Law shape." width="600"></p>
+                  <div>Constructal Law shape.</div>
+                  <p>The designs that happen spontaneously in nature reflect this tendency: they allow entities or things to flow more easily – to measurably move more current farther and faster per unit of useful energy consumed. Even streets and roads, which are artificially built, tend to have to sort of pattern to provide maximum mobility.</p>
+                  <h2>Orderly systems with the Constructal Law</h2>
+                  <p>Going back to our complex system and applying the Constructal Law, we could add a 7th object and magically decrease complexity from 15 down to 8!</p>
+                  <p><img src="http://i62.tinypic.com/rs60rq.png" alt="7 objects, complexity 8" width="600"></p>
+                  <div>7 objects, complexity 8</div>
+                  <p>To be able to develop in such fashion, you need to perceive your objects not as isolated entities, but as part of a bigger concept. For example, one concept could be your favorite webservice client, composed by objects such as the connection, the credentials, the XML text, the response, the request. Another concept could be your database component, composed of Active Record classes, validation classes, connection classes, relationship classes, and so on.</p>
+                  <p><img src="http://i62.tinypic.com/2007kvr.png" alt="sdfsdf" width="600"></p>
+                  <p>Figuring out your system will be much simpler if you separate these concerns in meaningful modules, composed by meaningful objects.</p>
+                  <h2>Living with the Constructal Law</h2>
+                  <p>When developing, don't let your instinct fool you into sloppy code. Don't allow one part of a module to talk to an inner part of another module.</p>
+                  <p>Consider the following picture.</p>
+                  <p><img src="http://f.cl.ly/items/0r2r2n0T2v390h2k290u/module_encapsulation.png" alt="breaking encapsulation as shown in the 2nd article of the series" width="600"></p>
+                  <div>breaking encapsulation as shown in the 2nd article of the series</div>
+                  <p>Here, the modules' encapsulation is broken, as we mention in <a href="http://alexsquest.com/texts/complexity-in-software-2-honor-thy-encapsulation">part 2</a> of our series on complexity. Whenever you have to change B, you'll be forced to change A as well. Whenever you need to do something, you're forced to do more than you should.</p>
+                  <p>We could state a law such as:</p>
+                  <blockquote>
+                    <p>For every interaction between component A and <strong>x</strong> amount of components, a change in A will require a total of 1+x changes.</p>
+                  </blockquote>
+                  <p>The less interactions we have between components, the better. By moving away from the flat, initial architecture into one where encapsulation happens at a modular level, we guarantee our systems to grow without being overwhelmed by this monstruous creature called complexity.</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
