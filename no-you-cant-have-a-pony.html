@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Actors, Green Threads and CSP On The JVM – No, You Can't Have A Pony</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1><a href="http://boundary.com/blog/2014/09/03/no-you-cant-have-a-pony/" title="Actors, Green Threads and CSP On The JVM – No, You Can't Have A Pony" rel="bookmark">Actors, Green Threads and CSP On The JVM – No, You Can't Have A Pony</a> </h1>
+                  <p>I really wish people would stop building actor frameworks for the JVM. I know, I'm guilty of having <a href="https://github.com/boundary/scalang">done this</a> myself in the past. Invariably, these projects fall far short of their intended goals, and in my opinion the applications which adopt them end up with a worse design than if they had never incorporated them in the first place.</p>
+                  <p>Let's take a step back, however. What the hell are actors, and why is everyone so hot and bothered by them? The actor model describes a set of axioms to be followed in order to avoid common issues with concurrent programming, and in the academic world it provides a means for the theoretical analysis of concurrent computation. Specific implementations can vary substantially in how they define actors, and in the restrictions on what actors can and cannot do, however the most basic axioms of the actor model are:</p>
+                  <ol>
+                    <li>All actor state is local to that actor, and cannot be accessed by another.</li>
+                    <li>Actors must communicate only by means of message passing. Mutable messages cannot be aliased.</li>
+                    <li>As a response to a message an actor can: launch new actors, mutate its internal state, or send messages to one or more other actors.</li>
+                    <li>Actors may block themselves, but no actor should block the thread on which it is running.</li>
+                  </ol>
+                  <p>So what are the advantages to adopting the actor model for concurrent programming? The primary advantages center around the ergonomics of concurrency. Concurrent systems are classically very hard to reason about because there are no ordering guarantees around memory mutation beyond those which are manually enforced by the programmer. Unless a lot of care, planning and experience went into the design of the system, it inevitably becomes very difficult to tell which threads might be executing a given piece of code at a time. The bugs that crop up due to sloppiness in concurrency are notoriously difficult to resolve due to the unpredictable nature of thread scheduling. Stamping out concurrency bugs is a snipe hunt.</p>
+                  <p>By narrowing the programming model so drastically, actor systems are supposed to avoid most of the silliness encountered with poorly designed concurrency. Actors and their attendant message queues provide local ordering guarantees around delivery, and since an actor can only respond to a single message at a time you get implicit locking around all of the local state for that actor. The lightweight nature of actors also means that they can be spawned in a manner that is 1:1 with the problem domain, relieving the programmer of the need to multiplex over a thread pool.</p>
+                  <p>Actor aficionados will probably reference performance as an advantage of actor frameworks. The argument for superior performance of actors (and in particular the green thread schedulers that most actor implementations are built upon) comes down to how a server decomposes work from the client and how that work gets executed on a multi-core machine. The <a href="http://medianetwork.oracle.com/video/player/3731008736001">typical straw-man</a> drawn up by <a href="http://www.reactivemanifesto.org/#event-driven">actor activists</a> is a message passing benchmark using entirely too many threads, run on a cruddy macbook. It's easy to gin up some hackeneyed <a href="http://en.wikipedia.org/wiki/Fear,_uncertainty_and_doubt">FUD</a>against threads to market an actor framework. It's much harder to prove a material advantage to adopting said framework.</p>
+                  <p>Unfortunately, actor frameworks on the JVM cannot sufficiently constrain the programming environment to avoid the concurrency pitfalls that the actor model should help you avoid. After all, within the thread you are simply writing plain old java (or scala or clojure). There's no real way to limit what that code can do, unless it is explicitly disallowed from calling into other code or looping. Therefore, even the actor frameworks which use bytecode weaving to implement cooperative multi-tasking amongst actors cannot fully guarantee non-blocking behavior. This point bears repetition: without fundamental changes in how the JVM works, one cannot guarantee that an arbitrary piece of code will not block.</p>
+                  <p>When making engineering decisions we must always be mindful of the tradeoffs we make and why we make them. Bolt on actor systems are complex beasts. They often use <a href="https://github.com/puniverse/quasar/blob/master/quasar-core/src/main/java/co/paralleluniverse/fibers/instrument/InstrumentMethod.java">bytecode weaving</a> to alter your code, hopefully without altering its meaning. They quite often rely on Java's fork/join framework, which is <a href="http://homes.cs.washington.edu/~djg/teachingMaterials/grossmanSPAC_forkJoinFramework.html#gotchas">notorious for its overhead</a>, especially when it comes to small computations, and is fantastically complicated when compared to a vanilla thread pool. Actor systems are supposed to make parallel computation dead simple, but every lightweight threading system on the JVM that I've seen is anything but simple.</p>
+                  <p>Lest you think that I am a hater, I genuinely like actor oriented programming. I have been an enthusiastic Erlang programmer for a number of years, and I used to get genuinely excited about the activity around adding this paradigm to Java. However, I am now convinced that without support from the platform these lightweight concurrency libraries will always be a boondoggle. I'm not the only one to make <a href="http://www.mailinator.com/tymaPaulMultithreaded.pdf">this</a> <a href="https://lobste.rs/s/ycor8k/why_go_is_not_good/comments/gs4pe9#c_gs4pe9">observation</a>, either.</p>
+                  <p>We shouldn't be trusting vendors who are pushing manifestos, decades old tribal knowledge about thread implementations, and misleading benchmarks. We should be building the simplest possible systems to solve our problems, and measuring them to understand how to get the most out of our machines.</p>
+                  <p>　　</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
