@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>The Impedance Mismatch Between Conceptual Models and Implementation Environments</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="doc.htm" >Document</a></li>
+               <li><a href="quickconf.html">Qucik Start</a> </li>
+               <li><a href="examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" --> 
+                  <h1>The Impedance Mismatch Between Conceptual Models and Implementation Environments</h1>
+                  <p><a href="http://osm7.cs.byu.edu/ER97/workshop4/sw.html?utm_content=buffere538c&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer"><strong><em>Reference</em></strong></a></p>
+                  <p>　　</p>
+                  <center>
+                    <h2>Abstract</h2>
+                  </center>
+                  <blockquote>As object-oriented conceptual models become the standard analysis models of software engineering, the impedance mismatch between analysis and implementation environments becomes a significant problem. While software engineers give lip service to this problem, it is rarely well described. In this paper we present eight specific problems associated with transforming an object-oriented conceptual model into an implementation, using modern object-oriented languages. We will also provide some examples of how to start solving these problems. Only by recognizing and defining our problems can we ever hope to overcome them.</blockquote>
+                  <h2>1 Introduction</h2>
+                  <p>During the past few years the analysis models of software engineering [1, 3, 5, 10] have subsumed the object-oriented conceptual models of the database field. These newer models allow us to think about problems using concepts that are similar to the way we think naturally. While such models make it easier to analyze problems and create specifications, translating these models into efficient implementations is difficult. There is a significant impedance mismatch between the underlying concepts of analysis and the concepts of object-oriented programming.</p>
+                  <p>As software engineers our biggest problem is not recognizing the impedance mismatch. We are usually very good at solving problems but we can not solve a problem we do not see. In the past the problem was not significant. Our analysis models were strongly influenced by programming concepts. In a sense, these analysis models were little more than high-level programming languages. It made translation from analysis or specification into design easy, but it made it difficult to interact with a customer. Even now, some of the newer object-oriented analysis models are really just graphical versions of standard object-oriented programming paradigms. However, other analysis and specification models were created independent of implementation concerns. They were developed to model reality (e.g. OSA [3]). They borrowed much from conceptual modeling and have indeed become conceptual models for object-oriented software engineering. Because these other conceptual models are implementation independent, there are significant problems transforming these models into implementations. However, most practitioners have not used implementation independent analysis models and have not encountered nor do they recognize many of the new problems. Because these newer models will become a part of good software development practice, it is important that we come to understand the impedance problems.</p>
+                  <p>In the following section we describe eight impedance mismatches. For each mismatch we describe the issue from the conceptual modeling point of view, then from the implementation environment point of view. We finish each section by describing possible means of reducing the mismatch. We conclude the paper by describing our vision of the future and why research in this area is important.</p>
+                  <h2>2 Impedance Mismatches</h2>
+                  <p>Each of the following eight mismatches is a significant problem in its own right. Because of limited space we describe the problems only at a high level of abstraction. While the concepts associated with the problems overlap, we present them as independent issues. We do recognize that these eight problems do not cover the entire problem space associated with moving from object-oriented conceptual models to implementation. However they constitute a core of concern that needs to be addressed.</p>
+                  <p>While most of these concepts have been described in other publications, rarely do we discuss them as a group. One of the purposes of this paper is to present a high-level overview of the many issues. In this manner we can start to understand how each of the problems and their associated solutions interact. Understanding the interactions between the solutions, we can come to a better understanding of the optimal solution.</p>
+                  <p>To resolve the impedance mismatches requires an extensive amount of research over an extended period of time. We can not hope to cover all possible solutions in this paper. Our intent is to show that there are things that can be done to improve the situation. One approach is to improve current languages. This is indeed a viable solution but first we must determine how to manually map the dissonant concepts of conceptual models into the environments of today. Only then is it possible to automate the process and incorporate the technology into a language. For that reason we present the following solutions as possible research into design patterns [6] and not as topics into compiler research.</p>
+                  <p>For the purposes of this paper we will assume an object-oriented perspective. We also assume a knowledge of object-oriented analysis models and object-oriented languages such as C++, Smalltalk, Java, Eiffel, and Ada95 [2, 4, 7, 9, 11].</p>
+                  <h3>2.1 Persistence</h3>
+                  <p>A common assumption of conceptual models is that all objects are persistent. Objects only cease to exist because something else destroys them or they terminate themselves.</p>
+                  <p>In implementation environments, it is assumed that all objects die when the program terminates. Only explicitly identified objects are persistent, and the programmer is responsible for ensuring that these objects are saved and restored from program invocation to program invocation.</p>
+                  <p>There are three basic design patterns we can use to overcome the differences in models. The first is to organize into a pattern current techniques for handling persistence. The other two change our entire design concept from that of designing programs that are operations to that of designing programs that are persistent objects.</p>
+                  <p>Our current technique for transforming a conceptual model with assumed persistence into an object-oriented implementation is to first identify the components of the specification model that are persistent and then implement them. Implementation usually takes the form of inheritance from a "persistent" class that defines the information and methods for storing and retrieving information from disk. This technique is well understood. What is needed now is research into tools and methods to make it easier.</p>
+                  <p>The other two approaches to solving the persistent problem force us to think of programs as persistent objects and not as transient functions. In the first approach we extend the current practice of storing and retrieving manually selected objects to automatically storing and retrieving all objects, except those that have been explicitly identified as transient. Thus, our conceptual framework would shift closer to that of conceptual modeling where all things are assumed persistent. The second approach to programs as objects would use the pattern associated with databases. That is, the program or executable object would conceptually execute in a persistent medium. Logically, during the execution of a program all objects would be read from and written to permanent storage. Of course this causes efficiency problems. To improve efficiency we would use caching techniques to bring into memory those parts of the object needed for execution.</p>
+                  <h3>2.2 Classes</h3>
+                  <p>While many practitioners think the concept of class as found in conceptual modeling is similar, if not identical, to the concept of class or type as found in object-oriented programming languages, there are significant differences. In conceptual models, a class is a set of objects(or an extent), and all of the objects in the set have properties in common. Also, each object is a member of a class precisely because it has the indicated properties. The objects, however, can have additional properties . For instance, a member of the class <em>Teenager</em>, may own a car although that property is not common to all teenagers. Another property of classes found in conceptual modeling is class migration. That is, it is possible for objects to become and cease to be members of many different classes. It is also possible for objects to belong to more than one class at a time.</p>
+                  <p>The notion of class is much different in current implementation environments. An object is not a member of a class but is an instance of a class. As an instance, it has only those properties defined for its class. There is no class extent and it is impossible for objects to move from class to class. It is also not possible for an object to be an instance of more than one class.</p>
+                  <p>The first and simplest thing we can do to make programming classes or types more like conceptual model types is to provide a pattern for extents. That is, associate with each class the set of objects that are members of the class. We must also provide means by which objects can be members of more than one class at a time and can move from class to class. There are two approaches. In one approach we can develop patterns that provide dynamic acquisition and removal of properties. In this pattern, all object implementations become dynamic data structures. In the other approach we ensure that any object created has enough allocated space to store any property of any class it may become a member of. This pattern requires a type of path analysis which determines the maximum set of classes an object can, in its lifetime, belong to given that is was initially created as an instance of some class <em>C</em>.</p>
+                  <h3>2.3 Relations</h3>
+                  <p>An obvious difference between conceptual models and implementation environments is the presence of relations. Conceptual models allow for relations of any arity. Associated with each class in a relation is some form of cardinality constraint.</p>
+                  <p>Implementation environments don't have relations. Instead, an object has attributes. There are no cardinality constraints associated with the attributes. Because of this we find that many implementations of relations include redundancy with the associated update anomalies.</p>
+                  <p>Research into the incorporation of relations into mainstream programming languages is not new. There have been several exploratory languages that have made relations, or at least binary relations, a data structure in the language. However, the vast majority of implementation environments do not provide relations. To help most practitioners learn to use relations, we need to provide patterns and libraries to support the easy use of relations of any arity in all programming environments.</p>
+                  <p>To design and implement relations of large arity we should consider directly using the relation implementation model of databases. That is, use tables and indexes. Of course research must be instituted to determine the most efficient forms for in-memory relations.</p>
+                  <p>For relations of small arity, especially binary relations, we need to look at patterns and tools that will help us implement them as attributes. To achieve access efficiency (as opposed to update efficiency) there will probably be some redundancy. For instance, if we have a relation <em>Student is assigned Advisor</em> then an instance of the <em>Student</em> class would have an attribute <em>Advisor</em> and an instance of the <em>Advisor</em> class would have an attribute <em>Set_of_Students</em>. Tools and generic classes should be used to minimize problems with update anomalies. Development of design patterns for relations should also identify additional information that can be used to optimize their use. For instance, if we know a relation is constant, then we can use redundancy in implementations because update anomalies can not occur. Also, if we know that for a binary relation between <em>A</em> and <em>B</em> that we never access <em>A</em> given <em>B</em> then we can implement this relation as a simple attribute (such information is already captured in the UML implementation environment).</p>
+                  <h3>2.4 Generalization/Specialization</h3>
+                  <p>Conceptual models contain a form of abstraction called generalization or specialization. It represents the "is-a" relation between classes. If an object is a member of a class and <em>C'</em> is a specialization of a class <em>C</em> then the object is also a member of <em>C</em>. Because of this, all objects in <em>C'</em> must have the properties of <em>C'</em> and the extent of <em>C'</em> is a subset of the extent of <em>C</em>.</p>
+                  <p>In implementation environments we have inheritance. A subclass <em>C'</em> may inherit from a superclass <em>C</em> which means that <em>C'</em> has all of the attributes and method signatures of <em>C</em>. Thus, instances of <em>C'</em> have the same attributes and method signatures as instances of <em>C</em> but no other properties are guaranteed. For instance, assume the existence of a superclass <em>List</em> and a subclass of <em>List</em>, <em>Bounded_List</em>. We may implement a sort routine for <em>List</em> that produces a list that is ordered from lowest to highest. There is nothing in current programming environments that require the semantics to be preserved in the subclass. In particular, it is possible for the sort operation in <em>Bounded_List</em> to produce a list that is ordered from highest to lowest.</p>
+                  <p>In conceptual modeling it is possible to make a class <em>Teenager</em> be a specialization of <em>Person</em> and require that the <em>Age</em> associated with a teenager be between 13 and 19. In object-oriented languages the analogous representation would be to require the type of the age attribute in <em>Teenager</em> (e.g. <em>Teenager_Age</em>) be inherited from the type of the age attribute in <em>Person</em> (e.g. <em>Person_Age</em>). However, this is not possible. The only way to do this with current object-oriented languages is to require access and update methods on attributes and then use co-variance to insure that when updating a teenager, only teenager ages are used. If a language does not support co-variance then there will be problems.</p>
+                  <p>To better guarantee that generalization/specialization abstractions are preserved in implementations we should first do those things we already know how to do. We can institute style guidelines that encourage developers to use inheritance correctly. For instance, we can specify that the re-implementation of a method should preserve the semantics of the more general method. It would be even better to guarantee that inheritance is used correctly. To do that we might develop patterns similar to the design by contract concepts in Eiffel. Specifically, ensure that the class invariants of a specialization imply the class invariants of the generalization. Also, ensure that the semantics of methods in the specialization imply the semantics of the corresponding methods in the generalization.</p>
+                  <p>An even more fundamental problem of generalization/specialization should also be investigated. What form of generalization/specialization should be incorporated into design? There are actually several forms of generalization/specialization. For example there is extensive, restrictive, and negative generalization specialization. We must identify the different forms and determine how they might be mapped into our implementation environment.</p>
+                  <h3>2.5 Active Objects</h3>
+                  <p>In object-oriented conceptual modeling we allow active objects. An active object is one that has its own thread of control. In some conceptual models all objects are considered to be active unless they are identified as being passive objects. Active objects imply the presence of inter-object concurrency. In conceptual modeling it is not assumed that active objects provide uniform service availability.</p>
+                  <p>In object-oriented programming languages all objects are passive and uniform service availability is assumed.</p>
+                  <p>Much work has been done to allow the implementation of active objects. Of most importance is the ability to use concurrency to implement concurrent active objects. However, we still encounter two problems. First, much of concurrent design is functional concurrency and not object-based concurrency. Secondly, most programmers don't know how to think concurrently. We need to develop patterns that are compelling. That is, patterns that are so "natural" that many designers will be comfortable using them. These patterns should allow us to think about and directly implement active objects. Just as the class replaced the function as the main building block of design, so should the active object replace the task. Not only should we have concurrent active objects, but the design patterns should directly support intra-object concurrency. We must also support active communication, communication by events and signals. The design patterns must allow non-uniform service availability.</p>
+                  <h3>2.6 Concurrency</h3>
+                  <p>In conceptual modeling both inter- and intra-object concurrency is assumed. As mentioned in the previous section, inter-object concurrency is incorporated into the model by active objects. It is also possible for an object to have more than one thread of control which is intra-object concurrency. Because of both forms of concurrency, we often find massive amounts of concurrency in conceptual models.</p>
+                  <p>In some implementation environments, such as those based on Smalltalk or C++, there is no concurrency support. Others, such as Eiffel, Ada95, and Java do provide concurrency but these environments usually assume that it is course grained, meaning, they support a limited number of threads for large objects, a number usually in the tens or hundreds. This number is often far surpassed by the number of threads in a conceptual model. For instance, many conceptual models assume that most, if not all objects are active and thus concurrent. Most real conceptual models have thousands if not millions of objects. Thus, most real models include thousands to millions of threads of control. We just can't support that with current implementation environments, even if they do support concurrency to a limited extent. Means must be found to reduce the concurrency in the system.</p>
+                  <p>Much work has been done to allow the implementation of concurrency. Ada95 and Java were developed with concurrency as a fundamental part of the language. Eiffel just added concurrency. In C++ it is more difficult, but we can use libraries to incorporate concurrency into design and implementation. However, it is still difficult to create concurrent designs.</p>
+                  <p>We need to develop design patterns whose primary purpose is to make it easier to transform concurrency in a conceptual model into concurrency in a programming environment. This includes both inter- object concurrency in a distributed environment and intra-object concurrency.</p>
+                  <p>We also need patterns for reducing massive concurrency. One approach to solving the massive concurrency problem is to look at distributing the objects over a large number of interconnected machines. With the internet this is becoming viable. Significant research is already being conducted in this field. Another approach is to identify as many active objects as possible that can be converted into passive objects. A technique similar to process inversion [8] would be helpful in this quest.</p>
+                  <h3>2.7 Complex Interactions and Communication</h3>
+                  <p>Various forms of communication are allowed in different conceptual models. In general they provide for both synchronous and asynchronous communication. Communication usually takes the form of events or signals with associated input and output information. To describe complex situations the models provide real-time constraints. To integrate this form of communication with concurrency, conceptual models also provide mechanisms to deal with faulty communication. For example, if an object is trying to communicate with another object, another object that is not ready to communicate, then the analyst can describe what will take place.</p>
+                  <p>Typical implementation environments only support communication by method or function calls. Those environments that support concurrency do provide some advanced communication mechanisms, but usually only for synchronous communication. And, none but Java really deal with communication in a distributed environment.</p>
+                  <p>Those languages that support concurrency also support some form of communication that can be used to implement the various forms of complex interactions. Ada and Java are probably the best. Design patterns for using similar capabilities in other languages is desirable. For instance, can we develop a pattern and mapping software that allows us to represent Java-like distributed communication in C++?</p>
+                  <p>Even with the advanced communication features of the most modern environments, mapping directly from conceptual models to these implementation environments is not straight forward. The mapping of real-time constraints, priorities, and non-determinism is a problem that must be reduced. The mapping is possible and is best done automatically. Thus, an area of fruitful research would be to automatically translate interactions of conceptual models programs.</p>
+                  <h3>2.8 Declarative Information</h3>
+                  <p>In conceptual models there are many forms of declarative information. There are cardinality constraints, real-time constraints, general constraints, and derivation descriptions(1st-order statements defining how components of the conceptual model are derived from other components). There are also triggering constraints, such as class membership conditions. When an object that is not a member of a class <em>C</em> satisfies the membership conditions, it then becomes a member of a class. For instance, when a person turns 62, they automatically become a senior citizen. In an analogous implied declaration, when an object ceases to have all of the properties of a class to which it belongs, it ceases to be a member of the class.</p>
+                  <p>Object-oriented programming environments provide few means to represent declarative information. Almost every expression is applicative. The only common object-oriented language that has any desirable features is Eiffel. It provides for class invariants and for pre- and post-conditions on methods.</p>
+                  <p>To translate declarative information in a conceptual model into applicative implementations requires that we resolve two concerns. First we must guarantee constraints will be met and we must translate derivation expressions into code. For the guarantee of constraints, we can do two things. First we can encourage the development of programs where we can prove that a constraint will always be satisfied. This is research into proof of correctness. The other approach is to identify the objects in a constraint that may change. Then, wherever in the code a change may occur to one of those objects, make sure that the program checks the constraint and takes appropriate action.</p>
+                  <p>We can use the latter method of implementing constraint checking to implement triggering constraints. For a given triggering constraint we first identify any of the variables that may change over time whose change may cause the constraint to change its state. After identifying the methods we then modify them so that before they return, the triggering constraint is checked. If it was false and is now true, then a method associated with the triggering constraint is fired. When dealing with the class membership conditions, the method usually causes the object to be added to the appropriate class.</p>
+                  <p>For derivation expressions, we need to provide patterns for Prolog-type Horne clauses and provide efficient unification. This will allow us to implement the general case. In simple cases, which the design patterns should help us identify, we can even do better by translating the derivation expression into an Eiffel-like once function. That is, the first time the information is called for, we compute the value and save it. The next time the information is accessed, we retrieve the stored value. Hopefully we can make derivation expressions like recursion. Both recursion and derivation expressions are elegant mechanisms for expressing ideas but are both inefficient for computational purposes. With recursion, we have developed algorithms for translating recursive control structures into iterative forms. With derivation expressions we need to translate the expressions inti imperative forms.</p>
+                  <h2>3 Conclusions</h2>
+                  <p>The most expensive errors made during software development are analysis and specification errors. To minimize these we must develop analysis models that are much closer to reality. Many of the emerging object-oriented conceptual models allow us to do a better job of this. However, as we move closer to natural forms we move further away from current implementation paradigms. This causes many impedance problems that software engineers do not readily recognize. Hopefully this paper has identified some of the more serious issues.</p>
+                  <p>Each of these problems requires sizable amounts of research in its own right. However, the research in this area must not ignore the fact that the issues are interrelated. For instance, to solve the persistence problem one must also investigate the concept of active objects. The intent of this paper was to give a high-level view of the problems so that the reader can see the broad picture.</p>
+                  <p>The future of software development is in distributed, concurrent, persistent, active-object systems. Our implementation environments do not support these ideas well. Conceptual models do a much better job. We must develop and teach patterns and tools that will allow us to translate tomorrow's concepts into today's implementation environments.</p>
+                  <p>&nbsp;</p>
+                  <div class="adsensf" id="vgad336x">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- 页上左336 -->
+                    <ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+                    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
+                  </div>
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="340" valign="top"  bgcolor="#FFFFD7"> 
+          <div class="adsensf" id="vgad336x280">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 页上左336 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7573657117119544"
+     data-ad-slot="6751585519"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>         
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
