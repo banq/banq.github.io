@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/MainTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Jdon Framework</title>  
+<!-- #EndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+				<!-- #BeginEditable "main" -->
+				<div>
+                  <div>
+                    <div>                    </div>
+                      <div id="closebtn"></div>
+                      <div id="article">
+                        <div contenteditable="true">
+                          <h1>Eventual Consistency with Spring for Apache Kafka: Part 1 of 2</h1>
+                          <div>
+                            <div>
+                              <div>
+                                <h2>Using Spring for Apache Kafka to manage a Distributed Data Model in MongoDB across multiple microservices</h2>
+                                <div>
+                                  <div>
+                                    <div>
+                                      <div><a href="https://garystafford.medium.com/?source=post_page-----cfbbed450b5e--------------------------------" rel="noopener" target="_top">
+                                        <div><img alt="Gary A. Stafford" src="../1_X1kPJdug_0qSelVFypdjYQ.jpeg" width="48" height="48"></div>
+                                      </a></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Given a modern <a href="https://en.wikipedia.org/wiki/Distributed_computing" rel="noopener" target="_top">distributed system</a> composed of multiple microservices, each possessing a sub-set of a domain&rsquo;s aggregate data, that system will almost assuredly have some data duplication. Given this duplication, how do we maintain data consistency? In this <a rel="noopener" href="https://itnext.io/eventual-consistency-with-spring-for-apache-kafka-part-2-of-2-23bedd512ccf" target="_top">two-part</a> post, we will explore one possible solution to this challenge — <a href="https://kafka.apache.org/" rel="noopener" target="_top">Apache Kafka</a> and the model of <a href="https://en.wikipedia.org/wiki/Eventual_consistency" rel="noopener" target="_top">eventual consistency</a>.</p>
+                              <h1 data-selectable-paragraph="">Introduction</h1>
+                              <p data-selectable-paragraph="">Apache Kafka is an open-source distributed event streaming platform capable of handling trillions of messages. According to <a href="https://www.confluent.io/what-is-apache-kafka" rel="noopener" target="_top">Confluent</a>, initially conceived as a messaging queue, Kafka is based on an abstraction of a distributed commit log. Since being created and open-sourced by LinkedIn in 2011, Kafka has quickly evolved from a messaging queue to a full-fledged event streaming platform.</p>
+                              <p data-selectable-paragraph="">Eventual consistency, according to <a href="https://en.wikipedia.org/wiki/Eventual_consistency" rel="noopener" target="_top">Wikipedia</a>, is a consistency model used in distributed computing to achieve high availability that informally guarantees that if no new updates are made to a given data item, eventually all accesses to that item will return the last updated value. I previously covered the topic of eventual consistency in a distributed system using RabbitMQ in the May 2017 post, <a href="http://programmaticponderings.com/2017/05/15/eventual-consistency-decoupling-microservices-with-spring-amqp-and-rabbitmq/" rel="noopener" target="_top">Eventual Consistency: Decoupling Microservices with Spring AMQP and RabbitMQ</a>. The post was featured on Pivotal&rsquo;s RabbitMQ <a href="https://content.pivotal.io/rabbitmq" rel="noopener" target="_top">website</a>.</p>
+                              <h1 data-selectable-paragraph="">Domain-driven Design</h1>
+                              <p data-selectable-paragraph="">To ground the discussion, let&rsquo;s examine a common example — an online storefront. Using a <a href="https://en.wikipedia.org/wiki/Domain-driven_design" rel="noopener" target="_top">domain-driven design (DDD)</a> approach, we would expect our <a href="https://en.wikipedia.org/wiki/Problem_domain" rel="noopener" target="_top">problem domain</a>, the online storefront, to be composed of multiple <a href="https://en.wikipedia.org/wiki/Domain-driven_design#Bounded_context" rel="noopener" target="_top">bounded contexts</a>. Bounded contexts would likely include Shopping, Customer Service, Marketing, Security, Fulfillment, Accounting, and so forth, as shown in the <a href="https://en.wikipedia.org/wiki/Domain-driven_design#Context_map" rel="noopener" target="_top">context map</a>, below.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="862" height="619" role="presentation" src="../0_D_LzhEsYtiADkcIf.png" srcset="https://miro.medium.com/max/483/0*D_LzhEsYtiADkcIf.png 276w, https://miro.medium.com/max/966/0*D_LzhEsYtiADkcIf.png 552w, https://miro.medium.com/max/1120/0*D_LzhEsYtiADkcIf.png 640w, https://miro.medium.com/max/1225/0*D_LzhEsYtiADkcIf.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Given this problem domain, we can assume we have the concept of a Customer. Further, we can assume the unique properties that define a Customer are likely to be spread across several bounded contexts. A complete view of the Customer will require you to aggregate data from multiple contexts. For example, the Accounting context may be the <a href="https://en.wikipedia.org/wiki/System_of_record" rel="noopener" target="_top">system of record</a> for primary customer information, such as the customer&rsquo;s name, contact information, contact preferences, and billing and shipping addresses. Marketing may possess additional information about the customer&rsquo;s use of the store&rsquo;s loyalty program and online shopping activity. Fulfillment may maintain a record of all orders being shipped to the customer. Security likely holds the customer&rsquo;s access credentials, account access history, and privacy settings.</p>
+                              <p data-selectable-paragraph="">Below are the Customer data objects are shown in yellow. Orange represents the logical divisions of responsibility within each bounded context. These divisions will manifest themselves as individual microservices in our online storefront example.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="1557" height="1008" role="presentation" src="../0_UpyRPNG_WkV7UnrD.png" srcset="https://miro.medium.com/max/483/0*UpyRPNG_WkV7UnrD.png 276w, https://miro.medium.com/max/966/0*UpyRPNG_WkV7UnrD.png 552w, https://miro.medium.com/max/1120/0*UpyRPNG_WkV7UnrD.png 640w, https://miro.medium.com/max/1225/0*UpyRPNG_WkV7UnrD.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <h1 data-selectable-paragraph="">Distributed Data Consistency</h1>
+                              <p data-selectable-paragraph="">Let&rsquo;s agree that the architecture of our domain&rsquo;s data model requires some duplication of data across bounded contexts or even between services within the same context. We must ensure data consistency. Take, for example, the case where a customer changes their home address or email. Let us assume that the Accounting context is the system of record for these data fields. However, to fulfill orders, the Shipping context might also need to maintain the customer&rsquo;s current home address. Likewise, the Marketing context, responsible for opt-in email advertising, also needs to be aware of the email change and update its customer records.</p>
+                              <p data-selectable-paragraph="">If a piece of shared data is changed, then the party making the change should be responsible for communicating the change without expecting a response. They are stating a fact, not asking a question. Interested parties can choose if and how to act upon the change notification. This decoupled communication model is often described as Event-Carried State Transfer, defined by <a href="https://twitter.com/martinfowler" rel="noopener" target="_top">Martin Fowler</a> of ThoughtWorks in his insightful post, <a href="https://martinfowler.com/articles/201701-event-driven.html" rel="noopener" target="_top">What do you mean by &ldquo;Event-Driven&rdquo;?</a>. Changes to a piece of data can be thought of as a state change event — events that contain details of the data that changed. Coincidentally, Fowler uses a customer&rsquo;s address change as an example of Event-Carried State Transfer in the post. Fellow former ThoughtWorker Graham Brooks also detailed the concept in his post, <a href="http://www.grahambrooks.com/event-driven-architecture/patterns/stateful-event-pattern/" rel="noopener" target="_top">Event-Carried State Transfer Pattern</a>.</p>
+                              <h2 data-selectable-paragraph="">Consistency Strategies</h2>
+                              <p data-selectable-paragraph="">Multiple architectural approaches can be taken to solve for data consistency in a distributed system. For example, you could use a single relational database with shared schemas to persist data, avoiding the distributed data model altogether. However, it could be argued that using a single database just turned your distributed system back into a monolith.</p>
+                              <p data-selectable-paragraph="">You could use <a href="https://en.wikipedia.org/wiki/Change_data_capture" rel="noopener" target="_top">Change Data Capture</a> (CDC) to track changes to each database and send a record of those changes to Kafka topics for consumption by interested parties. <a href="https://www.confluent.io/product/connectors/" rel="noopener" target="_top">Kafka Connect</a> is an excellent choice for this, as explained in the article, <a href="https://www.confluent.io/blog/no-more-silos-how-to-integrate-your-databases-with-apache-kafka-and-cdc" rel="noopener" target="_top">No More Silos: How to Integrate your Databases with Apache Kafka and CDC</a>, by Robin Moffatt of Confluent.</p>
+                              <p data-selectable-paragraph="">Alternately, we could use a separate data service, independent of the domain&rsquo;s other business services, whose sole role is to ensure data consistency across domains. If messages persist in Kafka, the service has the added ability to provide data auditability through message replay. Of course, another set of services adds additional operational complexity to the system.</p>
+                              <p data-selectable-paragraph="">In this post&rsquo;s somewhat simplistic architecture, the business microservices will maintain consistency across their respective domains by producing and consuming messages from multiple Kafka topics to which they are subscribed. Kafka <a href="https://docs.confluent.io/current/clients/producer.html" rel="noopener" target="_top">Producers</a> may also be <a href="https://docs.confluent.io/current/clients/consumer.html" rel="noopener" target="_top">Consumers</a> within our domain.</p>
+                              <h1 data-selectable-paragraph="">Storefront Example</h1>
+                              <p data-selectable-paragraph="">In this post, our online storefront API will be built in Java using <a href="https://spring.io/projects/spring-boot" rel="noopener" target="_top">Spring Boot</a> and <a href="https://openjdk.java.net/projects/jdk/16/" rel="noopener" target="_top">OpenJDK 16</a>. We will ensure the uniformity of distributed data by using a <a href="https://kafka.apache.org/intro" rel="noopener" target="_top">publish/subscribe model</a> with <a href="https://spring.io/projects/spring-kafka" rel="noopener" target="_top">Spring for Apache Kafka Project</a>. When a piece of data is changed by one Spring Boot microservice, if appropriate, that state change will trigger a state change event, which will be shared with other microservices using Kafka topics.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="1440" height="900" role="presentation" src="../1_7b5pY1_Fy0siXx7k3HfaOA.png" srcset="https://miro.medium.com/max/483/1*7b5pY1_Fy0siXx7k3HfaOA.png 276w, https://miro.medium.com/max/966/1*7b5pY1_Fy0siXx7k3HfaOA.png 552w, https://miro.medium.com/max/1120/1*7b5pY1_Fy0siXx7k3HfaOA.png 640w, https://miro.medium.com/max/1225/1*7b5pY1_Fy0siXx7k3HfaOA.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              View of the Storefront API from Kiali
+                              <p data-selectable-paragraph="">We will explore different methods of leveraging Spring Kafka to communicate state change events related to the specific use case of a customer placing an order through the online storefront. An abridged view of the storefront ordering process is shown in the diagram below. The arrows represent the exchange of data. Kafka will serve as a means of decoupling services from one another while still ensuring the data is distributed.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="1522" height="582" role="presentation" src="../1_XeWaP-VZrNWc9Df0ogp4qA.png" srcset="https://miro.medium.com/max/483/1*XeWaP-VZrNWc9Df0ogp4qA.png 276w, https://miro.medium.com/max/966/1*XeWaP-VZrNWc9Df0ogp4qA.png 552w, https://miro.medium.com/max/1120/1*XeWaP-VZrNWc9Df0ogp4qA.png 640w, https://miro.medium.com/max/1225/1*XeWaP-VZrNWc9Df0ogp4qA.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Given the use case of placing an order, we will examine the interactions of three services that compose our storefront API: the Accounts service within the Accounting bounded context, the Fulfillment service within the Fulfillment context, and the Orders service within the Order Management context. We will examine how the three services use Kafka to communicate state changes (changes to their data) to each other in a completely wholly manner.</p>
+                              <p data-selectable-paragraph="">The diagram below shows the event flows between sub-systems discussed in the post. The numbering below corresponds to the numbering in the ordering process above. We will look at three event flows 2, 5, and 6. We will simulate event flow 3, the order being created by the Shopping Cart service.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2122" height="1036" role="presentation" src="../1_Q_lWEbeG7TQ8uv0eQc2bSA.png" srcset="https://miro.medium.com/max/483/1*Q_lWEbeG7TQ8uv0eQc2bSA.png 276w, https://miro.medium.com/max/966/1*Q_lWEbeG7TQ8uv0eQc2bSA.png 552w, https://miro.medium.com/max/1120/1*Q_lWEbeG7TQ8uv0eQc2bSA.png 640w, https://miro.medium.com/max/1225/1*Q_lWEbeG7TQ8uv0eQc2bSA.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Below is a view of the online storefront through the lens of the major sub-systems involved. Although the diagram is overly simplified, it should give you an idea of where Kafka and <a href="https://zookeeper.apache.org/" rel="noopener" target="_top">Zookeeper</a>, Kafka&rsquo;s current cluster manager, might sit in a typical, highly-available, microservice-based, distributed application platform.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="781" height="621" role="presentation" src="../0_SYsomFzXr0ZjVFVh.png" srcset="https://miro.medium.com/max/483/0*SYsomFzXr0ZjVFVh.png 276w, https://miro.medium.com/max/966/0*SYsomFzXr0ZjVFVh.png 552w, https://miro.medium.com/max/1120/0*SYsomFzXr0ZjVFVh.png 640w, https://miro.medium.com/max/1225/0*SYsomFzXr0ZjVFVh.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">This post will focus on the storefront&rsquo;s backend API — its services, databases, and messaging sub-systems.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="781" height="621" role="presentation" src="../0_PZPbtrjN2tkYLF68.png" srcset="https://miro.medium.com/max/483/0*PZPbtrjN2tkYLF68.png 276w, https://miro.medium.com/max/966/0*PZPbtrjN2tkYLF68.png 552w, https://miro.medium.com/max/1120/0*PZPbtrjN2tkYLF68.png 640w, https://miro.medium.com/max/1225/0*PZPbtrjN2tkYLF68.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <h1 data-selectable-paragraph="">Storefront Microservices</h1>
+                              <p data-selectable-paragraph="">We will explore the functionality of each of the three microservices and how they share state change events using <a href="https://www.confluent.io/blog/kafka-2-8-0-features-and-improvements-with-early-access-to-kip-500/" rel="noopener" target="_top">Kafka 2.8</a>. Each storefront API service is built using <a href="https://spring.io/projects/spring-boot" rel="noopener" target="_top">Spring Boot 2.0</a> and <a href="https://gradle.org/" rel="noopener" target="_top">Gradle</a>. Each Spring Boot service includes <a href="https://projects.spring.io/spring-data-rest/" rel="noopener" target="_top">Spring Data REST</a>, <a href="https://projects.spring.io/spring-data-mongodb/" rel="noopener" target="_top">Spring Data MongoDB</a>, <a href="https://spring.io/projects/spring-kafka" rel="noopener" target="_top">Spring for Apache Kafka</a>, <a href="https://cloud.spring.io/spring-cloud-sleuth/" rel="noopener" target="_top">Spring Cloud Sleuth</a>, <a href="http://springfox.github.io/springfox/" rel="noopener" target="_top">SpringFox</a>, and <a href="https://spring.io/guides/gs/actuator-service/" rel="noopener" target="_top">Spring Boot Actuator</a>. For simplicity, <a href="https://kafka.apache.org/documentation/streams/" rel="noopener" target="_top">Kafka Streams</a> and the use of <a href="https://cloud.spring.io/spring-cloud-stream/" rel="noopener" target="_top">Spring Cloud Stream</a> are not part of this post.</p>
+                              <h2 data-selectable-paragraph="">Source Code</h2>
+                              <p data-selectable-paragraph="">The storefront&rsquo;s microservices source code is publicly available on GitHub. The four GitHub projects can be cloned using the following commands:</p>
+                              <pre><span data-selectable-paragraph="">git clone --branch 2021-istio \<br>    --single-branch --depth 1 \<br>    <a href="https://github.com/garystafford/storefront-demo-accounts.git" rel="noopener" target="_top">https://github.com/garystafford/storefront-demo-accounts.git</a></span><span data-selectable-paragraph="">git clone --branch 2021-istio \<br>    --single-branch --depth 1 \<br>    <a href="https://github.com/garystafford/storefront-demo-orders.git" rel="noopener" target="_top">https://github.com/garystafford/storefront-demo-orders.git</a></span><span data-selectable-paragraph="">git clone --branch 2021-istio \<br>    --single-branch --depth 1 \<br>    <a href="https://github.com/garystafford/storefront-demo-fulfillment.git" rel="noopener" target="_top">https://github.com/garystafford/storefront-demo-fulfillment.git</a></span><span data-selectable-paragraph="">git clone --branch 2021-istio \<br>    --single-branch --depth 1 \<br>    <a href="https://github.com/garystafford/storefront-demo.git" rel="noopener" target="_top">https://github.com/garystafford/storefront-demo.git</a></span></pre>
+                              <p data-selectable-paragraph=""><em>Code samples in this post are displayed as </em><a href="https://help.github.com/articles/about-gists/" rel="noopener" target="_top"><em>Gists</em></a><em>, which may not display correctly on some mobile and social media browsers. Links to gists are also provided.</em></p>
+                              <h2 data-selectable-paragraph="">Accounts Service</h2>
+                              <p data-selectable-paragraph="">The Accounts service is responsible for managing basic customer information, such as name, contact information, addresses, and credit cards for purchases. A partial view of the data model for the Accounts service is shown below. This <a href="https://martinfowler.com/bliki/DDD_Aggregate.html" rel="noopener" target="_top">cluster of domain objects</a> represents the Customer Account <a href="https://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks" rel="noopener" target="_top">Aggregate</a>.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="1758" height="1120" role="presentation" src="../0_UvhIu8yBZ7FlVAfx.png" srcset="https://miro.medium.com/max/483/0*UvhIu8yBZ7FlVAfx.png 276w, https://miro.medium.com/max/966/0*UvhIu8yBZ7FlVAfx.png 552w, https://miro.medium.com/max/1120/0*UvhIu8yBZ7FlVAfx.png 640w, https://miro.medium.com/max/1225/0*UvhIu8yBZ7FlVAfx.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The Customer class, the Accounts service&rsquo;s primary data entity, is persisted in the Accounts MongoDB database. Below we see the representation of a Customer, as a <a href="https://www.mongodb.com/json-and-bson" rel="noopener" target="_top">BSON</a> document in the customer.accounts MongoDB database collection.</p>
+                              <p data-selectable-paragraph="">Along with the primary Customer entity, the Accounts service contains a CustomerChangeEvent class. As a Kafka producer, the Accounts service uses the CustomerChangeEvent <a href="https://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks" rel="noopener" target="_top">domain event</a> object to carry state information about the client the Accounts service wishes to share when a new customer is added, or a change is made to an existing customer. The CustomerChangeEvent object is not an exact duplicate of the Customer object. For example, the CustomerChangeEvent object does not share sensitive credit card information with other message Consumers (the CreditCard data object).</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="1324" height="784" role="presentation" src="../0_LT8oyDvorafUal30.png" srcset="https://miro.medium.com/max/483/0*LT8oyDvorafUal30.png 276w, https://miro.medium.com/max/966/0*LT8oyDvorafUal30.png 552w, https://miro.medium.com/max/1120/0*LT8oyDvorafUal30.png 640w, https://miro.medium.com/max/1225/0*LT8oyDvorafUal30.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Since the CustomerChangeEvent domain event object does not persist in MongoDB, we can look at its JSON message payload in Kafka to examine its structure. Note the differences in the data structure (schema) between the Customer document in MongoDB and the Kafka CustomerChangeEvent message payload.</p>
+                              <p data-selectable-paragraph="">For simplicity, we will assume that other services do not make changes to the customer&rsquo;s name, contact information, or addresses — this is the sole responsibility of the Accounts service.</p>
+                              <p data-selectable-paragraph="">Source code for the Accounts service is available on <a href="https://github.com/garystafford/storefront-demo-accounts/tree/2021-istio" rel="noopener" target="_top">GitHub</a>. Use the latest 2021-istio branch of the project.</p>
+                              <h2 data-selectable-paragraph="">Orders Service</h2>
+                              <p data-selectable-paragraph="">The Orders service is responsible for managing a customer&rsquo;s past and current orders; it is the system of record for the customer&rsquo;s order history. A partial view of the data model for the Orders service is shown below. This cluster of domain objects represents the Customer Orders Aggregate.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2038" height="1720" role="presentation" src="../0_qbikNwxzb8SKEy-H.png" srcset="https://miro.medium.com/max/483/0*qbikNwxzb8SKEy-H.png 276w, https://miro.medium.com/max/966/0*qbikNwxzb8SKEy-H.png 552w, https://miro.medium.com/max/1120/0*qbikNwxzb8SKEy-H.png 640w, https://miro.medium.com/max/1225/0*qbikNwxzb8SKEy-H.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The CustomerOrders class, the Order service&rsquo;s primary data entity, is persisted in MongoDB. This entity contains a history of all the customer&rsquo;s orders (Order data objects), along with the customer&rsquo;s name, contact information, and addresses. In the Orders MongoDB database, a CustomerOrders, represented as a BSON document in the customer.orders database collection, looks as follows:</p>
+                              <p data-selectable-paragraph="">Along with the primary CustomerOrders entity, the Orders service contains the FulfillmentRequestEvent class. As a Kafka producer, the Orders service uses the FulfillmentRequestEvent domain event object to carry state information about an approved order, ready for fulfillment. It sends to Kafka for consumption by the Fulfillment service. The FulfillmentRequestEvent object only contains the information it needs to share. Our example shares a single Order, along with the customer&rsquo;s name, contact information, and shipping address.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2038" height="828" role="presentation" src="../0_iyPTPIRm1h4eQMcb.png" srcset="https://miro.medium.com/max/483/0*iyPTPIRm1h4eQMcb.png 276w, https://miro.medium.com/max/966/0*iyPTPIRm1h4eQMcb.png 552w, https://miro.medium.com/max/1120/0*iyPTPIRm1h4eQMcb.png 640w, https://miro.medium.com/max/1225/0*iyPTPIRm1h4eQMcb.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Since the FulfillmentRequestEvent domain event object is not persisted in MongoDB, we can look at its JSON message payload in Kafka. Again, note the schema differences between the CustomerOrders document in MongoDB and the FulfillmentRequestEvent message payload in Kafka.</p>
+                              <p data-selectable-paragraph="">Source code for the Orders service is available on <a href="https://github.com/garystafford/storefront-demo-orders/tree/2021-istio" rel="noopener" target="_top">GitHub</a>. Use the latest 2021-istio branch of the project.</p>
+                              <h2 data-selectable-paragraph="">Fulfillment Service</h2>
+                              <p data-selectable-paragraph="">Lastly, the Fulfillment service is responsible for fulfilling orders. A partial view of the data model for the Fulfillment service is shown below. This cluster of domain objects represents the Fulfillment Aggregate.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2600" height="1771" role="presentation" src="../0_tmQwNZBmmampBm_y.png" srcset="https://miro.medium.com/max/483/0*tmQwNZBmmampBm_y.png 276w, https://miro.medium.com/max/966/0*tmQwNZBmmampBm_y.png 552w, https://miro.medium.com/max/1120/0*tmQwNZBmmampBm_y.png 640w, https://miro.medium.com/max/1225/0*tmQwNZBmmampBm_y.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The Fulfillment service&rsquo;s primary entity, the Fulfillment class, is persisted in MongoDB. This entity contains a single Order data object, along with the customer&rsquo;s name, contact information, and shipping address. The Fulfillment service also uses the Fulfillment entity to store the latest shipping status, such as &lsquo;Shipped&rsquo;, &lsquo;In Transit&rsquo;, and &lsquo;Received&rsquo;. The customer&rsquo;s name, contact information, and shipping address are managed by the Accounts service, replicated to the Orders service, and passed to the Fulfillment service via Kafka, using the FulfillmentRequestEvent entity.</p>
+                              <p data-selectable-paragraph="">In the Fulfillment MongoDB database, a Fulfillment object, represented as a BSON document in the fulfillment.requests database collection, looks as follows:</p>
+                              <p data-selectable-paragraph="">Along with the primary Fulfillment entity, the Fulfillment service has an OrderStatusChangeEvent class. As a Kafka producer, the Fulfillment service uses the OrderStatusChangeEvent domain event object to carry state information about an order&rsquo;s fulfillment statuses. The OrderStatusChangeEvent object contains the order&rsquo;s UUID, a timestamp, shipping status, and optional order status notes.</p>
+                              <div>
+                                <div>
+                                  <div><img alt="" width="356" height="600" role="presentation" src="../0_4FZvoS4XC9MJE3Fq" srcset="https://miro.medium.com/max/483/0*4FZvoS4XC9MJE3Fq 276w, https://miro.medium.com/max/623/0*4FZvoS4XC9MJE3Fq 356w" sizes="356px"></div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Since the OrderStatusChangeEvent domain event object is not persisted in MongoDB, again, we can again look at its JSON message payload in Kafka.</p>
+                              <p data-selectable-paragraph="">Source code for the Fulfillment service is available on <a href="https://github.com/garystafford/storefront-demo-fulfillment/tree/2021-istio" rel="noopener" target="_top">GitHub</a>. Use the latest 2021-istio branch of the project.</p>
+                              <h1 data-selectable-paragraph="">State Change Event Messaging Flows</h1>
+                              <p data-selectable-paragraph="">There are three state change event messaging flows illustrated in this post.</p>
+                              <ol>
+                                <li data-selectable-paragraph="">Changes to a Customer triggers an event message produced by the Accounts service, which is published on the accounts.customer.change Kafka topic and consumed by the Orders service;</li>
+                                <li data-selectable-paragraph="">Order Approved triggers an event message produced by the Orders service, which is published on the orders.order.fulfill Kafka topic, and is consumed by the Fulfillment service;</li>
+                                <li data-selectable-paragraph="">Changes to the status of an Order triggers an event message produced by the Fulfillment Service, which is published on the fulfillment.order.change Kafka topic, and is consumed by the Orders service;</li>
+                              </ol>
+                              <p data-selectable-paragraph="">Each of these state change event messaging flows follows the same architectural pattern on the Kafka topic&rsquo;s producer and consumer sides.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2102" height="902" role="presentation" src="../1_CH3pjOWgbaCbMXGodMcHow.png" srcset="https://miro.medium.com/max/483/1*CH3pjOWgbaCbMXGodMcHow.png 276w, https://miro.medium.com/max/966/1*CH3pjOWgbaCbMXGodMcHow.png 552w, https://miro.medium.com/max/1120/1*CH3pjOWgbaCbMXGodMcHow.png 640w, https://miro.medium.com/max/1225/1*CH3pjOWgbaCbMXGodMcHow.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">Let us examine each state change event messaging flow and the code behind it.</p>
+                              <h2 data-selectable-paragraph="">Customer State Change</h2>
+                              <p data-selectable-paragraph="">When a new Customer entity is created or updated by the Accounts service, a CustomerChangeEvent message is produced and sent to the accounts.customer.change Kafka topic. This message is retrieved and consumed by the Orders service. This is how the Orders service eventually has a record of all customers who may place an order. By way of Kafka, it can be said that the Order&rsquo;s Customer contact information is <a href="https://en.wikipedia.org/wiki/Eventual_consistency" rel="noopener" target="_top">eventually consistent</a> with the Account&rsquo;s Customer contact information.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="781" height="81" role="presentation" src="../0_rv8ydDFjY8a-MESR.png" srcset="https://miro.medium.com/max/483/0*rv8ydDFjY8a-MESR.png 276w, https://miro.medium.com/max/966/0*rv8ydDFjY8a-MESR.png 552w, https://miro.medium.com/max/1120/0*rv8ydDFjY8a-MESR.png 640w, https://miro.medium.com/max/1225/0*rv8ydDFjY8a-MESR.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">There are different methods to trigger a message to be sent to Kafka. For this particular state change, the Accounts service uses a listener. The listener class, which extends <a href="https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/core/mapping/event/AbstractMongoEventListener.html" rel="noopener" target="_top">AbstractMongoEventListener</a>, listens for an <a href="https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/core/mapping/event/AbstractMongoEventListener.html#onAfterSave-org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent-" rel="noopener" target="_top">onAfterSave</a> event for a Customer entity.</p>
+                              <p data-selectable-paragraph="">The listener handles the event by instantiating a new CustomerChangeEvent with the Customer&rsquo;s information and passes it to the Sender class.</p>
+                              <p data-selectable-paragraph="">The SenderConfig class handles the configuration of the Sender. This Spring Kafka producer configuration class uses Spring Kafka&rsquo;s <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/support/serializer/JsonSerializer.html" rel="noopener" target="_top">JsonSerializer</a> class to serialize the CustomerChangeEvent object into a JSON message payload.</p>
+                              <p data-selectable-paragraph="">The Sender uses a <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/core/KafkaTemplate.html" rel="noopener" target="_top">KafkaTemplate</a> to send the message to the accounts.customer.change Kafka topic, as shown below. Since message order is critical to ensure changes to a Customer&rsquo;s information are processed in order, all messages are sent to a single topic with a single partition.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2314" height="1286" role="presentation" src="../1_PqIVOhxHdGWm0AJzy2wujQ.png" srcset="https://miro.medium.com/max/483/1*PqIVOhxHdGWm0AJzy2wujQ.png 276w, https://miro.medium.com/max/966/1*PqIVOhxHdGWm0AJzy2wujQ.png 552w, https://miro.medium.com/max/1120/1*PqIVOhxHdGWm0AJzy2wujQ.png 640w, https://miro.medium.com/max/1225/1*PqIVOhxHdGWm0AJzy2wujQ.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The Orders service&rsquo;s Receiver class consumes the CustomerChangeEvent messages produced by the Accounts service.</p>
+                              <p data-selectable-paragraph="">The Orders service&rsquo;s Receiver class is configured differently compared to the Fulfillment service. The Orders service receives messages from multiple topics, each containing messages with different payload structures. Each type of message must be deserialized into different object types. To accomplish this, the ReceiverConfig class uses Apache Kafka&rsquo;s <a href="https://kafka.apache.org/0102/javadoc/org/apache/kafka/common/serialization/StringDeserializer.html" rel="noopener" target="_top">StringDeserializer</a>. The Orders service&rsquo;s ReceiverConfig references Spring Kafka&rsquo;s AbstractKafkaListenerContainerFactory classes <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/config/AbstractKafkaListenerContainerFactory.html#setMessageConverter-org.springframework.kafka.support.converter.MessageConverter-" rel="noopener" target="_top">setMessageConverter</a> method, which allows for dynamic object type matching.</p>
+                              <p data-selectable-paragraph="">Each Kafka topic the Orders service consumes messages from is associated with a method in the Receiver class (shown above). This method accepts a specific object type as input, denoting the object type into which the message payload needs to be deserialized. This way, we can receive multiple message payloads, serialized from multiple object types, and successfully deserialize each type into the correct data object. In the case of a CustomerChangeEvent, the Orders service calls the receiveCustomerOrder method to consume the message and correctly deserialize it.</p>
+                              <p data-selectable-paragraph="">For all services, a Spring application.yaml properties file in each service&rsquo;s resources directory contains the Kafka configuration (lines 11–19).</p>
+                              <h2 data-selectable-paragraph="">Order Approved for Fulfillment</h2>
+                              <p data-selectable-paragraph="">When the status of the Order in a CustomerOrders entity is changed to &lsquo;Approved&rsquo; from &lsquo;Created&rsquo;, a FulfillmentRequestEvent message is produced and sent to the orders.order.fulfill Kafka topic. This message is retrieved and consumed by the Fulfillment service. This is how the Fulfillment service has a record of what Orders are ready for fulfillment.</p>
+                              <p data-selectable-paragraph="">Since we did not create the Shopping Cart service for this post, the Orders service simulates an order approval event, containing an approved order, being received, through Kafka, from the Shopping Cart Service. The Orders service can create a random order history for each customer to simulate order creation and approval. Further, the Orders service can scan all customer orders for orders that contain both a &lsquo;Created&rsquo; and &lsquo;Approved&rsquo; order status. This state is communicated as an event message to Kafka for all orders matching those criteria. A FulfillmentRequestEvent is produced, which contains the order to be fulfilled, and the customer&rsquo;s contact and shipping information. The FulfillmentRequestEvent is passed to the Sender class.</p>
+                              <p data-selectable-paragraph="">The SenderConfig class handles the configuration of the Sender class. This Spring Kafka producer configuration class uses Spring Kafka&rsquo;s <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/support/serializer/JsonSerializer.html" rel="noopener" target="_top">JsonSerializer</a> class to serialize the FulfillmentRequestEvent object into a JSON message payload.</p>
+                              <p data-selectable-paragraph="">The Sender class uses a KafkaTemplate to send the message to the orders.order.fulfill Kafka topic, as shown below. Since message order is not critical, messages can be sent to a topic with multiple partitions if the volume of messages requires it.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2314" height="1286" role="presentation" src="../1_L8lJ2xlfNDTjAB6_Kca8BQ.png" srcset="https://miro.medium.com/max/483/1*L8lJ2xlfNDTjAB6_Kca8BQ.png 276w, https://miro.medium.com/max/966/1*L8lJ2xlfNDTjAB6_Kca8BQ.png 552w, https://miro.medium.com/max/1120/1*L8lJ2xlfNDTjAB6_Kca8BQ.png 640w, https://miro.medium.com/max/1225/1*L8lJ2xlfNDTjAB6_Kca8BQ.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The Fulfillment service&rsquo;s Receiver class consumes the FulfillmentRequestEvent from the Kafka topic and instantiates a Fulfillment object, containing the data passed in the FulfillmentRequestEvent message payload. The Fulfillment object includes the order to be fulfilled and the customer&rsquo;s contact and shipping information.</p>
+                              <p data-selectable-paragraph="">The Fulfillment service&rsquo;s ReceiverConfig class defines the DefaultKafkaConsumerFactory and ConcurrentKafkaListenerContainerFactory, responsible for deserializing the message payload from JSON into a FulfillmentRequestEvent object.</p>
+                              <h2 data-selectable-paragraph="">Fulfillment Order Status State Change</h2>
+                              <p data-selectable-paragraph="">When the Order status in a Fulfillment entity is changed to anything other than <strong>Approved</strong>, an OrderStatusChangeEvent message is produced by the Fulfillment service and sent to the fulfillment.order.change Kafka topic. This message is retrieved and consumed by the Orders service. This is how the Orders service tracks all CustomerOrder lifecycle events from the initial <strong>Created</strong> status to the final <strong>Received</strong> status.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="781" height="81" role="presentation" src="../0_zX7QAqF_H4nu5PAN.png" srcset="https://miro.medium.com/max/483/0*zX7QAqF_H4nu5PAN.png 276w, https://miro.medium.com/max/966/0*zX7QAqF_H4nu5PAN.png 552w, https://miro.medium.com/max/1120/0*zX7QAqF_H4nu5PAN.png 640w, https://miro.medium.com/max/1225/0*zX7QAqF_H4nu5PAN.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The Fulfillment service exposes several endpoints via the FulfillmentController class, which simulates a change in order status. They allow an order&rsquo;s status to be changed from <strong>Approved</strong> to <strong>Processing</strong>, to <strong>Shipped</strong>, to <strong>In Transit</strong>, and finally to <strong>Received</strong>. This change applies to all orders that meet the criteria.</p>
+                              <p data-selectable-paragraph="">Each of these state changes triggers a change to the Fulfillment document in MongoDB. Each change also generates a Kafka message containing the OrderStatusChangeEvent in the message payload. The Fulfillment service&rsquo;s Sender class handles this.</p>
+                              <p data-selectable-paragraph="">Note in this example that these two events are not handled in an atomic transaction. Either updating the database or sending the message could fail independently, which would cause a loss of data consistency. In the real world, we must ensure that both these independent actions succeed or fail as a single transaction to ensure data consistency, using any of a handful of common architectural patterns.</p>
+                              <p data-selectable-paragraph="">The SenderConfig class handles the configuration of the Sender class. This Spring Kafka producer configuration class uses Spring Kafka&rsquo;s <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/support/serializer/JsonSerializer.html" rel="noopener" target="_top">JsonSerializer</a> class to serialize the OrderStatusChangeEvent object into a JSON message payload. This class is almost identical to the SenderConfig class in the Orders and Accounts services.</p>
+                              <p data-selectable-paragraph="">The Sender class uses a KafkaTemplate to send the message to the fulfillment.order.change Kafka topic, as shown below. Message order is not critical since a timestamp is recorded, ensuring the proper sequence of order status events can be maintained. Messages can be sent to a topic with multiple partitions if the volume of messages requires it.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="2314" height="1286" role="presentation" src="../1_vvPYAGLxUi0AwJz7LtAj3w.png" srcset="https://miro.medium.com/max/483/1*vvPYAGLxUi0AwJz7LtAj3w.png 276w, https://miro.medium.com/max/966/1*vvPYAGLxUi0AwJz7LtAj3w.png 552w, https://miro.medium.com/max/1120/1*vvPYAGLxUi0AwJz7LtAj3w.png 640w, https://miro.medium.com/max/1225/1*vvPYAGLxUi0AwJz7LtAj3w.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-selectable-paragraph="">The Orders service&rsquo;s Receiver class is responsible for consuming the OrderStatusChangeEvent message produced by the Fulfillment service.</p>
+                              <p data-selectable-paragraph="">As explained above, the Orders service is configured differently compared to the Fulfillment service to receive messages from Kafka. The Orders service receives messages from more than one topic. The ReceiverConfig class deserializes all messages using the StringDeserializer. The Orders service&rsquo;s ReceiverConfig class references the Spring Kafka AbstractKafkaListenerContainerFactory class&rsquo;s <a href="https://docs.spring.io/spring-kafka/api/org/springframework/kafka/config/AbstractKafkaListenerContainerFactory.html#setMessageConverter-org.springframework.kafka.support.converter.MessageConverter-" rel="noopener" target="_top">setMessageConverter</a> method, which allows for dynamic object type matching.</p>
+                              <div id="safari-reader-element-marker"></div>
+                              Each Kafka topic the Orders service consumes messages from is associated with a method in the Receiver class (shown above). This method accepts a specific object type as an input parameter, denoting the object type into which the message payload needs to be deserialized. In the case of an OrderStatusChangeEvent message, the receiveOrderStatusChangeEvents method is called to consume a message from the fulfillment.order.change Kafka topic.
+                              <h1 data-selectable-paragraph="">Part Two</h1>
+                              <p data-selectable-paragraph="">In <a rel="noopener" href="https://itnext.io/eventual-consistency-with-spring-for-apache-kafka-part-2-of-2-23bedd512ccf" target="_top">Part Two</a> of this post, we will review how to deploy and run the storefront API components into a local development environment running on Kubernetes with <a href="https://istio.io/" rel="noopener" target="_top">Istio</a>, using <a href="https://minikube.sigs.k8s.io/" rel="noopener" target="_top">Minikube</a>. To provide operational visibility, we will add observability tools, like Yahoo&rsquo;s <a href="https://github.com/yahoo/CMAK" rel="noopener" target="_top">CMAK</a> (Cluster Manager for Apache Kafka), <a href="https://github.com/mongo-express/mongo-express" rel="noopener" target="_top">Mongo Express</a>, <a href="https://kiali.io/" rel="noopener" target="_top">Kiali</a>, <a href="https://prometheus.io/" rel="noopener" target="_top">Prometheus</a>, and <a href="https://grafana.com/" rel="noopener" target="_top">Grafana</a> to our system.</p>
+                              <div role="button" tabindex="0">
+                                <div>
+                                  <div>
+                                    <div><img alt="" width="1440" height="900" role="presentation" src="../1_7b5pY1_Fy0siXx7k3HfaOA.png" srcset="https://miro.medium.com/max/483/1*7b5pY1_Fy0siXx7k3HfaOA.png 276w, https://miro.medium.com/max/966/1*7b5pY1_Fy0siXx7k3HfaOA.png 552w, https://miro.medium.com/max/1120/1*7b5pY1_Fy0siXx7k3HfaOA.png 640w, https://miro.medium.com/max/1225/1*7b5pY1_Fy0siXx7k3HfaOA.png 700w" sizes="700px"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              View of the Storefront API from Kiali</div>
+                          </div>
+                        </div>
+                        <div id="incoming-page-placeholder">
+                          <div id="incoming-page-corner">
+                            <div id="incoming-page-text" data-itext="nextPageLoadingTips">Loading Next Page…</div>
+                          </div>
+                        </div>
+                      </div>
+                      <p>&nbsp;</p>
+                    </div>
+                  </div>
+                 
+          <!-- #EndEditable -->
+                 
+			  	
+          </td>
+		  <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- InstanceBeginEditable name="EditRegion3" --><!-- InstanceEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+<!-- InstanceEnd --></html>
