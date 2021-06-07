@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Jdon Framework</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+    <h1 class="title">Modelling with Business Capabilities</h1>
+<div>
+<section data-redirect-url="https://www.linkedin.com/login?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fpulse%2Fmodelling-business-capabilities-trond-hjorteland">
+<div class="leading-image"><img src="https://media.licdn.cn/dms/image/C4D12AQHMDclL9Uw9ZA/article-cover_image-shrink_720_1280/0/1592750736583?e=1628726400&amp;v=beta&amp;t=Ux6lIKTQMeFFr7dVV5ZrOulTct9DAGhkmvYvxrJ4U_Y" alt="Modelling with Business Capabilities" /></div>
+<p><strong>We probably can all agree that modularisation of a large complex system into smaller and more manageable parts is an actual best practise, not only for lowering the cognitive load for each part, but also for team independence and operational resiliency.&nbsp;The tricky bit is how one can go about drawing the boundaries, making a stable and sustainable structure of the overall system. Domain-Driven Design with its Bounded Contexts is one approach, where the language of the domain is used as a guide, another is taking inspiration from the capabilities defined by the business model to find the natural seams in your domain.</strong></p>
+<blockquote>"A business capability is a particular ability or capacity that a business may possess or exchange to achieve a specific purpose or outcome." &ndash;Ulrich Homann</blockquote>
+<p><em>This is an abridged version of the chapter on Business Capability Modelling published as part of the free&nbsp;</em><a href="https://leanpub.com/visualcollaborationtools" target="_blank" rel="nofollow noopener"><em>Visual Collaboration Tools</em></a><em>&nbsp;book on Leanpub.</em></p>
+<h2>What Business Capabilities are</h2>
+<p>Business capability models are frequently used in enterprise architecture as a way to describe a company in a holistic way, representing the organisation&rsquo;s business model independent of the structure, processes, people, or resources like IT systems, buildings, materials, hardware, tools, know-how etc. Everything is included, every nut and bolt; nothing belongs outside of the model, and its premise is an outside-in perspective of the company as it strictly describes what the company is capable of &ndash; its abilities.</p>
+<p>Business capability modelling is related to the&nbsp;<a href="https://en.wikipedia.org/wiki/Resource-based_view" target="_blank" rel="nofollow noopener">resource-based view</a>&nbsp;of the firm and often regarded as an extension to it as it also supports other&nbsp;<a href="https://cio-wiki.org/wiki/Value_Configuration" target="_blank" rel="nofollow noopener">value configurations</a>&nbsp;in addition to classical value chains, like&nbsp;<a href="https://en.wikipedia.org/wiki/Value_network" target="_blank" rel="nofollow noopener">value networks</a>&nbsp;and&nbsp;<a href="https://en.wikipedia.org/wiki/Value_shop" target="_blank" rel="nofollow noopener">value shops</a>. This type of modelling may sound academic and something that only the business and enterprise architects care about, but it is quite tangible and widely applicable. Simply put, the capabilities are what the business regard itself to be capable of, what its competence is, both for internal and external parties. What makes the concept a bit hard to grasp is that they inherently describe&nbsp;<em>what</em>&nbsp;the company does, not&nbsp;<em>how</em>. It is an abstraction of the business reality that sets them apart from classical business process modelling, which usually focuses on&nbsp;<em>how</em>&nbsp;things are done. This abstractness also makes the capabilities inherently more stable than other approaches as they do not change when their implementation does, like automation using the software. The only reason for them changing is company strategy adjustments, such as deciding to pivot, extend, or moving out of some business area.</p>
+<p>This strict and abstract business view gives its enabling components, be it roles (people), processes, information, and resources, an explicit business context. An interesting aspect of this vantage point is that the capabilities need to be fairly self-contained, meaning it must be able to deliver on that capability in relativity independent manner. Furthermore, the capabilities are naturally hierarchical and decomposable, meaning that one top-level capability, e.g. Sales, will contain a number of capabilities which again will contain another set. The number of levels differs based on the size and complexity of the enterprise, but 3-4 levels are common.&nbsp;</p>
+<p>Although it may seem that business capabilities are something that only business and enterprise architects care about, they can be used to a lot more than strategic planning and documentation, some of which may even be relevant for developers and software architects. Especially their inherent independence and logical boundary fits well with the SOA/microservices principles of autonomy and explicit boundaries, as well as the concepts of bounded contexts from domain-driven design. Even without having a defined business capability model at hand, the concept can be used to identify those services as a heuristic. If you can match the suggested boundary to something that can be characterised as a business capability, you may be on to a good autonomous service.</p>
+<p>What makes business capabilities so versatile is their descriptive nature, that they define the problem space well and says nothing about the solution space. They are a good foundation for a lot of more detailed modelling, being stable from the business perspective and only change when the business itself changes.</p>
+<h2>How to create the model</h2>
+<p>Typically, this modelling is done collaboratively, getting all the people with the right business knowledge into the same room. This is not something a few people do on their own in isolation, but it may be advantageous sometimes when starting from scratch for somebody to build a straw model before inviting busy people to contribute to it in the workshop.</p>
+<p>Before inviting people to participate in a workshop, it is always important to be explicit about the expectations. Whether the goal is to define a big picture map of the whole enterprise or if it is detailing the lower-level capabilities indicates who needs to be involved. For the top-level mapping senior business leaders, enterprise architects, and business architects from across the enterprise are needed, while for the detailing of specific capabilities people with deep knowledge of that part is required, like product managers, system matter experts, and software architects. Although it can seem sensible to try to create a full capability map, going all the way from the top to the lower levels of the hierarchy, the effort will most likely overshadow the benefits. Therefore adjust the initiative to the specific goal at hand, be it creating a top-level model to be used for business modelling or to modularise a software monolith belonging to one of those top-level capabilities.</p>
+<p>The goal is to capture and document the capabilities that represent what the business does now and what it desires for the future. In most companies, some sort of business model and business architecture already exists and should be brought to the workshop as input, be it value chain analysis, business processes, and business plans. Even existing org charts can be interesting for inspiration, as well as a list of core business entities. For some industries there even exist publicly available reference models that can be beneficial to take a look at.</p>
+<p>To learn more about business capability modelling and how you can do this in practice, with tips and tricks in how to run a workshop and how to define and document the result, check out the free&nbsp;<a href="https://leanpub.com/visualcollaborationtools" target="_blank" rel="nofollow noopener">Visual Collaboration Tools</a>&nbsp;book on Leanpub. Here you can also can learn more about a number of other great modelling and collaboration techniques like Event Storming, User Story Mapping, Domain Storytelling, Business Model Canvas, Example Mapping, Impact Mapping, Wardley Maps, and much more, all written by industry experts with a lot of experience using the tools. By paying a small fee you can also contribute to a good cause, a diversity program in tech.</p>
+<p>If you want to learn more about what business capability models, I have a few talks on this, the most recent being this from the&nbsp;<a href="https://virtualddd.com/#/conference" target="_blank" rel="nofollow noopener">#DDDDD Conference</a>:</p>
+</section>
+</div>
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>
