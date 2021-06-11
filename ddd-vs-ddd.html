@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Jdon Framework</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+                <h1 class="title">DDD vs DDD</h1>
+                <div>
+                <div>
+                <h1 data-selectable-paragraph="">Domain-Driven Design vs Demo Driven Development, a case for the &ldquo;Yes upfront design&rdquo; approach</h1>
+                <p data-selectable-paragraph="">Modern software development project management styles, such as Scrum, are centered around short development cycles, a.k.a. sprints. Many organizations misinterpret this and take a &ldquo;no upfront design&rdquo; and a &ldquo;get coding from day one&rdquo; approach. To them, the theory goes that we don&rsquo;t need to design a software solution. We start coding but in small increments. At the end of each sprint the demo of working software is shown to the product owner and stakeholders. The stakeholders give feedback, then we modify the application, and so on, until we reach the point when we can deliver a software application.</p>
+                <p data-selectable-paragraph="">I call this misinterpretation of the Agile principles a Demo Driven Development. According to this misunderstanding of a methodology, the whole team is rushed towards this short term goal and encouraged to cut corners in order to have a demo ready for the end of a sprint.</p>
+                <p data-selectable-paragraph="">This may seem like a good idea, it gets people focused on a common goal. Some may say that it gets them working harder during the sprint, as they have an achievable goal. Also, product stakeholders have a chance to give early feedback, and if the requirements have been misunderstood this can be rectified early on.</p>
+                <p data-selectable-paragraph="">There are many other alleged benefits of this style of development and it has been gaining momentum in recent years. I think this method works to an extent in some situations: for a small project, for projects with a relatively simple domain, or where developers understand the domain well.</p>
+                <p data-selectable-paragraph="">However, I suggest that this style of software development is inappropriate for medium to large projects or for projects with a complex domain.</p>
+                <p data-selectable-paragraph="">Various studies, such as the<a href="https://www.standishgroup.com/sample_research_files/CHAOSReport2015-Final.pdf" target="_top" rel="noopener nofollow">&nbsp;Standish Chaos Report</a>, show that more than half of software development projects are not successful.</p>
+                <figure class="clear">
+                <div tabindex="0" role="button">
+                <div>
+                <div>
+                <div><img role="presentation" src="https://miro.medium.com/max/962/1*KP0qUKqjdQ73fe9uYCpCmg.jpeg" sizes="700px" srcset="https://miro.medium.com/max/276/1*KP0qUKqjdQ73fe9uYCpCmg.jpeg 276w, https://miro.medium.com/max/552/1*KP0qUKqjdQ73fe9uYCpCmg.jpeg 552w, https://miro.medium.com/max/640/1*KP0qUKqjdQ73fe9uYCpCmg.jpeg 640w, https://miro.medium.com/max/700/1*KP0qUKqjdQ73fe9uYCpCmg.jpeg 700w" alt="" width="962" height="896" /></div>
+                </div>
+                </div>
+                </div>
+                <figcaption data-selectable-paragraph="">Software projects success rate, from&nbsp;<a href="https://www.standishgroup.com/sample_research_files/CHAOSReport2015-Final.pdf" target="_top" rel="noopener nofollow">CHAOS report</a></figcaption>
+                </figure>
+                <p data-selectable-paragraph="">As we can see, the larger the project, the more likely it is to fail. So if your project is anything but small, you have statistics working against you. In order to increase the chance of your project succeeding, instead of adopting these &ldquo;get coding from day one&rdquo; and &ldquo;no upfront design&rdquo; software development styles, I propose the adoption of a&nbsp;<strong>Domain-Driven Design&nbsp;</strong>approach, this approach is particularly beneficial for medium and large projects, or any project with a complex domain.</p>
+                <p data-selectable-paragraph=""><strong>DDD</strong>&nbsp;is a software development approach coined by&nbsp;<strong>Eric Evans&nbsp;</strong>in his book&nbsp;<em>Domain-Driven Design: Tackling Complexity in the Heart of Software,</em>&nbsp;initially published in 2003. Since then it has been enriched by many contributions from an ever-growing DDD community of practitioners.</p>
+                <p data-selectable-paragraph="">Before we examine how using the DDD approach would benefit your project let's explore in more detail this rival &ldquo;Demo Driven Development&rdquo; practice (as I call it), or rather examine its shortfalls.</p>
+                <p data-selectable-paragraph="">But first, a funny slide (they told me to put one in every presentation):</p>
+                <figure class="clear">
+                <div tabindex="0" role="button">
+                <div>
+                <div>
+                <div>
+                <div><img src="https://miro.medium.com/max/60/1*q-RPfG62MOCbp-V2OuP01A.jpeg?q=20" alt="The code monkey vs Domain Driven Design" width="12000" height="10000" /></div>
+                <img src="chrome-extension://hchobocdmclopcbnibdnoafilagadion/view.html" alt="The code monkey vs Domain Driven Design" width="12000" height="10000" /></div>
+                </div>
+                </div>
+                </div>
+                <figcaption data-selectable-paragraph="">The Infinite Monkey, courtesy of @TopsyRoxyMei &copy;</figcaption>
+                </figure>
+                <p data-selectable-paragraph="">French mathematician Emil Borel postulated&nbsp;<em>The Infinite monkey theorem</em>&nbsp;in 1913 which states that&nbsp;<strong>a monkey on a typewriter hitting keys at random for an infinite amount of time would produce complete works of Willam Shakespeare.</strong></p>
+                <h1 data-selectable-paragraph="">No upfront design</h1>
+                <p data-selectable-paragraph="">Agile in general, and Scrum in particular, prides itself on a &ldquo;No upfront design&rdquo; approach. The idea is that each sprint we bring an Epic or a few Stories from the Backlog into a sprint. We focus on building a small portion of the product at a time. At the end of the sprint, we showcase what we produced and the product owner and other stakeholders give us feedback, tell us what to change. By iterating from sprint to sprint, changing and rebuilding the product each time, eventually, we will end up with a complete solution. Hmm, this reminds me of something&hellip;</p>
+                <p data-selectable-paragraph="">Yes, as you guessed, this sounds like: &ldquo;If you have an infinite number of sprints and a team of monkeys you will end up with the desired software solution&rdquo; 😃</p>
+                <p data-selectable-paragraph="">Okay, we do use software developers instead of monkeys &mdash; so we do not need an infinite amount of time. However, this approach does add a significant amount of time to most projects. And for complex and large projects this will result in code that is known, in the DDD community, as &ldquo; a big ball of mud&rdquo; or &ldquo;spaghetti code&rdquo;. The Constant Refactoring approach can help, but how many product owners and stakeholders actually allow it?</p>
+                <h1 data-selectable-paragraph=""><strong>Start coding ASAP</strong></h1>
+                <p data-selectable-paragraph="">After more than 20 years working in IT, the &ldquo;Start coding from day one&rdquo;, to me, is the biggest mistake one can make in a Software Development project. According to Domain-Driven Design principles, the developer's understanding of the domain gets distilled into code. In practice, this means that if software developers misunderstand the domain and requirements they will start building the wrong product.</p>
+                <p data-selectable-paragraph="">It&rsquo;s true that as a project progresses, after many iterations and sprints, developers will eventually understand what is required from them. Unfortunately, by this stage, they have created a mass of code that is poorly structured and therefore hard to change and maintain. This is the point where developers say to stakeholders: &ldquo;We should really scrap all the existing code and rebuild this from scratch.&rdquo; At which point managers start to look for some &ldquo;good developers&rdquo; to hire, which, of course, don&rsquo;t exist 😃.</p>
+                <p data-selectable-paragraph="">The problem was<strong>&nbsp;</strong>not in the quality of the developers but in the use of the wrong software development approach.</p>
+                <h1 data-selectable-paragraph="">Domain-Driven Design</h1>
+                <p data-selectable-paragraph="">Luckily there is another way. You don&rsquo;t need to perform the proverbial &ldquo;Two years analysis phase&rdquo; as is often presented as a pitfall of a Waterfall Methodology, nor do you have to start coding without any design. Instead, you can adopt a&nbsp;<strong>Domain-Driven Design&nbsp;</strong>approach.</p>
+                <p data-selectable-paragraph=""><strong>Domain-Driven Design (DDD)</strong>&nbsp;is an approach to software development: a set of techniques, principles, and patterns used to aid in the development of complex systems.</p>
+                <p data-selectable-paragraph="">The goal of practicing DDD is to handle complex scenarios with a systematic approach in such a way that domain experts (stakeholders, product users, etc.) and the development team (product owner, software architects, developers, etc.) can collaborate effectively with minimum friction. Typically, they gather around a whiteboard during a Domain Exploration Session and produce various types of diagrams by using a number of techniques provided by DDD. These techniques are beyond the scope of this blog and there are many resources on the internet to give you an overview.</p>
+                <h1 data-selectable-paragraph="">Domain-Driven Design and Agile</h1>
+                <p data-selectable-paragraph="">DDD can be used in conjunction with Agile, after all, they are two different things. Agile is a project management methodology, whereas DDD is a set of techniques and approaches to software development. The main point I am trying to make in this blog is: Do not focus on demoing fully working software at the end of each sprint. Instead, you can demo various DDD artifacts that are the product of Knowledge Crunching sessions. For example, you could demo a&nbsp;<a href="https://medium.com/domain-driven-stories/using-draw-io-to-capture-domain-stories-3ca828f732a0" target="_top" rel="noopener">Domain Story Diagram</a>, an Event Storming sheet, a diagram of Entities in a Domain Model, a Bounded Context Map&hellip; All these artifacts can be demoed and reviewed at Sprint Review meetings.</p>
+                <figure class="clear">
+                <div tabindex="0" role="button">
+                <div>
+                <div>
+                <div>
+                <div><img role="presentation" src="https://miro.medium.com/max/60/1*7K0zWViv6Si79qyYSUqyuQ.jpeg?q=20" alt="" width="869" height="626" /></div>
+                <img role="presentation" src="chrome-extension://hchobocdmclopcbnibdnoafilagadion/view.html" alt="" width="869" height="626" /></div>
+                </div>
+                </div>
+                </div>
+                <figcaption data-selectable-paragraph="">Modeling and prototyping happening in parallel &copy; Darko Kantic</figcaption>
+                </figure>
+                <p data-selectable-paragraph="">This means that you can still iterate, but&nbsp;<strong>not</strong>&nbsp;by re-developing code, rather you can iterate through diagrams by refining the Domain Model. Changing a few diagrams is far easier (and cheaper) than changing working software.</p>
+                <p data-selectable-paragraph="">In addition, if you are prototyping in parallel with DDD modeling then you can demo various prototypes (while stressing to stakeholders that &ldquo;this is only a prototype.&rdquo; )</p>
+                <h1 data-selectable-paragraph="">Prototype from day one</h1>
+                <p data-selectable-paragraph="">Instead of starting coding working software from day one, we should start coding prototypes. This can be done in parallel with modeling. Prototyping differs from coding in that we are aware that this is throw-away code. We do not waste time testing the code and don&rsquo;t develop details, we are &ldquo;just playing&rdquo; to see &ldquo;how something will work&rdquo;, we are getting familiar with the technology, with the &ldquo;plumbing&rdquo;. For example, we could experiment with how to create a React Form and send submitted data into a Pulsar Topic using Akka Streams. We want to investigate the mechanics of this concept so that when we start building the real thing we already have knowledge of it and have an infrastructure ready. Or maybe we just want to investigate whether this concept is appropriate for our implementation, after all, we may decide that it is not adequate for our project and choose another technology stack.</p>
+                <p data-selectable-paragraph=""><strong>Reviewing the BDD specification.</strong></p>
+                <p data-selectable-paragraph="">Another good artifact for sprint review is the Behavior Driven Development specification as this is something that stakeholders can understand. DDD plays well with BDD, especially if you use the Domin Storytelling technique and diagrams. You can read&nbsp;<a href="https://medium.com/domain-driven-stories/domain-story-as-spock-test-specification-d6f2ae03c3bd" target="_top" rel="noopener">my blog</a>&nbsp;to see how you can use the output of a Domin Story diagram and use it as a Spock Testing Framework test specification.</p>
+                <p data-selectable-paragraph="">I hope that in this blog I have raised your interest in DDD and shown that &ldquo;Yes upfront design&rdquo; is a useful approach because iterating and changing diagrams is cheaper than iterating and changing working software.</p>
+                <p data-selectable-paragraph=""><strong>P.S.</strong></p>
+                <p data-selectable-paragraph="">And to finish on a happy note&hellip;</p>
+                <p data-selectable-paragraph=""><strong>An actual monkeys experiment</strong></p>
+                <blockquote>
+                <p data-selectable-paragraph="">In 2002, lecturers and students from the University of Plymouth MediaLab Arts course used a &pound;2,000 grant from the Arts Council to study&nbsp;<strong>the literary output&nbsp;</strong>of&nbsp;<strong>real monkeys</strong>. They&nbsp;<strong>left a computer keyboard</strong>&nbsp;in the enclosure of six&nbsp;<em>Celebes crested macaques</em>&nbsp;in Paignton Zoo in Devon, England for a month.</p>
+                <p data-selectable-paragraph=""><a href="https://en.wikipedia.org/wiki/Infinite_monkey_theorem" target="_top" rel="noopener nofollow">Wikipedia</a></p>
+                </blockquote>
+                <p data-selectable-paragraph="">You can download the full text created by the monkeys from the&nbsp;<a href="https://en.wikipedia.org/wiki/Infinite_monkey_theorem" target="_top" rel="noopener nofollow">Wikipedia page</a>, see the &ldquo;Actual monkeys&rdquo; section. The text is titled NOTES TOWARDS THE COMPLETE WORKS OF SHAKESPEARE and includes pictures of authors, monkeys. (No, they did not produce the complete works of Shakespeare 😄)</p>
+                </div>
+                </div>
+                 
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>

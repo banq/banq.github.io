@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Jdon Framework</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+                <h1 class="title">STOP doing dogmatic Domain Driven Design</h1>
+                <div>
+                <div>
+                <p>The mainstream thought on Domain Driven Design is about Entities, Value Objects, Aggregates, Repositories, Services, Factories&hellip; all kinds of technical patterns. Because of this, most don&rsquo;t think they need Domain Driven Design because it&rsquo;s complicated for their domain. Why would you need all that &ldquo;stuff&rdquo;? Well, maybe you don&rsquo;t! In a large system, modeling your domain, defining boundaries, and how they relate is far more important than concerning yourself if you&rsquo;re using the Repository pattern correctly.</p>
+                <h2>YouTube</h2>
+                <p>Check out my&nbsp;<a href="https://www.youtube.com/channel/UC3RKA4vunFAfrfxiJhPEplw" target="_blank" rel="noreferrer noopener">YouTube channel</a>&nbsp;where I post all kinds of content that accompanies my posts including this video showing everything that is in this post.</p>
+                <figure>
+                <div>
+                <div>&nbsp;</div>
+                </div>
+                </figure>
+                <h2>Domain Driven Design</h2>
+                <p>I often use terms that people associate with Domain Driven Design (DDD), however, I generally don&rsquo;t call out Domain Driven Design explicitly in many of my videos or blog posts. You probably have noticed that I do talk a lot about boundaries. Boundaries are probably the most important aspect for me that came from Domain Driven Design. However, the vast majority of content or discussions you will find online about DDD revolve around tactical patterns: Entities, Value Objects, Repositories, Services, Aggregates, etc.</p>
+                <p>While the tactical patterns have value, they must come after understanding the concept and value of defining boundaries with a Bounded Context. While a Bounded Context does get a lot of attention from Domain Driven Design enthusiasts, it&rsquo;s not what people are introduced to first in tutorials or &ldquo;sample&rdquo; applications.</p>
+                <p>Here are some of the comments and questions I see the most related to Domain Driven Design:</p>
+                <blockquote>
+                <p>DDD is only powerful when your business logic is complex</p>
+                </blockquote>
+                <p>While I agree complexity is a driving factor, I also think it&rsquo;s helped me most when dealing with larger systems. Complexity from the Domain as well as the complexity that comes from a large system.</p>
+                <blockquote>
+                <p>In DDD you&rsquo;re supposed to use a repository pattern.</p>
+                <p>You need to use factories to create entities or value objects.</p>
+                </blockquote>
+                <p>This is the wrong concern. Focusing on patterns rather than boundaries and modeling the actual domain.</p>
+                <blockquote>
+                <p>You have no logic in your entities, so that&rsquo;s an anemic domain model, which is an anti-pattern.</p>
+                </blockquote>
+                <p>It&rsquo;s only an anti-pattern if you think you have a domain model but you really have a data model with transaction scripts. There isn&rsquo;t anything wrong with starting with that and moving to a richer domain model as your understanding of the problem evolves.</p>
+                <blockquote>
+                <p>You can&rsquo;t have dependencies in your Domain Model</p>
+                </blockquote>
+                <p>People go to incredible lengths to avoid have dependencies in their domain model. While again it&rsquo;s a good practice to avoid dependencies and worth striving for, sometimes you actually need a dependency. Using&nbsp;<a href="https://en.wikipedia.org/wiki/Double_dispatch" target="_blank" rel="noreferrer noopener">Double Dispatch</a>&nbsp;isn&rsquo;t bad because you&rsquo;re passing a dependency to a method and someone told you all dependencies must be injected via the constructor.</p>
+                <h2>Dogmatic Domain Driven Design</h2>
+                <p>I think all the questions above are losing sight of the benefits of Domain Driven Design. I don&rsquo;t think concerning yourself solely along with tactical patterns and if they are being applied correctly is applying DDD. I think that&rsquo;s applying dogmatic DDD.</p>
+                <p>To me doing Domain Driven Design is about understanding your domain, the language, the context of different people within it, the problem, and the solution space and trying to model it. And you&rsquo;re not going to get it right at first as it will take time to iteratively build upon the insights you gain.</p>
+                <p>There&rsquo;s value in the tactical patterns like&nbsp;<a href="https://codeopinion.com/aggregate-design-using-invariants-as-a-guide/" target="_blank" rel="noreferrer noopener">Aggregates (which are a consistency boundary),</a>&nbsp;but that shouldn&rsquo;t be the focus. Just because you have repositories, aggregates, entities, doesn&rsquo;t mean you&rsquo;re doing Domain Driven Design. You just have a bunch of patterns.</p>
+                <h2>Language</h2>
+                <p>I find language a great way to understand the boundaries and define a bounded context within a system. A great example of this was from Mel Conway on Twitter.</p>
+                <figure></figure>
+                <p>Depending on who you&rsquo;re talking to in your Domain, they likely have a different context given the subdomain they are in or the role that they have.</p>
+                <p>Exactly as Mel is pointing out, context matters in how language and intent is used.</p>
+                <p>As an example, in a Transportation company that transports freight/goods, there are multiple subdomains. Recruitment is who is hiring drivers, making sure they have the proper license, compliances, etc. Operations are concerned about the actual shipments and the freight being picked up and delivered.</p>
+                <p>Both have the concept of a Vehicle. But both have very different concerns and views on what a Vehicle is. They share the same term &ldquo;Vehicle&rdquo; but based on their context have very different views of what matters to me.</p>
+                <figure><a href="https://codeopinion.com/wp-content/uploads/2021/06/1-1.png" target="_top"><img src="https://codeopinion.com/wp-content/uploads/2021/06/1-1-1024x367.png" sizes="(max-width: 1024px) 100vw, 1024px" srcset="https://codeopinion.com/wp-content/uploads/2021/06/1-1-1024x367.png 1024w, https://codeopinion.com/wp-content/uploads/2021/06/1-1-300x107.png 300w, https://codeopinion.com/wp-content/uploads/2021/06/1-1-768x275.png 768w, https://codeopinion.com/wp-content/uploads/2021/06/1-1-1536x550.png.pagespeed.ce.5bsJiL8efC.png 1536w, https://codeopinion.com/wp-content/uploads/2021/06/1-1.png 1817w" alt="STOP doing dogmatic Domain Driven Design" width="1024" height="367" /></a></figure>
+                <p>In recruitment, the concept of a Vehicle maybe is owned by a Driver (known as an Owner Operator). They might care about the Vehicle Safety requirements and other compliances. Operations care about the availability of the vehicle and if it can do a particular shipment at a given time. Very different concerns.</p>
+                <h2>Discovery</h2>
+                <p>Understanding a Domain, Subdomains, and developing a Bounded Context can be very challenging. I like to use the analogy of walking into a dark room with only a small flashlight</p>
+                <div>
+                <figure class="clear"><a href="https://codeopinion.com/wp-content/uploads/2021/06/image.png" target="_top"><img src="https://codeopinion.com/wp-content/uploads/2021/06/image.png" sizes="(max-width: 488px) 100vw, 488px" srcset="https://codeopinion.com/wp-content/uploads/2021/06/image.png 488w, https://codeopinion.com/wp-content/uploads/2021/06/image-300x207.png 300w" alt="" width="488" height="337" /></a></figure>
+                </div>
+                <p>At first, you have no mental model of what the room actually looks like. As you slowly flash the light around the room, you get a better mental model of how high the ceilings are, what&rsquo;s the shape of the room, what&rsquo;s on the floor. Your understanding grows slowly as you shine the light.</p>
+                <p>Understanding the boundaries of a domain takes effort and is the key to being able to understand the problem and solution space. This is the key to domain modeling.</p>
+                <h2>Domain Driven Design</h2>
+                <p>The title says it all. It&rsquo;s not pattern-driven design, it&rsquo;s Domain Driven Design. Don&rsquo;t get caught up in the dogmatic majority that is focused on the tactical patterns. Again, yes they are valuable. Aggregate Design is a great way to define consistency boundaries. I&rsquo;m not discounting the patterns, but that&rsquo;s not the focus. The patterns are a means to an end.</p>
+                </div>
+                </div>
+                 
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>
