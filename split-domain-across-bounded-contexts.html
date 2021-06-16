@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Splitting a Domain Across Multiple Bounded Contexts</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+               
+<h1 class="title">Splitting a Domain Across Multiple Bounded Contexts</h1>
+<div>
+<div>
+<p>Imagine a wholesaler of parts for agricultural machines. They&rsquo;ve built a B2B webshop that resellers and machine servicing companies use to order. In their Ubiquitous Language, an Order represents this automated process. It enables customers to pick products, apply the right discounts, and push it to Shipment.</p>
+<p>Our wholesaler merges with a competitor: They&rsquo;re an older player with a solid customer base and a huge catalog. They also have an ordering system, but it&rsquo;s much more traditional: customers call, and an account manager enters the order, applies an arbitrary discount, and pushes it to Shipment.</p>
+<p>The merged company still has a single Sales Subdomain, but it now has two Sales Bounded Contexts. They both have concepts like Order and Discount in their models, and these concepts have fundamentally the same meaning. The employees from both wholesalers agree on what an order or a discount is. But they have different processes for using them, they enter different information in the forms, and there are different business rules.</p>
+<p>In the technical sense that difference is expressed in the object design, the methods, the workflows, the logic for applying discounts, the database representation, and some of the language. It runs deeper though: for a software designer to be productive in either Bounded Context, they&rsquo;d have to understand the many distinctions between the two models.&nbsp;<strong>Bounded Contexts represent Understandability Boundaries.</strong></p>
+<p>In a perfectly designed system, our ideal Bounded Contexts would usually align nicely with the boundaries of the subdomains. In reality though, Bounded Contexts follow the contours of the evolution of the system. Systems evolve along with the needs and opportunities of organisations. And unfortunately, needs and opportunities don&rsquo;t often arise in ways that match our design sensibilities. We&rsquo;re uncomfortable with code that could be made more consistent, if only we had the time to do so. We want to unify concepts and craft clean abstractions, because we think that is what we should do to create a well-designed system. But that might not be the better option.</p>
+<h2>Deliberate Design Choices</h2>
+<p>The example above trivially shows that&nbsp;<strong>a single subdomain may be represented by multiple Bounded Contexts.</strong></p>
+<p>Bounded Contexts may or may not align with app or service boundaries. Similarly, they may or may not align with domain boundaries. Domains live in the problem space. They are how an organisation perceives its areas of activity and expertise. Bounded Contexts are part of the solution space; they are deliberate design choices.&nbsp;<strong>As a systems designer, you choose these boundaries to manage the understandability of the system</strong>, by using different models to solve different aspects of the domain.</p>
+<p>You might argue that in the wholesaler merger, the designers didn&rsquo;t have a choice. It&rsquo;s true that the engineers didn&rsquo;t choose to merge the companies. And there will always be external triggers that put constraints on our designs. At this point however, the systems designers can make a case for:</p>
+<ul>
+<li>merging the two Sales Contexts,</li>
+<li>migrating one to the other,</li>
+<li>building a new Sales Context to replace both,</li>
+<li>postponing this effort,</li>
+<li>or not doing anything and keeping the existing two Contexts.</li>
+</ul>
+<p>These are design choices, even if ultimately the CEO picks from those options (because of the expected ROI for example). Perhaps, after considering the trade-offs, keeping the two Sales Contexts side by side is the best strategic design choice for now, as it allows the merged company to focus on new opportunities. After all, the existing systems do serve their purpose. The takeaway here is that having&nbsp;<strong>two Bounded Contexts for a single Subdomain can be a perfectly valid choice</strong>.</p>
+<h2>Twenty Commodities Traders</h2>
+<p>When there is no external trigger (as in the wholesaler merger), would you ever choose to split a single domain over multiple Contexts, deliberately?</p>
+<p>One of us was brought in to consult for a small commodities trader. They were focused on a few specialty commodities, and consisted of 20 traders, some operational support roles, and around 10 developers. The lead engineer gave a tour of the system, which&nbsp;<strong>consisted of 20 Bounded Contexts for the single Trading Domain</strong>. There was one Context for each trader.</p>
+<p>This seemed odd, and our instinct was to identify similarities, abstract them, and make them reusable. The developers were doing none of that. At best they were copy-pasting chunks of each other&rsquo;s code. The lead engineer&rsquo;s main concern was&nbsp;<em>&ldquo;Are we doing the optimal design for our situation?&rdquo;</em>&nbsp;They were worried they were in a big mess.</p>
+<p>Were they?</p>
+<p>Every trader had their own representation of a trade. There were even&nbsp;<a href="https://verraes.net/2019/06/emergent-contexts-through-refinement/" target="_top">multiple representations of money</a>&nbsp;throughout the company. The traders&rsquo; algorithms were different, although many were doing somewhat similar things. Each trader had a different dashboard. The developers used the same third party libraries, but when they&nbsp;<strong>shared their own code between each other, they made no attempt at unifying it</strong>. Instead, they copied code, and modified it over time as they saw fit. A lot of the work involved mathematical algorithms, more than typical business oriented IT.</p>
+<p>It turned out that every trader had unique needs. They needed to move fast: they experimented with different algorithms, projections, and ways of looking at the market. The developers were serving the traders, and worked in close collaboration with them, constantly turning their ideas into new code. The traders were highly valued, they were the prima donnas in a high stress, highly competitive environment. You couldn&rsquo;t be a slow coder or a math slacker if you wanted to be part of this. There were no (Jira) tickets, no feature backlogs. It was the ultimate&nbsp;<strong>fast feedback loop between domain experts and programmers</strong>.</p>
+<p>Things were changing very rapidly, every day.&nbsp;<strong>Finding the right abstractions would have taken a lot of coordination</strong>, it would slow development down drastically. An attempt at unifying the code would have destroyed the company.</p>
+<p>This design was not full of technical debt. It also wasn&rsquo;t a legacy problem, where the design had accidentally grown this way over the years. The code was working. This lack of unifying abstractions was&nbsp;<strong>a deliberate design choice</strong>, fit for purpose, even if it seems like a radical choice at first. And all the developers and traders were happy with it.</p>
+<p>These weren&rsquo;t merely separate programs with a lot of repeated code either. This was a single domain, split over 20 Bounded Contexts, each with&nbsp;<strong>their own domain model, their own Ubiquitous Language, and their own rate of change</strong>. Coordinating the language and concepts in the models, would have increased the friction in this high speed environment. By deliberately choosing to design individual Contexts, they eliminated that friction.</p>
+<h2>Trade-offs</h2>
+<p>There are consequences of this design choice: When a developer wanted help with a problem, they had to bring that other developer up to speed. Each developer, when working in another bounded context, expected that they&rsquo;d have to make a context switch. After all, their terms and concepts were different from each other, even though they shared similar terminology. Context-switching has a cost, which you&rsquo;ve probably experienced if you&rsquo;ve work on different projects throughout a day. But here, because the Contexts were clearly well-bounded, this didn&rsquo;t cause many problems. And sometimes, by explaining a problem to another developer with a similar background (but a different Bounded Context), solutions became obvious.</p>
+<h2>Multiple Bounded Contexts in Ordinary IT Systems</h2>
+<p>The trading system is an extreme example, and you won&rsquo;t come across many environments where a single Subdomain with 20 Bounded Contexts would make sense. But there are&nbsp;<strong>many common situations where you should consider splitting a domain</strong>. If in your company, the rules about pricing for individual and corporate customers are different, perhaps efforts to unify these rules in a single domain model will cost more than it is worth. Or in a payroll system, where the rules and processes for salaried and hourly employees are different, you might be better off splitting this domain.</p>
+<h2>Conclusion</h2>
+<p><strong>The question is not: Can I unify this?</strong>&nbsp;Of course you can. But should you? Perhaps not.&nbsp;<strong>The right Context boundaries follow the contours of the business</strong>. Different areas change at different times and at different speeds. And over time&nbsp;<strong>what appears similar may diverge in surprising and unexpectedly productive ways</strong>&nbsp;(if given the opportunity). Squeezing concepts into a single model is constraining. You&rsquo;re complicating your model by making it serve two distinct business needs, and taking a continued coordination cost. It&rsquo;s a hidden dependency debt.</p>
+<p>There&rsquo;s two heuristics we can derive here:</p>
+<ol>
+<li><strong>Bounded Contexts shouldn&rsquo;t serve the designer&rsquo;s sensibilities and need for perfection, but enable business opportunities.</strong></li>
+<li>The Rate of Change Heuristic:&nbsp;<strong>Consider organising Bounded Contexts so they manage related concepts that change at the same pace.</strong></li>
+</ol>
+<p><em>Written by Mathias Verraes&nbsp;<a href="https://twitter.com/mathiasverraes" target="_top">@mathiasverraes</a>&nbsp;and Rebecca Wirfs-Brock&nbsp;<a href="https://twitter.com/rebeccawb" target="_top">@rebeccawb</a>.</em></p>
+</div>
+</div>
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>
