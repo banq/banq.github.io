@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Changing The Way We Use JPA</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+                <h1 class="title">Changing The Way We Use JPA</h1>
+                <div>
+                <div>
+                <p>I've been updating some training materials recently, and thinking about better ways of teaching and talking about JPA. One of the things I've been thinking about is how we have typically used JPA, and how that should change given the pains I've experienced (and observed).</p>
+                <p>JPA is often seen as a set of annotations (or XML files) that provide O/R (object-relational) mapping information. And most developers think that the more mapping annotations they know and use, the more benefits they get. But the past few years of wrestling with small to medium monoliths/systems (with about 200 tables/entities) have taught me something else.</p>
+                <p><strong>TL;DR</strong></p>
+                <ol>
+                <li>Reference entities by ID (only map entity relationships&nbsp;<em>within</em>&nbsp;an aggregate)</li>
+                <li>Don't let JPA steal your Identity (avoid&nbsp;<code>@GeneratedValue</code>&nbsp;when you can)</li>
+                <li>Use ad-hoc joins to join unrelated entities</li>
+                </ol>
+                <h3>Reference Entities by Identifier</h3>
+                <p><em>Only map entity relationships&nbsp;<strong>within</strong>&nbsp;an aggregate.</em></p>
+                <p>Tutorials (and training) would typically go about teaching and covering all possible relationship mappings. After basic mappings, many would start from simple uni-directional&nbsp;<code>@ManyToOne</code>&nbsp;mapping. Then proceed to bi-directional&nbsp;<code>@OneToMany</code>&nbsp;and&nbsp;<code>@ManyToOne</code>. Unfortunately, most often than not, they fail to explicitly point out that it is perfectly fine to&nbsp;<em>not</em>&nbsp;map the relationship. So, beginners would often complete the training thinking that it would be a mistake to&nbsp;<em>not</em>&nbsp;map a related entity. They mistakenly think that a foreign key field&nbsp;<em>must</em>&nbsp;be mapped as a related entity.</p>
+                <p>In fact, it is&nbsp;<em>not</em>&nbsp;an error, if you change the&nbsp;<code>@ManyToOne</code>&nbsp;mapping below&hellip;</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                </td>
+                <td>
+                <div>
+                <p><code>&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;@实体&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>公共类 SomeEntity {&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@ManyToOne</code>&nbsp;<code>私人国家；&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>@实体&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>公共类国家{&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Id</code>&nbsp;<code>私有字符串 id；&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p>&hellip;into a basic field that contains the primary key value of the&nbsp;<em>related</em>&nbsp;entity.</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                </td>
+                <td>
+                <div>
+                <p><code>&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;@实体&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>公共类 SomeEntity {&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Column</code>&nbsp;<code>私有字符串 countryId;&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>@实体&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>公共类国家{&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Id</code>&nbsp;<code>私有字符串 id；&lt;/font&gt;&lt;font style=</code><code>"vertical-align: inherit;"</code><code>&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;/font&gt;&lt;/font&gt;&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p><em>Why is this a problem?</em></p>
+                <p>Mapping all entity relationships increases the chances of unwanted traversals that usually lead to unnecessary memory consumption. This also leads to an unwanted cascade of&nbsp;<code>EntityManager</code>&nbsp;operations.</p>
+                <p>This may not be much if you're dealing with just a handful of entities/tables. But it becomes a maintenance nightmare when working with dozens (if not hundreds) of entities.</p>
+                <p><em>When do you map a related entity?</em></p>
+                <p>Map related entities only when they are&nbsp;<em>within</em>&nbsp;an&nbsp;<a href="https://martinfowler.com/bliki/DDD_Aggregate.html" target="_top">Aggregate</a>&nbsp;(in DDD).</p>
+                <blockquote>
+                <p>Aggregate is a pattern in Domain-Driven Design. A DDD aggregate is a cluster of domain objects that can be treated as a single unit. An example may be an order and its line-items, these will be separate objects, but it's useful to treat the order (together with its line items) as a single aggregate.</p>
+                </blockquote>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                <p>13</p>
+                </td>
+                <td>
+                <div>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>Order {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@OneToMany</code><code>(mappedBy =&nbsp;</code><code>"order"</code><code>, ...)&nbsp;</code><code>private</code>&nbsp;<code>List&lt;OrderItem&gt; items;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>OrderItem {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@ManyToOne</code><code>(optional =&nbsp;</code><code>false</code><code>)&nbsp;</code><code>private</code>&nbsp;<code>Order order;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p>More modern approaches to aggregate design (see Vaughn Vernon's&nbsp;<cite>Implementing Domain-Driven Design</cite>) advocate a cleaner separation between aggregates. It is a good practice to refer to an aggregate root by storing its ID (unique identifier), not a full reference.</p>
+                <p>If we expand the simple order example above, the line-item (<code>OrderItem</code>&nbsp;class) should not have a&nbsp;<code>@ManyToOne</code>&nbsp;mapping to the product (since it is another aggregate in this example). Instead, it should just have the ID of the product.</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                <p>13</p>
+                <p>14</p>
+                <p>15</p>
+                </td>
+                <td>
+                <div>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>Order {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@OneToMany</code><code>(mappedBy =&nbsp;</code><code>"order"</code><code>, ...)&nbsp;</code><code>private</code>&nbsp;<code>List&lt;OrderItem&gt; items;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>OrderItem {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@ManyToOne</code><code>(optional =&nbsp;</code><code>false</code><code>)&nbsp;</code><code>private</code>&nbsp;<code>Order order;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Column</code>&nbsp;<code>private</code>&nbsp;<code>... productId;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p>But&hellip; what if the&nbsp;<code>Product</code>&nbsp;(aggregate root entity) has its&nbsp;<code>@Id</code>&nbsp;field mapped as&nbsp;<code>@GeneratedValue</code>? Are we forced to persist/flush first and then use the generated ID value?</p>
+                <p>And, what about joins? Can we still join those entities in JPA?</p>
+                <h3>Don't Let JPA Steal Your&nbsp;<code>Id</code>entity</h3>
+                <p>Using&nbsp;<code>@GeneratedValue</code>&nbsp;may initially make the mapping simple and easy to use. But when you start referencing other entities by ID (and not by mapping a relationship), it becomes a challenge.</p>
+                <p>If the&nbsp;<code>Product</code>&nbsp;(aggregate root entity) has its&nbsp;<code>@Id</code>&nbsp;field mapped as&nbsp;<code>@GeneratedValue</code>, then calling&nbsp;<code>getId()</code>&nbsp;may return&nbsp;<code>null</code>. When it returns&nbsp;<code>null</code>, the line-item (<code>OrderItem</code>&nbsp;class) will not be able to reference it!</p>
+                <p>In an environment where all entities always have a non-<code>null</code>&nbsp;<code>Id</code>&nbsp;field, referencing any entity by ID becomes easier. Furthermore, having non-<code>null</code>&nbsp;<code>Id</code>&nbsp;fields all the time, makes&nbsp;<code>equals(Object)</code>&nbsp;and&nbsp;<code>hashCode()</code>&nbsp;easier to implement.</p>
+                <p>And because all&nbsp;<code>Id</code>&nbsp;fields become explicitly initialized, all (aggregate root) entities have a&nbsp;<code>public</code>&nbsp;constructor that accepts the&nbsp;<code>Id</code>&nbsp;field value. And, as I've&nbsp;<a href="https://lorenzo-dee.blogspot.com/2016/01/jpa-pitfalls-mistakes.html" target="_top">posted long ago</a>, a&nbsp;<code>protected</code>&nbsp;no-args constructor can be added to keep JPA happy.</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                </td>
+                <td>
+                <div>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>Order {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Id</code>&nbsp;<code>private</code>&nbsp;<code>Long id;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>public</code>&nbsp;<code>Order(Long id) {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>this</code><code>.id = id;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>public</code>&nbsp;<code>Long getId() {&nbsp;</code><code>return</code>&nbsp;<code>id; }&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>protected</code>&nbsp;<code>Order() {&nbsp;</code><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <aside>
+                <p>While writing this post, I found an article by James Brundege (posted back in 2006),&nbsp;<cite><a href="https://web.archive.org/web/20171211235806/http://www.onjava.com/pub/a/onjava/2006/09/13/dont-let-hibernate-steal-your-identity.html" target="_top">Don't Let Hibernate Steal Your Identity</a></cite>&nbsp;(thanks to Wayback Machine), where he says,&nbsp;<q>Don't let Hibernate manage your&nbsp;<code>id</code>s</q>. I wish I heeded his advice earlier.</p>
+                </aside>
+                <p>But beware! When using Spring Data JPA to&nbsp;<code>save()</code>&nbsp;an entity that does not use&nbsp;<code>@GeneratedValue</code>&nbsp;on its&nbsp;<code>@Id</code>&nbsp;field, an unnecessary SQL&nbsp;<code>SELECT</code>&nbsp;is issued before the expected&nbsp;<code>INSERT</code>. This is due to&nbsp;<code>SimpleJpaRepository</code>'s&nbsp;<code>save()</code>&nbsp;method (shown below). It relies on the presence of the&nbsp;<code>@Id</code>&nbsp;field (non-<code>null</code>&nbsp;value) to determine whether to call&nbsp;<code>persist(Object)</code>&nbsp;or&nbsp;<code>merge(Object)</code>.</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                </td>
+                <td>
+                <div>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>SimpleJpaRepository</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Override</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>public</code>&nbsp;<code>&lt;S&nbsp;</code><code>extends</code>&nbsp;<code>T&gt; save(S entity) {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>if</code>&nbsp;<code>(entityInformation.isNew(entity)) {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>em.persist(entity);&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>return</code>&nbsp;<code>entity;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>}&nbsp;</code><code>else</code>&nbsp;<code>{&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>return</code>&nbsp;<code>em.merge(entity);&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p>The astute reader will notice that, if the&nbsp;<code>@Id</code>&nbsp;field is never&nbsp;<code>null</code>, the&nbsp;<code>save()</code>&nbsp;method will always call&nbsp;<code>merge()</code>. This causes the unnecessary SQL&nbsp;<code>SELECT</code>&nbsp;(before the expected&nbsp;<code>INSERT</code>).</p>
+                <p>Fortunately, the work-around is simple &mdash; implement&nbsp;<code>Persistable&lt;ID&gt;</code>.</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                <p>13</p>
+                <p>14</p>
+                </td>
+                <td>
+                <div>
+                <p><code>@MappedSuperclass</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>abstract</code>&nbsp;<code>class</code>&nbsp;<code>BaseEntity&lt;ID&gt;&nbsp;</code><code>implements</code>&nbsp;<code>Persistable&lt;ID&gt; {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Transient</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>private</code>&nbsp;<code>boolean</code>&nbsp;<code>persisted =&nbsp;</code><code>false</code><code>;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Override</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>public</code>&nbsp;<code>boolean</code>&nbsp;<code>isNew() {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>return</code>&nbsp;<code>!persisted;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@PostPersist</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@PostLoad</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>protected</code>&nbsp;<code>void</code>&nbsp;<code>setPersisted() {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>this</code><code>.persisted =&nbsp;</code><code>true</code><code>;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p>The above also implies that&nbsp;<em>all</em>&nbsp;updates to entities must be done by loading the existing entity into the persistence context first, and applying changes to the&nbsp;<em>managed</em>&nbsp;entity.</p>
+                <h3>Use Ad-hoc Joins to Join Unrelated Entities</h3>
+                <p>And, what about joins? Now that we reference other entities by ID, how can we join unrelated entities in JPA?</p>
+                <p>In JPA version 2.2, unrelated entities&nbsp;<em>cannot</em>&nbsp;be joined. However, I cannot confirm if this has become a standard in version 3.0, where all&nbsp;<code>javax.persistence</code>&nbsp;references were renamed to&nbsp;<code>jakarta.persistence</code>.</p>
+                <p>Given the&nbsp;<code>OrderItem</code>&nbsp;entity, the absence of the&nbsp;<code>@ManyToOne</code>&nbsp;mapping causes it to fail to be joined with the&nbsp;<code>Product</code>&nbsp;entity.</p>
+                <div>
+                <div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+                <p>12</p>
+                </td>
+                <td>
+                <div>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>Order {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>@Entity</code><code>&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>public</code>&nbsp;<code>class</code>&nbsp;<code>OrderItem {&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@ManyToOne</code><code>(optional =&nbsp;</code><code>false</code><code>)&nbsp;</code><code>private</code>&nbsp;<code>Order order;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code><code>@Column</code>&nbsp;<code>private</code>&nbsp;<code>... productId;&lt;font&gt;&lt;/font&gt;</code></p>
+                <p><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></p>
+                <p><code>}&lt;font&gt;&lt;/font&gt;</code></p>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                <p>Thankfully 😊,&nbsp;<a href="http://in.relation.to/2016/02/10/hibernate-orm-510-final-release/" target="_top">Hibernate 5.1.0+</a>&nbsp;(released back in 2016) and&nbsp;<a href="https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Basic_JPA_Development/Querying/JPQL#ON" target="_top">EclipseLink 2.4.0+</a>&nbsp;(released back in 2012) have been supporting joins of unrelated entities. These joins are also referred to as&nbsp;<em>ad-hoc joins</em>.</p>
+                <pre>SELECT o
+                  FROM Order o
+                  JOIN o.items oi
+                  JOIN Product p ON (p.id = oi.productId) -- supported in Hibernate and EclipseLink
+                </pre>
+                <p>Also, this has been raised as an API issue (<a href="https://github.com/eclipse-ee4j/jpa-api/issues/128" target="_top">Support JOIN/ON for two root entities</a>). I really hope that it will become a standard soon.</p>
+                <h3>In Closing</h3>
+                <p>What do you think about the above changes? Are you already using similar approaches? Do you use native SQL to explicitly retrieve a generated value (e.g. sequence object) to create an entity with a non-<code>null</code>&nbsp;<code>Id</code>&nbsp;field? Do you use entity-specific ID types to differentiate ID values? Let me know in the comments below.</p>
+                </div>
+                </div>
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>
