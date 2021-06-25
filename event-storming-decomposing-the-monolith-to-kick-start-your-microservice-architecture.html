@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Decomposing the Monolith with Event Storming</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+                <div>
+                    <div>
+                    <div>
+                    <h1>Decomposing the Monolith with Event Storming</h1>
+                    </div>
+                    <div>
+                    <h2>Kick-Start Your Microservices Architecture</h2>
+                    <div>
+                    <div>
+                    <div>
+                    <div>
+                    <div>
+                    <div>
+                    <div><a href="https://medium.com/@andrew.bonham?source=post_page-----acb8695a6e61--------------------------------" rel="noopener">Andrew Bonham</a></div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <p data-selectable-paragraph="">As software engineers and architects, we are often faced with the challenge of creating a target microservices architecture for a legacy system. These systems are often big monolithic applications that have been around for years, often with lots of dependencies, and usually with no one person in your company that understands it all. In these situations, a collection of domain experts are key to understanding the &ldquo;why&rdquo; around the business context and capabilities that are needed, context which is critical to creating a successful architecture.</p>
+                    <p data-selectable-paragraph="">Typically, you start by creating a<a href="https://en.wikipedia.org/wiki/Business_capability_model" rel="noopener nofollow">&nbsp;business capability model</a>&nbsp;or<a href="https://en.wikipedia.org/wiki/Taxonomy" rel="noopener nofollow">&nbsp;taxonomy</a>&nbsp;to map out the business capabilities and align them under specific level groupings. The overall model/taxonomy represents the collective set of capabilities needed by an application.</p>
+                    <figure>
+                    <div>
+                    <div>
+                    <div>
+                    <div><img role="presentation" src="https://miro.medium.com/max/60/1*yyTaCbMGkHesoUN9qsC2-A.png?q=20" alt="" width="240" height="240" /></div>
+                    <img role="presentation" src="https://miro.medium.com/max/240/1*yyTaCbMGkHesoUN9qsC2-A.png" sizes="240px" srcset="" alt="" width="240" height="240" /></div>
+                    </div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Business capability model, from&nbsp;<a href="https://en.wikipedia.org/wiki/Enterprise_architecture_artifacts" rel="noopener nofollow">https://en.wikipedia.org/wiki/Enterprise_architecture_artifacts</a></figcaption>
+                    </figure>
+                    <p data-selectable-paragraph="">While this is helpful, it has some gaps. The taxonomy by itself doesn&rsquo;t provide the broader context of the use case, it also doesn&rsquo;t provide insight into how to decompose the capabilities into microservices. This is where<a href="https://en.wikipedia.org/wiki/Event_storming" rel="noopener nofollow">&nbsp;event storming</a>&nbsp;can help.</p>
+                    <p data-selectable-paragraph="">Created by&nbsp;<a href="https://twitter.com/ziobrando?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" rel="noopener nofollow">Alberto Brandolini</a>, event storming is an interactive way to do&nbsp;<a href="https://en.wikipedia.org/wiki/Domain-driven_design" rel="noopener nofollow">Domain Driven Design</a>&nbsp;(DDD) that brings together domain experts across business and technology departments. In this article, I will provide an in-depth iterative example of event storming, some lessons learned using it, and how you can apply it to your architecture work.</p>
+                    <h1 data-selectable-paragraph="">What is Event Storming</h1>
+                    <p data-selectable-paragraph="">I first wanted to clarify some common misconceptions around Event Storming.</p>
+                    <h2 data-selectable-paragraph="">Misconception #1 &mdash; It&rsquo;s the Same as DDD</h2>
+                    <p data-selectable-paragraph="">While event storming is based on a number of DDD concepts &mdash; including bounded contexts and aggregates &mdash; formal DDD can tend to be complicated and requires extensive training. Event storming focuses on an interactive collaborative whiteboard exercise that engages all domain experts. It is simpler and does not require extensive training like formal DDD does.</p>
+                    <h2 data-selectable-paragraph="">Misconception #2 &mdash; It&rsquo;s the Same as Design Thinking</h2>
+                    <p data-selectable-paragraph="">Both event storming and&nbsp;<a href="https://en.wikipedia.org/wiki/Design_thinking" rel="noopener nofollow">design thinking</a>&nbsp;leverage interactive business process mapping exercises and whiteboarding. Where they differ is that event storming focuses on the decomposition and categorization that defines the microservice architecture. It&rsquo;s also focused on the things that are currently happening in the business process, known as events. Design thinking involves a phased process that includes problem definition, needfinding and benchmarking, ideation, prototyping and testing. It also focuses more on empathy and pain points.</p>
+                    <h2 data-selectable-paragraph="">How the Event Storming Process Really Works</h2>
+                    <p data-selectable-paragraph="">Now let&rsquo;s dive into the details on event storming. One of the first things to understand are the different types of details that are captured about the domain. These different types of details are typically represented by different colored sticky notes.</p>
+                    <p data-selectable-paragraph="">Let&rsquo;s walk through each of these in detail.</p>
+                    <ul>
+                    <li data-selectable-paragraph=""><strong>Events (orange):</strong>&nbsp;These are the most important and widely used component in Event Storming and represent the domain events and anything that is relevant to a domain expert. They are written in past tense and provide the underlying details that feed into the later categorization steps.</li>
+                    <li data-selectable-paragraph=""><strong>Commands (blue):</strong>&nbsp;These are requests to do something. They can originate from a user or system or by another event.</li>
+                    <li data-selectable-paragraph=""><strong>System (pink):&nbsp;</strong>These represent systems involved in the domain. They may issue commands or receive commands along with triggering events.</li>
+                    <li data-selectable-paragraph=""><strong>User (yellow):</strong>&nbsp;These are human users involved in the process. They may be a single person or a department/team. Yellow sticky notes help show how complicated the workflow of a business process can be based on the number of departments involved and the amount of back and forth.</li>
+                    <li data-selectable-paragraph=""><strong>Aggregate (tan):</strong>&nbsp;This is the first level of categorization and can be thought of as the &ldquo;thing&rdquo; that a group of events operate on. Typically they&rsquo;re a noun and can be identified when there&rsquo;s a cluster of events dependent on one another.</li>
+                    <li data-selectable-paragraph=""><strong>Read Model (green):</strong>&nbsp;This represents data that may be critical for a user or system to make a decision. I have not seen this one used often, but it can be helpful when there needs to be emphasis on what data the user sees.</li>
+                    <li data-selectable-paragraph=""><strong>Policy (grey):&nbsp;</strong>These represent standards or rules that may need to be executed, such as rules for a compliance policy.</li>
+                    </ul>
+                    <figure>
+                    <div>
+                    <div>
+                    <div>
+                    <div><img role="presentation" src="https://miro.medium.com/max/60/1*qICqGsrFpWfzOloWWCyv2w.png?q=20" alt="" width="551" height="224" /></div>
+                    <img role="presentation" src="https://miro.medium.com/max/551/1*qICqGsrFpWfzOloWWCyv2w.png" sizes="551px" srcset="https://miro.medium.com/max/276/1*qICqGsrFpWfzOloWWCyv2w.png 276w, https://miro.medium.com/max/551/1*qICqGsrFpWfzOloWWCyv2w.png 551w" alt="" width="551" height="224" /></div>
+                    </div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Legend for Event Storming details</figcaption>
+                    </figure>
+                    <p data-selectable-paragraph="">Now that we understand the different types of things we want to discover in the domain, let&rsquo;s walk through each of the iterative steps of event storming with an example. For our example we will model the domain of a generic e-commerce site.</p>
+                    <h1 data-selectable-paragraph="">Putting the Process Into Action</h1>
+                    <h2 data-selectable-paragraph="">Step #1 &mdash; Event Discovery</h2>
+                    <p data-selectable-paragraph="">The first phase of event storming is that of&nbsp;<strong>event discovery</strong>. Basically, everyone in the room is writing events and putting them up on the wall. Treat this phase like brainstorming so avoid applying any analysis or filtering at this stage as it will just slow things down. Don&rsquo;t worry, there are later steps in the process that will clean things up.</p>
+                    <p data-selectable-paragraph=""><mark>This step usually takes the longest and it&rsquo;s important to allow enough time for the foundation of events to be captured.</mark>&nbsp;Using the e-commerce site example, some possible events could be things like order submitted, payment processed, or inventory updated. An example of the output from this phase would look something like the below:</p>
+                    <figure>
+                    <div>
+                    <div>
+                    <div>
+                    <div><img role="presentation" src="https://miro.medium.com/max/60/1*bKXZ8otCDVHPOHt2XM_F5Q.png?q=20" alt="" width="441" height="281" /></div>
+                    <img role="presentation" src="https://miro.medium.com/max/441/1*bKXZ8otCDVHPOHt2XM_F5Q.png" sizes="441px" srcset="https://miro.medium.com/max/276/1*bKXZ8otCDVHPOHt2XM_F5Q.png 276w, https://miro.medium.com/max/441/1*bKXZ8otCDVHPOHt2XM_F5Q.png 441w" alt="" width="441" height="281" /></div>
+                    </div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output from step 1 of discovering domain events</figcaption>
+                    </figure>
+                    <h2 data-selectable-paragraph="">Step #2 &mdash; Placing the Events in Sequence</h2>
+                    <p data-selectable-paragraph="">The next series of steps help identify any missing events by&nbsp;<strong>placing the events in sequence</strong>&nbsp;(typically left to right). Once the order is established, you can go backwards to help identify additional events. In our e-commerce example, the order information is entered first, followed by the inventory being checked. While putting them in order we discovered we left out an event for the input checks being performed. TIP - When multiple events happen at the same time, you can stack them vertically, such as below:</p>
+                    <figure>
+                    <div tabindex="0" role="button">
+                    <div>
+                    <div>
+                    <div>
+                    <div><img role="presentation" src="https://miro.medium.com/max/60/1*4XtbsILmshnaxKiCxvZ8hA.png?q=20" alt="" width="702" height="219" /></div>
+                    <img role="presentation" src="https://miro.medium.com/max/702/1*4XtbsILmshnaxKiCxvZ8hA.png" sizes="700px" srcset="https://miro.medium.com/max/276/1*4XtbsILmshnaxKiCxvZ8hA.png 276w, https://miro.medium.com/max/552/1*4XtbsILmshnaxKiCxvZ8hA.png 552w, https://miro.medium.com/max/640/1*4XtbsILmshnaxKiCxvZ8hA.png 640w, https://miro.medium.com/max/700/1*4XtbsILmshnaxKiCxvZ8hA.png 700w" alt="" width="702" height="219" /></div>
+                    </div>
+                    </div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output after identifying missing events (outlined in red) after putting them in sequence</figcaption>
+                    </figure>
+                    <h2 data-selectable-paragraph="">Step #3 &mdash; Modeling Out the Broader Ecosystem</h2>
+                    <p data-selectable-paragraph="">After putting the events in sequence, the next step is to&nbsp;<strong>model out the broader ecosystem</strong>&nbsp;surrounding the events by asking questions such as,&nbsp;<em>&ldquo;What triggered the event? Is it a system? A user? Another event? What commands are involved?&rdquo;</em>&nbsp;This additional context is very valuable in understanding the current state of the domain. In our example, a user is what triggers the order information entered event and they do it through the webpage (system).</p>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    <div>
+                    <figure>
+                    <div tabindex="0" role="button">
+                    <div><img role="presentation" src="https://miro.medium.com/max/2564/1*INT6O-wTAGIPeNesLyHNhQ.png" alt="" width="1282" height="437" /></div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output after identifying what triggers the events, the users and systems involved</figcaption>
+                    </figure>
+                    </div>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    <h2 data-selectable-paragraph="">Step #4 &mdash; Simple Categorization of Events</h2>
+                    <p data-selectable-paragraph="">At this point, all of the detailed events and their related parts should be modeled and as you prepare to move into&nbsp;<strong>categorization</strong>.</p>
+                    <p data-selectable-paragraph="">The first categorization is known as&nbsp;<em>aggregates</em>. These are the nouns, or the things, that the events operate on. DDD also has a concept of&nbsp;<em>entities</em>, which you can think of as the next level down from aggregates. From my experience, treating the aggregate and entity as the same helps simplify things, making it easier for folks to understand. In our example, Inventory, Order, Offer are all examples of&nbsp;<em>aggregates.&nbsp;</em>They are the things that the events are operating on.</p>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    <div>
+                    <figure>
+                    <div tabindex="0" role="button">
+                    <div><img role="presentation" src="https://miro.medium.com/max/2602/1*t7NJHryenxopuuGEEESuYQ.png" alt="" width="1301" height="461" /></div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output with aggregates added in</figcaption>
+                    </figure>
+                    </div>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    <h2 data-selectable-paragraph="">Step #5 &mdash; Bounded Context Categorization of Events</h2>
+                    <p data-selectable-paragraph="">Now we are ready for the&nbsp;<strong>bounded context&nbsp;</strong>level of categorization. All related events would fall within a single bounded context. For example, all events related to a shopping cart would fall within a shopping cart bounded context. An important microservice concept to keep in mind here is&nbsp;<em>if it changes together it should go together.</em>&nbsp;We want to eliminate dependencies across bounded contexts as much as possible. If the language changes between events then that is a sign that you have crossed into a different bounded context.</p>
+                    <p data-selectable-paragraph="">For example, when moving from viewing promotional offers to checkout the language is changing. This is best done on a white board and you can simply draw an outline around the related events and label the bounded context appropriately.</p>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    <div>
+                    <figure>
+                    <div tabindex="0" role="button">
+                    <div><img role="presentation" src="https://miro.medium.com/max/2436/1*o3hiw5hsw3p_vnYvQF7R9A.png" alt="" width="1218" height="546" /></div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output with bounded context applied</figcaption>
+                    </figure>
+                    </div>
+                    </div>
+                    </div>
+                    <div>
+                    <div>
+                    <h2 data-selectable-paragraph="">Step #6 &mdash; Putting it All Together</h2>
+                    <p data-selectable-paragraph="">Now we have completed the event storming steps! You can now use both the bounded contexts and the aggregates to understand the microservices needed. Typically, an aggregate within a bounded context represents one or more microservices.</p>
+                    <p data-selectable-paragraph="">In our example, the Order Capture bounded context will have microservices related to both Order and Inventory. You will notice that Order also exists in the Shopping Cart bounded context and Order Fulfillment bounded context. This is okay, as it indicates they are different microservices since they are in different bounded contexts. They may both be doing things related to an Order, but what they are doing is different. In a monolithic application these would be bundled together creating coupling, but with a microservices architecture we separate them for independence.</p>
+                    <figure>
+                    <div tabindex="0" role="button">
+                    <div><img role="presentation" src="https://miro.medium.com/max/2002/1*HFmS_U5ojqG9Tz7RzHuipg.png" alt="" width="1001" height="191" /></div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output of what groupings of microservices are needed for the domain</figcaption>
+                    </figure>
+                    <h2 data-selectable-paragraph="">Additional Step #7: Create Capabilities</h2>
+                    <p data-selectable-paragraph="">Now you have a great amount of information to help start your target architecture. In my experiences, I&rsquo;ve found it helpful to add a step that&nbsp;<strong>creates capabilities from the events</strong>. Typically, the capability is the event just in present tense form. The capabilities can then be mapped to bounded contexts and aggregates in various target capability architecture views. These various views provide architects and engineers a well-thought-out blueprint for building their target state.</p>
+                    <figure>
+                    <div tabindex="0" role="button">
+                    <div>
+                    <div>
+                    <div>
+                    <div><img role="presentation" src="https://miro.medium.com/max/60/1*QyAHtvKnBe9uG3AATmLyyA.png?q=20" alt="" width="974" height="101" /></div>
+                    <img role="presentation" src="https://miro.medium.com/max/974/1*QyAHtvKnBe9uG3AATmLyyA.png" sizes="700px" srcset="https://miro.medium.com/max/276/1*QyAHtvKnBe9uG3AATmLyyA.png 276w, https://miro.medium.com/max/552/1*QyAHtvKnBe9uG3AATmLyyA.png 552w, https://miro.medium.com/max/640/1*QyAHtvKnBe9uG3AATmLyyA.png 640w, https://miro.medium.com/max/700/1*QyAHtvKnBe9uG3AATmLyyA.png 700w" alt="" width="974" height="101" /></div>
+                    </div>
+                    </div>
+                    </div>
+                    <figcaption data-selectable-paragraph="">Example output of mapping to capabilities</figcaption>
+                    </figure>
+                    <h1 data-selectable-paragraph="">Conclusion</h1>
+                    <p data-selectable-paragraph="">I hope you find this blog helpful. I have used this exercise many times and it is a great way to initiate a microservices modernization effort. It helps bring various domain experts across your company together, and educates everyone on the full end-to-end business processes involved. With event storming you can decompose the domain into small pieces that can be reassembled into the target microservices architecture that you want to define.</p>
+                    <p data-selectable-paragraph="">So go forth and decompose the monolith!</p>
+                    </div>
+                    </div>
+                 
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>
