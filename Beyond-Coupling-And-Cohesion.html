@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- #BeginEditable "doctitle" -->
+<title>Beyond Coupling and Cohesion: Strategies For Un-F*cking Yourself</title>  
+<!-- #EndEditable -->
+<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+    <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <!-- Custom styles for this template -->
+    <link href="css/starter-template.css" rel="stylesheet">
+
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+<body>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <img src="../images/jdon100.png" alt="" width="100" height="45">        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+               <li><a href="https://sourceforge.net/projects/jdon/files/">Download</a></li>
+               <li><a href="../doc.htm" >Document</a></li>
+               <li><a href="../quickconf.html">Qucik Start</a> </li>
+               <li><a href="../examples.html">Examples</a></li>
+               <li ><a href="https://github.com/banq/jdonframework">Github</a></li>
+               <li><a href="../articles.html">Articles</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+    <div class="container">
+     <div class="starter-template">     
+    
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">  
+  <tr>     
+    <td bgcolor="#FFFFFF"  valign="top" align="left">
+
+                  
+                <!-- #BeginEditable "main" --> 
+         <!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
+<h1 class="title">Beyond Coupling and Cohesion: Strategies For Un-F*cking Yourself</h1>
+<div>
+<div>
+<div>Written on August 8, 2021</div>
+<p>The terms&nbsp;<em>Loose Coupling</em>&nbsp;and&nbsp;<em>High Cohesion</em>&nbsp;seem to go hand in hand: the two concepts were coined together and if you&rsquo;re talking about one, the other will typically come up as well. Similarly, the concepts of&nbsp;<em>DRY</em>&nbsp;(Don&rsquo;t Repeat Yourself) and&nbsp;<em>Wrong Abstraction</em>&nbsp;go hand in hand: for example one person says we should&nbsp;<em>DRY</em>&nbsp;this code up and the other says they considered it but they don&rsquo;t want to create the&nbsp;<em>Wrong Abstraction</em>. I rarely hear these two sets of concepts in the same conversation, which surprises me because they are really talking about the same thing.</p>
+<p>Allow me to explain. This is a box:</p>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/box.png" alt="" /></p>
+<p>It defines the boundary of the system that you have the power to change. The things you&nbsp;<em>can</em>&nbsp;change go inside the box: the things you&nbsp;<em>can&rsquo;t</em>&nbsp;go outside. The only reason something inside the box needs to change is for the sake of something on the outside: be that changes in external systems, new requirements from users, or a change in the domain that you&rsquo;re trying to model.</p>
+<p>For example, say we have a function&nbsp;<code>foo()</code>&nbsp;that renders a box and every second week the UX team decides the box needs to change to some new colour. In effect we have a dependency pointing from&nbsp;<code>foo()</code>&nbsp;to our design team, because when the design team changes (their minds),&nbsp;<code>foo()</code>&nbsp;must change too. We&rsquo;ll colour these out-going dependency arrows green.</p>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/basic.png" alt="" /></p>
+<p>Alright we have our pieces in order. Let&rsquo;s use them to represent&nbsp;<em>Loose Coupling</em>:</p>
+<h2>Loose Coupling</h2>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/loose.png" alt="" /></p>
+<p>We&rsquo;re making this easy for ourselves by having no coupling at all: that is, we have two modules which each contain some service and those services change for completely different reasons. The finance reporter is only ever changed for the sake of the finance team, and the images downloader is used by customers. Our two services are unrelated in the domain, independent in our code, and separated into different modules.</p>
+<p>What if moved our two services into the one module?. This would take us from&nbsp;<em>Loose Coupling</em>&nbsp;to&nbsp;<em>Low Cohesion</em></p>
+<h2>Low Cohesion</h2>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/low-cohesion.png" alt="" /></p>
+<p>They will continue to evolve separately because they&rsquo;re still both independent in the domain and independent in our code, but it&rsquo;s going to be harder for a developer to reason about that module given two conceptually unrelated services live inside it. If that module was a package we needed to independently deploy, we would now be redeploying our finance service whenever we made a change to our image downloader and vice versa, causing needless deploys.</p>
+<h2>Cohesive + Non-Dry</h2>
+<p>What if we had two things that&nbsp;<em>would</em>&nbsp;need to change for the same reasons? Consider the situation where we have a class with two functions,&nbsp;<code>foo()</code>&nbsp;and&nbsp;<code>bar()</code>&nbsp;and the two functions share significant overlap which would need to be updated in tandem. We&rsquo;d consider this class to be cohesive, because the functions are tightly related, but we wouldn&rsquo;t call it&nbsp;<em>DRY</em>&nbsp;because we&rsquo;re repeating code.</p>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/cohesive-not-dry.png" alt="" /></p>
+<p>We can fix this dryness issue by factoring out a common&nbsp;<code>baz()</code>&nbsp;function and we&rsquo;re left with a a&nbsp;<em>DRY</em>,&nbsp;<em>High Cohesion</em>&nbsp;result that can&rsquo;t be faulted, just like our initial&nbsp;<em>Loose Coupling</em>&nbsp;example.</p>
+<h2>Cohesive + Dry</h2>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/high-cohesion.png" alt="" /></p>
+<p>(Blue arrows are for dependencies&nbsp;<em>within</em>&nbsp;the system)</p>
+<h2>What&rsquo;s The Common Thread?</h2>
+<p>So we started off in a good state, and tweaking one thing at a time, eventually landed in another good state. Note that each step of the way we changed something different:</p>
+<ol>
+<li>In the first step we changed the degree of&nbsp;<em>colocation</em>&nbsp;(how close our code is) by moving our finance service and image service into the same module.</li>
+<li>In the second step we changed the degree of&nbsp;<em>domain interdependence</em>&nbsp;(green arrows) by considering an example where the two pieces of code needed to change for the same reasons</li>
+<li>In the third step we changed the degree of&nbsp;<em>practical interdependence</em>&nbsp;(blue arrows) by extracting out a common function and adding a couple of dependencies to that function in the code.</li>
+</ol>
+<p>I contend that these three axes:&nbsp;<em>colocation</em>,&nbsp;<em>domain interdependence</em>, and&nbsp;<em>practical interdependence</em>, form a basis that covers&nbsp;<em>Coupling</em>,&nbsp;<em>Cohesion</em>,&nbsp;<em>DRYness</em>, and the&nbsp;<em>Wrong Abstraction</em>, as well as some other things too.</p>
+<p>Given that each of our axes are independent of eachother, we end up with 8 (2^3) permutations, four of which we&rsquo;ve already shown above. Let&rsquo;s see if you find the remaining four familiar.</p>
+<p>Our last example was high-domain interdependence, high-practical interdependence, and high-colocation. Let&rsquo;s switch now to low-domain interdependence:</p>
+<h2>Wrong Abstraction</h2>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/wrong-abstraction.png" alt="" /></p>
+<p>(Red arrows also express practical interdependence, but are coloured to reflect the pain they cause)</p>
+<p>This gives us the classical&nbsp;<em>Wrong Abstraction</em>&nbsp;example: we have one function that tries to do everything, and within it lives code for handling two separate use cases, which each have different reasons to change (as signified by two separate out-going dependencies). The solution to this problem is to dismantle the abstraction and separate the use cases (that is, because domain interdependence is low, so should be practical interdependence and colocation).</p>
+<h2>Tight Coupling</h2>
+<p>For the next example we&rsquo;ll switch to low-colocation. This is actually an issue I bumped into at work: we had a node app with a dependence on a package that included the code that the node app actually used (labeled A) as well as some code that was browser-specific (labeled B). We had inadvertently added some code to B which raised if there was no browser present, regardless of whether we explicitly imported it into our node app!</p>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/node.png" alt="" /></p>
+<p>The solution was to move A out of the package and into our node app (in our case nothing else depended on it).</p>
+<p>Decreasing colocation has a tendency to exponentially compound problems because instead of depending directly on a few chunks of code, you&rsquo;re now dependent on the entire module/package housing those chunks of code. As was the case with our node app, sometimes the extra stuff in that module/package will crash your server.</p>
+<h2>Microservices Destined To Be Together</h2>
+<p>For this example we&rsquo;ll set domain interdependence to high:</p>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/microservice.png" alt="" /></p>
+<p>Here we have two microservices which always need to change at the same time, meaning that unlike in the previous example, we would never have one service being updated on its own. This typically means that for each change, A needs to pass B some different parameters, or call a new endpoint. And&nbsp;<em>that</em>&nbsp;means B needs to remain backwards compatible with A for the brief gap between their two deployments. The solution to this problem is to just combine the two microservices into one! Slightly less micro but still provides a service.</p>
+<p>This demonstrates the importance of matching your colocation with your domain interdependence: if the domain determines that two things always change at the same time, the closer they are, the better. Not just closer lexically but physically closer by sharing a deployment.</p>
+<h2>Dangerous Duplication</h2>
+<p>We&rsquo;ve now looked at seven permutations meaning we&rsquo;re up to the final one. For this, we&rsquo;ll hold colocation low and domain-interdependence high but remove the practical interdependence (i.e. that angry red arrow). The classical example of this is having two duplicate functions living in completely separate modules, where we want to keep the functions in lockstep.</p>
+<p><img src="https://jesseduffield.com/images/posts/dependencies/non-dry.png" alt="" /></p>
+<p>Given that the compiler has no idea we want to keep the functions in-sync, it&rsquo;s up to the developer to use his telepathic instincts when updating the method to search for the entire codebase for a potential duplicate function in case that should be updated too. The obvious solution here is to delete the duplicate function and redirect all of its callers to the original. If we had the same duplication but within a single file (i.e. much higher colocation) it wouldn&rsquo;t be such a big deal because it&rsquo;s easier to spot the resemblance, but as you decrease colocation from same-file, to same-module, to same-repo, the problem grows ever more pernicious.</p>
+<h2>Conclusion</h2>
+<p>What can we learn after having traversed this 2x2x2 cube of conundrums? In each example, the solution was always to set our practical interdependence and colocation to whatever our domain interdependence was. That is, if two pieces of code change for completely different reasons, you should not only separate them but also minimise the dependencies in the code between them. Conversely, if two pieces of code change for the exact same reasons, you should not only move them close together, but also represent their interdependence in the domain with interdependence in the code, whether through sharing some common interface, calling eachother, or factoring out common code.</p>
+<p>The&nbsp;<em>DRY Principle</em>&nbsp;and the idea of the&nbsp;<em>Wrong Abstraction</em>&nbsp;both care about domain interdependence and practical interdependence, but not much about colocation. Coupling cares about practical interdependence but only when there&rsquo;s low colocation, and Cohesion cares about domain interdependence but only when there&rsquo;s high colocation. These disparate concepts cover a lot of ground, but not enough to capture the full range of situations generated by their underlying axes. Hopefully this post has equipped you with a schema to reason through these dependency dilemmas when you face them in the wild.</p>
+<p>Until next time!</p>
+<h2>Compare The Permutations Yourself</h2>
+<p>Have a go selecting high/low for the three axe and compare one permutation to the next.</p>
+Domain Interdependence:&nbsp;<label for="#domainInterdependence-no">Low</label>&nbsp;<input checked="checked" name="domainInterdependence" type="radio" value="no" />&nbsp;<label for="#domainInterdependence-yes">High</label>&nbsp;<input name="domainInterdependence" type="radio" value="yes" /><br />Practical Interdependence:&nbsp;<label for="#practicalInterdependence-no">Low</label>&nbsp;<input checked="checked" name="practicalInterdependence" type="radio" value="no" />&nbsp;<label for="#practicalInterdependence-yes">High</label>&nbsp;<input name="practicalInterdependence" type="radio" value="yes" /><br />Colocation:&nbsp;<label for="#colocation-no">Low</label>&nbsp;<input checked="checked" name="colocation" type="radio" value="no" />&nbsp;<label for="#colocation-yes">High</label>&nbsp;<input name="colocation" type="radio" value="yes" />
+<div>
+<p>Outcome: Programmer Nirvana!</p>
+<img src="https://jesseduffield.com/images/posts/dependencies/loose.png" /></div>
+</div>
+</div>
+          <!-- #EndEditable -->
+                 
+                  
+          </td>
+          <td width="100" valign="top"  bgcolor="#FFFFD7"> 
+        
+ </td>
+  </tr>
+</table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="2" bgcolor="#000000"  align="center">
+              <tr>
+                <td></td>
+              </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr><td height="20" bgcolor="#CAC9BB" align="center">
+  
+  </td>
+</tr>
+</table>
+ </div>
+</div><!-- /.container -->
+
+<!-- TemplateBeginEditable name="EditRegion3" --><!-- TemplateEndEditable -->
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4242434,document.body||document.documentElement)</script>	
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c4b79515624135"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent',
+    'share' : {
+      'position' : 'left',
+      'numPreferredServices' : 5
+    },  
+    'whatsnext' : {},  
+    'recommended' : {} 
+  });
+</script>
+<!-- AddThis Smart Layers END -->    
+</body>
+</html>
